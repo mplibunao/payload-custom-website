@@ -48,7 +48,7 @@ export function useIsSubmitting({
 function callAll<Args extends Array<unknown>>(
 	...fns: Array<((...args: Args) => unknown) | undefined>
 ) {
-	return (...args: Args) => fns.forEach(fn => fn?.(...args))
+	return (...args: Args) => fns.forEach((fn) => fn?.(...args))
 }
 
 /**
@@ -69,7 +69,7 @@ export function useDoubleCheck() {
 		const onClick: React.ButtonHTMLAttributes<HTMLButtonElement>['onClick'] =
 			doubleCheck
 				? undefined
-				: e => {
+				: (e) => {
 						e.preventDefault()
 						setDoubleCheck(true)
 				  }

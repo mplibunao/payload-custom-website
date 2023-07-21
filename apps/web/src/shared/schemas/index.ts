@@ -1,11 +1,12 @@
 import { type Static, Type } from '@sinclair/typebox'
 
-export const NODE_ENV = Type.Optional(
-	Type.Union([
+export const NODE_ENV = Type.Union(
+	[
 		Type.Literal('development'),
 		Type.Literal('production'),
 		Type.Literal('test'),
-	]),
+	],
+	{ default: 'development' },
 )
 export const APP_ENV = Type.Union(
 	[

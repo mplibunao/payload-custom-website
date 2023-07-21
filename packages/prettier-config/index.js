@@ -1,6 +1,6 @@
 /** @type {import("prettier").Config} */
 module.exports = {
-	arrowParens: 'avoid',
+	arrowParens: 'always',
 	semi: false,
 	singleQuote: true,
 	jsxSingleQuote: true,
@@ -10,10 +10,10 @@ module.exports = {
 	endOfLine: 'lf',
 	tabWidth: 2,
 	plugins: [
-		require('prettier-plugin-tailwindcss'),
+		//require('prettier-plugin-tailwindcss'),
 		require('@ianvs/prettier-plugin-sort-imports'),
 	],
 	importOrder: ['^\\$/(.*)$', '^[../]', '^[./]'],
 	importOrderSeparation: true,
-	tailwindConfig: '../../packages/tailwind-config',
+	//tailwindConfig: '../../packages/tailwind-config',
 }

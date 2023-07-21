@@ -1,8 +1,5 @@
 import { type Static, Type, type TObject } from '@sinclair/typebox'
-import { Value } from '@sinclair/typebox/value'
-import dotenv from 'dotenv'
 import envSchema from 'env-schema'
-import { CompilingStandardValidator } from 'typebox-validators/standard'
 import {
 	APP_ENV,
 	type App_env,
@@ -14,15 +11,6 @@ import {
 	cloudRunLoggerOptsEnvSchema,
 	type CloudRunLoggerOpts,
 } from './logger/cloudRunLoggerOpts.ts'
-
-const loadEnv = () => {
-	const APP_ENV = process.env.APP_ENV
-	const CI = Boolean(process.env.CI)
-
-	if (CI || APP_ENV === 'production') return
-	if (APP_ENV === 'test') return dotenv.config({ path: '.env.test' })
-	return dotenv.config()
-}
 
 /*
  *DOTENV + TYPEBOX ENV SCHEMAS = ENV
@@ -61,7 +49,6 @@ export const baseTypeboxEnvSchema = {
 	PORT,
 	STRIP_TRAILING_SLASH: Type.Optional(Type.Boolean({ default: true })),
 	REDIRECT_HTTP_TO_HTTPS: Type.Optional(Type.Boolean({ default: false })),
-	HOST: Type.Optional(Type.String({ default: '127.0.0.1' })),
 	SESSION_SECRET: Type.String(),
 }
 
@@ -80,7 +67,6 @@ export type Config<T extends Env = Env> = {
 		APP_ENV: App_env
 	}
 	server: {
-		host: string
 		port: number
 		stripTraillingSlash?: boolean
 		redirectHttpToHttps?: boolean
@@ -97,7 +83,6 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			APP_ENV: env.APP_ENV,
 		},
 		server: {
-			host: env.K_SERVICE ? '0.0.0.0' : (env.HOST as string),
 			port: env.PORT,
 			stripTraillingSlash: env.STRIP_TRAILING_SLASH,
 			redirectHttpToHttps: env.REDIRECT_HTTP_TO_HTTPS,
@@ -114,18 +99,6 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 
 /*
  *This is the default config using the default typebox schema
- *If you need different envs import the helpers and use them like this
- */
-//loadEnv()
-//const convertedEnv = Value.Convert(typeboxEnvSchema, process.env)
-//const validator = new CompilingStandardValidator(typeboxEnvSchema)
-//const env = validator.validateAndCleanCopy(convertedEnv as Env)
-//export const config = mapEnvToConfig(env)
-
-/*
- *This is the default config using the default typebox schema
- *See src/scripts/fsq for an example of how to add variables to schema and change the types of config
- *  - Basically the same as what we're doing here. Just customizing using generics
  */
 const env = getEnv<Env>(typeboxEnvSchema)
 export const config = mapEnvToConfig(env)

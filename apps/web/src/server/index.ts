@@ -17,9 +17,7 @@ const app = express()
 const appWithMiddlewares = await initApp(app, { config, devBuild, build })
 
 const server = appWithMiddlewares.listen(config.server.port, () => {
-	console.log(
-		`✅ server started on ${config.server.host}:${config.server.port}`,
-	)
+	console.log(`✅ server started on ${config.server.port}`)
 	if (config.env.NODE_ENV === 'development') {
 		broadcastDevReady(build)
 	}
@@ -48,7 +46,7 @@ const closeListeners = closeWithGrace(
 		console.log({ signal, manual }, 'closing application')
 
 		await new Promise((resolve, reject) => {
-			server.close(e => {
+			server.close((e) => {
 				closeListeners.uninstall()
 				return e ? reject(e) : resolve('ok')
 			})
