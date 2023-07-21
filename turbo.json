@@ -1,0 +1,57 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"pipeline": {
+		"ladle:build": {
+			"dependsOn": ["^ladle:build"],
+			"inputs": ["src/**/*", ".ladle/**/*"],
+			"outputs": ["build/**/*"]
+		},
+		"clean": {
+			"cache": false
+		},
+		"lint:check": {
+			"outputs": [".eslintcache"],
+			"dependsOn": [],
+			"inputs": [
+				"src/**/*.{ts,tsx,js,jsx}",
+				"!src/**/*.test.{tsx,ts}",
+				"tsconfig.json"
+			]
+		},
+		"lint:fix": {
+			"outputs": [".eslintcache"],
+			"dependsOn": [],
+			"inputs": [
+				"src/**/*.{ts,tsx,js,jsx}",
+				"!src/**/*.test.{tsx,ts}",
+				"tsconfig.json"
+			]
+		},
+		"test": {
+			"outputs": ["coverage/**"],
+			"dependsOn": [],
+			"inputs": [
+				"src/**/*.{tsx,ts}",
+				"!src/**/*.stories.tsx",
+				"vitest.config.ts"
+			]
+		},
+		"dev": {
+			"dependsOn": [],
+			"cache": false
+		},
+		"typecheck": {
+			"outputs": ["tsconfig.tsbuildinfo"],
+			"dependsOn": [],
+			"inputs": ["src/**/*.{tsx,ts}", "tsconfig.json"]
+		},
+		"format:check": {
+			"outputs": [],
+			"inputs": ["src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}"]
+		},
+		"format:fix": {
+			"outputs": [],
+			"inputs": ["src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}"]
+		}
+	}
+}

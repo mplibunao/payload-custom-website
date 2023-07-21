@@ -1,0 +1,28 @@
+{
+  "name": "eslint-config-custom",
+  "version": "0.0.0",
+  "main": ".eslintrc.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules"
+  },
+  "dependencies": {
+    "@types/eslint": "^8.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-only-warn": "^1.1.0",
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-testing-library": "^5.9.1",
+    "eslint-plugin-remix-react-routes": "^1.0.5",
+    "eslint-plugin-vitest": "^0.2.3",
+    "@remix-run/eslint-config": "^1.18.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.44.0",
+    "typescript": "^5.1.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

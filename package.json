@@ -1,0 +1,37 @@
+{
+	"name": "payload-custom-website",
+	"version": "0.0.0",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"scripts": {
+		"migrate": "./apps/pg-manager/migrate.sh",
+		"db:migrate:dev": "pnpm -F pg-manager db:migrate:dev",
+		"cli": "pnpm -F cli cli",
+		"clean": "turbo run clean --parallel",
+		"build": "turbo run build",
+		"dev": "turbo run dev --no-cache --continue",
+		"db:gen:types": "turbo run db:gen:types",
+		"test": "turbo run test",
+		"test:watch": "turbo run test:watch",
+		"lint:check": "turbo run lint:check",
+		"lint:fix": "turbo run lint:fix",
+		"format:fix": "turbo run format:fix",
+		"format:check": "turbo run format:check",
+		"ci": "./run ci",
+		"typecheck": "turbo run typecheck",
+		"prepare": "husky install"
+	},
+	"devDependencies": {
+		"husky": "^8.0.0",
+		"turbo": "1.8.5",
+		"typescript": "^5.1.6"
+	},
+	"engines": {
+		"npm": ">=8.15.0",
+		"node": ">=16.19.0"
+	},
+	"packageManager": "pnpm@8.2.0"
+}

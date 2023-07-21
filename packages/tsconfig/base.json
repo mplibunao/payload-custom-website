@@ -1,0 +1,32 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Default",
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"incremental": true,
+		"moduleResolution": "node",
+		"removeComments": true,
+		"skipLibCheck": true,
+		"noUnusedLocals": true,
+		"noUncheckedIndexedAccess": true,
+		"allowUnusedLabels": false,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"pretty": true,
+		"declaration": true,
+		"declarationMap": true,
+		"inlineSources": false,
+		"composite": false,
+		"preserveWatchOutput": true,
+		"isolatedModules": true,
+		"useDefineForClassFields": true
+	},
+	"exclude": ["node_modules"]
+}

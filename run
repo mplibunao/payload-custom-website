@@ -1,0 +1,200 @@
+#!/bin/bash
+
+function init:env { ## Copies .env.example and .env.test.example to .env and .env.test
+  pnpm -F cli init
+}
+
+function secret { ## Generates a random secret that can be used for your SECRET_KEY and more. Pass --help for more info
+  usage="$(cat <<-END
+Usage:
+  secret [OPTIONS]
+
+Options:
+  -b, --bytes <n>    Number of bytes for generating the secret (default: 64)
+  -h, --help         Show this help message and exit
+END
+)"
+
+  bytes=64
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      -b|--bytes)
+        bytes="$2"
+        shift 2
+        ;;
+      -h|--help)
+        echo "$usage"
+        return
+        ;;
+      *)
+        echo "Invalid option: $1" >&2
+        echo "$usage" >&2
+        return 1
+        ;;
+    esac
+  done
+
+  node -e "console.log(crypto.randomBytes($bytes).toString('hex'));"
+}
+
+function ci { ## Runs ci
+  pnpm tsc || return $?
+  pnpm lint:check || return $?
+  pnpm format:check || return $?
+  pnpm test || return $?
+}
+
+function db:reset { ## Reset database. Destroy then start it back up
+  echo "destroying database"
+  dc:destroy -y
+  echo "starting db"
+  dc:up
+}
+
+function db:setup { ## Setup database. Run migrations, Generate types and seed database
+  echo "setting up database"
+  pnpm -F db-migrator db:migrate:dev 
+  pnpm -F db db:gen:types
+}
+
+function db:migrate { ## Runs migration command
+  pnpm -F db-migrator db:migrate "$@"
+}
+
+function db:gen:types { ## Generates types from database
+  pnpm -F db db:gen:types
+}
+
+function db:gen:migration { ## Generates new migration file
+  pnpm -F db-migrator db:migrate create "$@"
+}
+
+function db:gen:fsq { ## Generates migration for foursquare data
+  pnpm -F api db:gen:fsq "$@"
+}
+
+function api:spec:generate { ## Generates open api spec and validates it
+  pnpm -F api spec:generate
+}
+
+function api:routes { ## Print api routes
+  pnpm -F api print-routes
+}
+
+function web:icons { ## Runs icon pipeline
+  pnpm -F web icons
+}
+
+function web:client:generate { ## Generate open api spec and client
+  pnpm -F api spec:generate || return $?
+  pnpm -F web client:generate || return $?
+}
+
+function dc:run { ## Docker: Runs [SERVICE] for one-off commands; Does not use ports specified in the service config preventing port collisions;
+  if [ $# -eq 0 ]; then echo 1>&2 "Usage: $0 $FUNCNAME run [SERVICE] [OPTIONAL COMMANDS]
+$0 $FUNCNAME run api pnpm add -D express 
+    ";exit 3;fi
+
+  echo "docker-compose run --rm $@"
+  docker-compose run --rm "$@"
+  exit_code=$?
+  echo "docker-compose down"
+  docker-compose down
+  exit $exit_code
+}
+
+function dc:up { ## Docker: Builds infrastructure
+  echo "docker-compose up"
+  docker-compose up "$@"
+  exit_code=$?
+  echo "docker-compose down"
+  docker-compose down
+  exit $exit_code
+}
+
+function dc:run:service { ## Docker: Runs [SERVICE] with ports specificed in configuration. Use this for starting standalone services.
+  echo "Starting service"
+  docker-compose run --rm --service-ports "$@"
+}
+
+function dc:exec { ## Docker: Uses docker exec to execute a command agains a running container
+  echo "docker-compose exec $@"
+  docker-compose exec ${@}
+}
+
+function dc:rebuild { ## Docker: Rebuilds and starts infrastructure
+  echo "docker-compose up --build"
+  docker-compose up --build
+  exit_code=$?
+  echo "docker-compose down"
+  docker-compose down
+  exit $exit_code
+}
+
+function dc:destroy { ## Docker: Destroy infrastructure including volumes
+  if [ $# -ne 1 ]; then
+    read -p "Are you sure you want to destroy the volumes as well? (Y/n)" answer
+    answer=${answer:y}
+  elif [ "$1" = "-n" ]; then
+    echo "Cancelling.."
+    answer="n"
+  elif [ "$1" = "-y" ]; then
+    answer="y"
+  fi
+
+  if [ "$answer" = "y" ]; then
+    echo "Destroying infrastructure"
+    docker-compose down -v
+  fi
+}
+
+function dc:ls { ## Docker: List services
+  echo "Listing services"
+  docker-compose ls ${@}
+}
+
+function dc:list_env { ## Docker: List env args in specific [SERVICE]
+  if [ $# -ne 2 ]; then echo 1>&2 "Usage: $0 $FUNCNAME [run | exec] [SERVICE]";exit 3;fi
+
+  if [ $1 = "run" ]; then
+    echo "docker-compose run --rm $2 sh -c 'set'"
+    docker-compose run --rm $2 sh -c 'set'
+  fi
+
+  if [ $1 = "exec" ]; then
+    echo "docker-compose exec $2 sh -c 'set'"
+    docker-compose exec $2 sh -c 'set'
+  fi
+}
+
+function dc:logs { ## Docker: Display logs for specific [service] or infrastructure
+  docker-compose logs $1
+}
+
+function dc:sh { ## Docker: Launch a shell in specified [SERVICE]
+  if [ $# -ne 2 ]; then echo 1>&2 "Usage: $0 $FUNCNAME [run | exec] [SERVICE]";exit 3;fi
+
+  if [ $1 = "run" ]; then
+    echo "Launching shell in service $1"
+    docker-compose run --rm $1 sh
+  fi
+
+  if [ $1 = "exec" ]; then
+    echo "Launching shell in service $1"
+    docker-compose exec $1 sh
+  fi
+}
+
+function help {
+  printf "Commands:\n"
+
+  grep -E '^[a-zA-Z_-].*? { .*?## .*$$' $0 | sed -e 's#\\:#:#g' -e 's/function //' | awk 'BEGIN {FS = " { .*?## "}; {printf "\033[36m %-20s \033[0m %s\n", $1, $2}'
+
+  printf "\nExtended help:\n  Each task has comments for general usage\n"
+}
+
+
+
+# This idea is heavily inspired by: https://github.com/adriancooney/Taskfile
+TIMEFORMAT=$'\nTask completed in %3lR'
+time "${@:-help}"

@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+coverage
+index.d.ts
+migrations
+scripts/**
+vitest.config.ts
+.eslintrc.cjs
+*.js
+src/client/react-query/*
+playwright-report
+server-build
