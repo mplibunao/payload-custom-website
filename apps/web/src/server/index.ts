@@ -7,8 +7,8 @@ import { getDirname } from '~/utils/esm.ts'
 // @ts-ignore - this file may not exist if you haven't built yet, but it will
 // definitely exist by the time the dev or prod server actually runs.
 import * as remixBuild from '../../build/index.js'
+import { initApp } from './app.ts'
 import { config } from './infra/config.ts'
-import { initApp } from './server.ts'
 
 const build = remixBuild as unknown as ServerBuild
 let devBuild = build
@@ -24,35 +24,36 @@ const server = appWithMiddlewares.listen(config.server.port, () => {
 })
 
 // delay is the number of milliseconds for the graceful close to finish
-// Fast reload for dev
-const delay = config.env.APP_ENV === 'production' ? 5000 : 200
-const closeListeners = closeWithGrace(
-	{ delay },
-	async ({
-		err,
-		signal,
-		manual,
-	}: {
-		err?: Error
-		signal?: Signals
-		manual?: boolean
-	}) => {
-		if (err) {
+// don't use on dev since it conflicts with hmr
+if (config.env.NODE_ENV === 'production') {
+	const closeListeners = closeWithGrace(
+		{ delay: 5000 },
+		async ({
+			err,
+			signal,
+			manual,
+		}: {
+			err?: Error
+			signal?: Signals
+			manual?: boolean
+		}) => {
+			if (err) {
+				// TODO: Replace with payload's pino instance
+				console.log(err)
+			}
+
 			// TODO: Replace with payload's pino instance
-			console.log(err)
-		}
+			console.log({ signal, manual }, 'closing application')
 
-		// TODO: Replace with payload's pino instance
-		console.log({ signal, manual }, 'closing application')
-
-		await new Promise((resolve, reject) => {
-			server.close((e) => {
-				closeListeners.uninstall()
-				return e ? reject(e) : resolve('ok')
+			await new Promise((resolve, reject) => {
+				server.close((e) => {
+					closeListeners.uninstall()
+					return e ? reject(e) : resolve('ok')
+				})
 			})
-		})
-	},
-)
+		},
+	)
+}
 
 // during dev, we'll keep the build module up to date with the changes
 if (process.env.NODE_ENV === 'development') {
@@ -61,8 +62,9 @@ if (process.env.NODE_ENV === 'development') {
 
 	// eslint-disable-next-line no-inner-declarations
 	async function reloadBuild() {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		devBuild = await import(`${BUILD_PATH}?update=${Date.now()}`)
+		devBuild = (await import(
+			`${BUILD_PATH}?update=${Date.now()}`
+		)) as ServerBuild
 		broadcastDevReady(devBuild)
 	}
 

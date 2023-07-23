@@ -5,12 +5,12 @@ import { flatRoutes } from 'remix-flat-routes'
  */
 export default {
 	appDirectory: 'src/app',
-	cacheDirectory: './node_modules/.cache/remix',
 	ignoredRouteFiles: ['**/*'],
 	serverModuleFormat: 'esm',
 	serverPlatform: 'node',
 	tailwind: true,
 	postcss: true,
+	// add paths outside of appDirectory to watchPaths so we get hmr/hdr
 	watchPaths: ['./tailwind.config.ts'],
 	future: {
 		v2_headers: true,
@@ -20,7 +20,7 @@ export default {
 		v2_routeConvention: true,
 		v2_dev: true,
 	},
-	routes: async defineRoutes => {
+	routes: async (defineRoutes) => {
 		return flatRoutes('routes', defineRoutes, {
 			appDir: 'src/app',
 			ignoredRouteFiles: [

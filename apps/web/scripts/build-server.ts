@@ -1,10 +1,9 @@
 import esbuild, { type Plugin } from 'esbuild'
-import esbuildPluginPino from 'esbuild-plugin-pino'
 import fs from 'fs'
 import minimist from 'minimist'
 import path from 'path'
 
-type App = 'dev' | 'prod'
+type App = 'prod'
 type Config = {
 	watch: boolean
 	minify: boolean
@@ -14,11 +13,6 @@ type BuildConfig = Record<App, Config>
 
 const getConfig = (app: App): Config => {
 	const config: BuildConfig = {
-		dev: {
-			watch: true,
-			minify: false,
-			entrypoints: ['../src/server/index.ts'],
-		},
 		prod: {
 			watch: false,
 			minify: true,
@@ -71,6 +65,16 @@ function getExternal() {
 		'@sinclair/typebox',
 		'@vercel/edge-config',
 		'pino',
+
+		// from script
+		'@remix-run/css-bundle',
+		'@remix-run/react',
+		'@remix-run/router',
+		'@remix-run/server-runtime',
+		'class-variance-authority',
+		'confetti-react',
+		'isbot',
+		'tailwind-merge',
 	]
 
 	// with node apis
@@ -88,8 +92,8 @@ function getExternal() {
 	]
 
 	const external = [...Object.keys(packageJson.dependencies)]
-		.filter(deps => !deps.startsWith('@findmyparking/'))
-		.filter(dep => !included.includes(dep))
+		.filter((deps) => !deps.startsWith('@findmyparking/'))
+		.filter((dep) => !included.includes(dep))
 		.concat(excluded)
 	console.info(external, 'external')
 
@@ -97,11 +101,7 @@ function getExternal() {
 }
 
 function getPlugins(): Plugin[] {
-	return [
-		nativeNodeModulesPlugin,
-		excludeVendorFromSourceMapPlugin,
-		esbuildPluginPino({ transports: ['pino-pretty'] }),
-	]
+	return [nativeNodeModulesPlugin, excludeVendorFromSourceMapPlugin]
 }
 
 // https://github.com/evanw/esbuild/issues/1685
@@ -110,7 +110,7 @@ function getPlugins(): Plugin[] {
 const excludeVendorFromSourceMapPlugin = {
 	name: 'excludeVendorFromSourceMap',
 	setup(build) {
-		build.onLoad({ filter: /node_modules/ }, args => {
+		build.onLoad({ filter: /node_modules/ }, (args) => {
 			if (args.path.endsWith('.js')) {
 				return {
 					contents:
@@ -133,7 +133,7 @@ const nativeNodeModulesPlugin = {
 	setup(build) {
 		// If a ".node" file is imported within a module in the "file" namespace, resolve
 		// it to an absolute path and put it into the "node-file" virtual namespace.
-		build.onResolve({ filter: /\.node$/, namespace: 'file' }, args => {
+		build.onResolve({ filter: /\.node$/, namespace: 'file' }, (args) => {
 			const resolvedId = require.resolve(args.path, {
 				paths: [args.resolveDir],
 			})
@@ -150,7 +150,7 @@ const nativeNodeModulesPlugin = {
 
 		// Files in the "node-file" virtual namespace call "require()" on the
 		// path from esbuild of the ".node" file in the output directory.
-		build.onLoad({ filter: /.*/, namespace: 'node-file' }, args => {
+		build.onLoad({ filter: /.*/, namespace: 'node-file' }, (args) => {
 			return {
 				contents: `
             import path from ${JSON.stringify(args.path)}
@@ -164,7 +164,7 @@ const nativeNodeModulesPlugin = {
 		// If a ".node" file is imported within a module in the "node-file" namespace, put
 		// it in the "file" namespace where esbuild's default loading behavior will handle
 		// it. It is already an absolute path since we resolved it to one above.
-		build.onResolve({ filter: /\.node$/, namespace: 'node-file' }, args => ({
+		build.onResolve({ filter: /\.node$/, namespace: 'node-file' }, (args) => ({
 			path: args.path,
 			namespace: 'file',
 		}))
@@ -177,7 +177,7 @@ const nativeNodeModulesPlugin = {
 	},
 } satisfies Plugin
 
-type PackageJson = {
+export type PackageJson = {
 	name: string
 	dependencies: Record<string, string>
 	devDependencies: Record<string, string>

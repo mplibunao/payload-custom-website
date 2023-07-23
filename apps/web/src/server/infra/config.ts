@@ -47,9 +47,8 @@ export const baseTypeboxEnvSchema = {
 	NODE_ENV,
 	APP_ENV,
 	PORT,
-	STRIP_TRAILING_SLASH: Type.Optional(Type.Boolean({ default: true })),
-	REDIRECT_HTTP_TO_HTTPS: Type.Optional(Type.Boolean({ default: false })),
-	SESSION_SECRET: Type.String(),
+	STRIP_TRAILING_SLASH: Type.Boolean({ default: true }),
+	REDIRECT_HTTP_TO_HTTPS: Type.Boolean({ default: false }),
 }
 
 /*

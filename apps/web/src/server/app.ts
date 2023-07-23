@@ -16,6 +16,10 @@ export const initApp = async (
 		devBuild,
 	}: { config: Config; build: ServerBuild; devBuild: ServerBuild },
 ) => {
+	// trust all proxies in front of express
+	// lets cookies / sessions work
+	app.set('trust proxy', true)
+
 	const lazyMiddlewareQuery = []
 
 	if (config.server.redirectHttpToHttps) {
@@ -82,6 +86,11 @@ export const initApp = async (
 			},
 		}),
 	)
+
+	//const remixHandler =
+	//config.env.NODE_ENV === 'development'
+	//? (...args) => getRequestHandler(devBuild, config)(...args)
+	//: getRequestHandler(build, config)
 
 	app.all(
 		'*',

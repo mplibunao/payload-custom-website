@@ -19,6 +19,7 @@ dist
 dist-ssr
 public/build
 server-build
+.cache
 
 # misc
 .DS_Store
