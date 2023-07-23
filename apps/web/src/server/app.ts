@@ -4,17 +4,16 @@ import express, { type Express, type Response } from 'express'
 import helmet from 'helmet'
 
 import { type Config } from './infra/config.ts'
-import { getRequestHandler } from './infra/remix/index.ts'
+import {
+	createDevRequestHandler,
+	createRemixRequestHandler,
+} from './infra/remix/index.ts'
 import { generateNonce } from './middleware/generateNonce.ts'
 
 // eslint-disable-next-line max-statements
 export const initApp = async (
 	app: Express,
-	{
-		config,
-		build,
-		devBuild,
-	}: { config: Config; build: ServerBuild; devBuild: ServerBuild },
+	{ config, build }: { config: Config; build: ServerBuild },
 ) => {
 	// trust all proxies in front of express
 	// lets cookies / sessions work
@@ -87,17 +86,12 @@ export const initApp = async (
 		}),
 	)
 
-	//const remixHandler =
-	//config.env.NODE_ENV === 'development'
-	//? (...args) => getRequestHandler(devBuild, config)(...args)
-	//: getRequestHandler(build, config)
-
 	app.all(
 		'*',
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		config.env.NODE_ENV === 'development'
-			? (...args) => getRequestHandler(devBuild, config)(...args)
-			: getRequestHandler(build, config),
+			? createDevRequestHandler(build, config)
+			: createRemixRequestHandler(build, config),
 	)
 
 	return app
