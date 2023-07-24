@@ -20,6 +20,7 @@ export default {
 		v2_routeConvention: true,
 		v2_dev: true,
 	},
+	serverDependenciesToBundle: [],
 	routes: async (defineRoutes) => {
 		return flatRoutes('routes', defineRoutes, {
 			appDir: 'src/app',

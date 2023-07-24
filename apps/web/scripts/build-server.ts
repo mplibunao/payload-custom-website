@@ -32,7 +32,7 @@ const getConfig = (app: App): Config => {
 	const config: BuildConfig = {
 		prod: {
 			watch: false,
-			minify: false,
+			minify: true,
 			entrypoints: {
 				paths: ['src/server/index.ts'],
 				ignore: [],
