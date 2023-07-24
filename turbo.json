@@ -22,7 +22,7 @@
 				"src/**/*.{tsx,ts}",
 				"!src/**/*.test.{tsx,ts}",
 				"tsconfig.json",
-				"esbuild-tsconfig.json",
+				"remix.json",
 				"scripts/build-server.ts"
 			]
 		},

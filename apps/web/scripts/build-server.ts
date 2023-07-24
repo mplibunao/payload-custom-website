@@ -50,7 +50,6 @@ const entryPoints = await globby([
 	...config.entrypoints.paths,
 	...config.entrypoints.ignore,
 ])
-console.info(entryPoints, 'entryPoints')
 
 esbuild
 	.build({
