@@ -13,7 +13,11 @@ import { generateNonce } from './middleware/generateNonce.ts'
 // eslint-disable-next-line max-statements
 export const initApp = async (
 	app: Express,
-	{ config, build }: { config: Config; build: ServerBuild },
+	{
+		config,
+		build,
+		BUILD_PATH,
+	}: { config: Config; build: ServerBuild; BUILD_PATH: string },
 ) => {
 	// trust all proxies in front of express
 	// lets cookies / sessions work
@@ -90,7 +94,7 @@ export const initApp = async (
 		'*',
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		config.env.NODE_ENV === 'development'
-			? await createDevRequestHandler(build, config)
+			? await createDevRequestHandler(build, config, BUILD_PATH)
 			: createRemixRequestHandler(build, config),
 	)
 
