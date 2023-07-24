@@ -8,8 +8,7 @@
 		"noEmit": true,
 		"module": "esnext",
 		"jsx": "react-jsx",
-		"emitDeclarationOnly": false,
-		"allowImportingTsExtensions": true
+		"emitDeclarationOnly": false
 	},
 	"include": ["src"],
 	"exclude": ["node_modules"]

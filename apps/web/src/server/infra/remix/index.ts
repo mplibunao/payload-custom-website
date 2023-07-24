@@ -1,12 +1,16 @@
 import { type RequestHandler, createRequestHandler } from '@remix-run/express'
 import { broadcastDevReady, type ServerBuild } from '@remix-run/node'
+import { Type } from '@sinclair/typebox'
 import { type Request, type Response } from 'express'
 import path from 'path'
-import { BUILD_PATH } from '~/shared/constants/hmr.ts'
 import { getDirname } from '~/shared/esm.ts'
 
 import { type Config } from '../config.ts'
 import { ServerTiming } from '../serverTiming.ts'
+
+export const remixEnvSchema = {
+	REMIX_BUILD_PATH: Type.String(),
+}
 
 export function createRemixRequestHandler(
 	build: ServerBuild,
@@ -29,33 +33,40 @@ export function createRemixRequestHandler(
  * - https://www.youtube.com/watch?v=zTrjaUt9hLo
  * - https://remix.run/docs/en/main/guides/manual-mode
  */
-export function createDevRequestHandler(
+const buildPath = '../../build/index.js'
+export async function createDevRequestHandler(
 	build: ServerBuild,
 	config: Config,
-): RequestHandler {
-	async function handleServerUpdate() {
+): Promise<RequestHandler> {
+	console.info(config.remix.buildPath, 'config.remix.buildPath')
+	function handleServerUpdate() {
 		// 1. re-import the server build
-		build = (await import(`${BUILD_PATH}?t=${Date.now()}`)) as ServerBuild
+		//build = (await import(
+		//`${buildPath}?t=${Date.now()}`
+		//`${config.remix.buildPath}?t=${Date.now()}`
+		//)) as ServerBuild
 		// 2. tell dev server that this app server is now up-to-date and ready
-		broadcastDevReady(build)
+
+		import(`${buildPath}?t=${Date.now()}`).then((res: ServerBuild) => {
+			build = res
+			broadcastDevReady(build)
+		})
+		//broadcastDevReady(build)
 	}
 
+	const { default: chokidar } = await import('chokidar')
 	const dirname = getDirname(import.meta.url)
-	const watchPath = path.join(dirname, BUILD_PATH).replace(/\\/g, '/')
+	const watchPath = path
+		.join(dirname, config.remix.buildPath)
+		.replace(/\\/g, '/')
 
-	// use .then instead of making function async because RequestHandler type then app.all type breaks vs js eslint errors
-	import('chokidar')
-		.then((res) => {
-			res.default
-				.watch(watchPath, { ignoreInitial: true })
-				// eslint-disable-next-line @typescript-eslint/no-misused-promises
-				.on('add', handleServerUpdate)
-				// eslint-disable-next-line @typescript-eslint/no-misused-promises
-				.on('change', handleServerUpdate)
-		})
-		.catch((err) => {
-			console.log('Error encountered listening to hmr changes', err)
-		})
+	chokidar
+		.watch(watchPath, { ignoreInitial: true })
+
+		//.on('add', handleServerUpdate)
+
+		//.on('change', handleServerUpdate)
+		.on('all', handleServerUpdate)
 
 	// wrap request handler to make sure its recreated with the latest build for every request
 	return async (req, res, next) => {

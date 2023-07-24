@@ -90,7 +90,7 @@ export const initApp = async (
 		'*',
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		config.env.NODE_ENV === 'development'
-			? createDevRequestHandler(build, config)
+			? await createDevRequestHandler(build, config)
 			: createRemixRequestHandler(build, config),
 	)
 

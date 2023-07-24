@@ -2,13 +2,17 @@ import { type ServerBuild, broadcastDevReady } from '@remix-run/node'
 import closeWithGrace, { type Signals } from 'close-with-grace'
 import express from 'express'
 
-// @ts-ignore - this file may not exist if you haven't built yet, but it will
+// this file may not exist if you haven't built yet, but it will
 // definitely exist by the time the dev or prod server actually runs.
+// since we are bundling express code, we don't want to bundle the build together with it since remix already handles that for us (and since it breaks)
+// therefore use run-time imports. See https://esbuild.github.io/api/#non-analyzable-imports
+// we use env for build path because in dev path is `../..` while in prod `..`
+//const build = (await import(config.remix.buildPath)) as unknown as ServerBuild
 import * as remixBuild from '../../build/index.js'
 import { initApp } from './app.ts'
 import { config } from './infra/config.ts'
 
-const build = remixBuild as unknown as ServerBuild
+let build = remixBuild as unknown as ServerBuild
 
 const app = express()
 const appWithMiddlewares = await initApp(app, { config, build })

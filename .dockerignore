@@ -15,7 +15,7 @@ yarn-error.log*
 # output
 **/*dist
 **/*build
-**/*public
+**/*public/build
 out/
 .next/
 .cache

@@ -9,6 +9,23 @@
 		"clean": {
 			"cache": false
 		},
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": [
+				"dist/**",
+				".next/**",
+				"public/build/**",
+				"build/**",
+				".cache"
+			],
+			"inputs": [
+				"src/**/*.{tsx,ts}",
+				"!src/**/*.test.{tsx,ts}",
+				"tsconfig.json",
+				"esbuild-tsconfig.json",
+				"scripts/build-server.ts"
+			]
+		},
 		"lint:check": {
 			"outputs": [".eslintcache"],
 			"dependsOn": [],

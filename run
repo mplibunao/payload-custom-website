@@ -38,7 +38,7 @@ END
 }
 
 function ci { ## Runs ci
-  pnpm tsc || return $?
+  pnpm typecheck || return $?
   pnpm lint:check || return $?
   pnpm format:check || return $?
   pnpm test || return $?
@@ -69,25 +69,8 @@ function db:gen:migration { ## Generates new migration file
   pnpm -F db-migrator db:migrate create "$@"
 }
 
-function db:gen:fsq { ## Generates migration for foursquare data
-  pnpm -F api db:gen:fsq "$@"
-}
-
-function api:spec:generate { ## Generates open api spec and validates it
-  pnpm -F api spec:generate
-}
-
-function api:routes { ## Print api routes
-  pnpm -F api print-routes
-}
-
 function web:icons { ## Runs icon pipeline
   pnpm -F web icons
-}
-
-function web:client:generate { ## Generate open api spec and client
-  pnpm -F api spec:generate || return $?
-  pnpm -F web client:generate || return $?
 }
 
 function dc:run { ## Docker: Runs [SERVICE] for one-off commands; Does not use ports specified in the service config preventing port collisions;
@@ -183,6 +166,26 @@ function dc:sh { ## Docker: Launch a shell in specified [SERVICE]
     echo "Launching shell in service $1"
     docker-compose exec $1 sh
   fi
+}
+
+function docker:web:build { ## Docker: Build web. Eg. run docker:web:build mplibunao/web:0.0.1
+  docker build -f ./apps/web/Dockerfile -t "$@" .
+}
+
+function docker:web:run { ## Docker: Run web container. Eg. run docker:web:run mplibunao/web:0.0.1
+  docker run --rm -p 3000:3000 --env-file ./apps/web/.env.docker.example "$@"
+}
+
+function docker:debug:distroless { ## Docker: Debug distroless image
+  docker run --entrypoint sh -it "$@"
+}
+
+function docker:build { ## Docker: Shortcut for docker:web:build. Eg. run docker:build mplibunao/web:0.0.1
+  docker:web:build "$@"
+}
+
+function docker:run { ## Docker: Shortcut for docker:web:build. Eg. run docker:build mplibunao/web:0.0.1
+  docker:web:run "$@"
 }
 
 function help {

@@ -1,24 +1,19 @@
 {
-  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts"],
-  "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolveJsonModule": true,
-    "target": "ES2022",
-    "strict": true,
-    "noImplicitAny": true,
-    "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+	"extends": "tsconfig/remix.json",
+	"compilerOptions": {
+		"importHelpers": true,
+		"jsx": "react-jsx",
+		"baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
-    },
-    "skipLibCheck": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+    }
+	},
+	"include": [
+		"src",
+		"**/*.ts",
+		"**/*.tsx",
+		"scripts/**.ts",
+    "**/*.d.ts"
+	],
+	"exclude": ["node_modules"]
 }

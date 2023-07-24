@@ -11,6 +11,7 @@ import {
 	cloudRunLoggerOptsEnvSchema,
 	type CloudRunLoggerOpts,
 } from './logger/cloudRunLoggerOpts.ts'
+import { remixEnvSchema } from './remix/index.ts'
 
 /*
  *DOTENV + TYPEBOX ENV SCHEMAS = ENV
@@ -44,11 +45,14 @@ export const getEnv = <T>(schema: TObject) => {
  */
 export const baseTypeboxEnvSchema = {
 	...cloudRunLoggerOptsEnvSchema,
+	...remixEnvSchema,
 	NODE_ENV,
 	APP_ENV,
 	PORT,
 	STRIP_TRAILING_SLASH: Type.Boolean({ default: true }),
 	REDIRECT_HTTP_TO_HTTPS: Type.Boolean({ default: false }),
+	PAYLOAD_SECRET: Type.String(),
+	MONGODB_URI: Type.String(),
 }
 
 /*
@@ -71,6 +75,9 @@ export type Config<T extends Env = Env> = {
 		redirectHttpToHttps?: boolean
 	}
 	loggerOpts: CloudRunLoggerOpts
+	remix: {
+		buildPath: string
+	}
 }
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
@@ -92,6 +99,9 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			APP_ENV: env.APP_ENV,
 			LOGGING_LEVEL: env.LOGGING_LEVEL,
 			K_SERVICE: env.K_SERVICE,
+		},
+		remix: {
+			buildPath: env.REMIX_BUILD_PATH,
 		},
 	}
 }
