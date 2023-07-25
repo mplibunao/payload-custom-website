@@ -69,6 +69,10 @@
 		"format:fix": {
 			"outputs": [],
 			"inputs": ["src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}"]
+		},
+		"isEsm": {
+			"inputs": ["package.json"],
+			"outputs": []
 		}
 	}
 }

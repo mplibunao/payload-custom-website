@@ -22,7 +22,8 @@
 		"format:check": "turbo run format:check",
 		"ci": "./run ci",
 		"typecheck": "turbo run typecheck",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"isEsm": "turbo isEsm --parallel"
 	},
 	"devDependencies": {
 		"prettier-config": "workspace:*",
