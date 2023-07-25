@@ -20,10 +20,9 @@ const BUILD_PATH = path
 // we use env for build path because in dev path is `../..` while in prod `..`
 let build = (await import(BUILD_PATH)) as unknown as ServerBuild
 
-const app = express()
-const appWithMiddlewares = await initApp(app, { config, build, BUILD_PATH })
+const app = await initApp(express(), { config, build, BUILD_PATH })
 
-const server = appWithMiddlewares.listen(config.server.port, () => {
+const server = app.listen(config.server.port, () => {
 	console.log(`✅ server started on ${config.server.port}`)
 	if (config.env.NODE_ENV === 'development') {
 		broadcastDevReady(build)
