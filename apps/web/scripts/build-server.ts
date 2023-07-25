@@ -85,19 +85,18 @@ function getExternal() {
 		'kysely',
 		'postgres',
 		'regexparam',
-		'react',
+		'react-dom',
 		'@sinclair/typebox',
 		'@vercel/edge-config',
 
-		// from script
 		'@remix-run/css-bundle',
-		'@remix-run/react',
 		'@remix-run/router',
 		'@remix-run/server-runtime',
 		'class-variance-authority',
 		'confetti-react',
 		'isbot',
 		'tailwind-merge',
+		'remix-utils',
 	]
 
 	// with node apis

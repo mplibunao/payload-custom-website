@@ -20,7 +20,19 @@ export default {
 		v2_routeConvention: true,
 		v2_dev: true,
 	},
-	serverDependenciesToBundle: [],
+	serverDependenciesToBundle: [
+		'@sinclair/typebox',
+		'react-dom',
+		'@remix-run/css-bundle',
+		'@remix-run/router',
+		'@remix-run/server-runtime',
+		'class-variance-authority',
+		'confetti-react',
+		'isbot',
+		'tailwind-merge',
+		'remix-utils',
+	],
+	serverMinify: true,
 	routes: async (defineRoutes) => {
 		return flatRoutes('routes', defineRoutes, {
 			appDir: 'src/app',
