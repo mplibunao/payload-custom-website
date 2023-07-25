@@ -17,7 +17,7 @@ import {
  *											 Default: `prod`
  */
 
-type App = 'prod'
+type App = 'prod' | 'dev'
 type Config = {
 	watch: boolean
 	minify: boolean
@@ -26,11 +26,19 @@ type Config = {
 		ignore: string[]
 	}
 }
-type BuildConfig = Record<App, Config>
 
+type BuildConfig = Record<App, Config>
 const getConfig = (app: App): Config => {
 	const config: BuildConfig = {
 		prod: {
+			watch: false,
+			minify: true,
+			entrypoints: {
+				paths: ['src/server/index.ts'],
+				ignore: [],
+			},
+		},
+		dev: {
 			watch: false,
 			minify: true,
 			entrypoints: {
@@ -45,14 +53,16 @@ const getConfig = (app: App): Config => {
 
 const argv = minimist(process.argv.slice(2))
 const app = (argv.a || argv.app || 'prod') as App
+const watch = (argv.w || argv.watch || false) as boolean
+
 const config = getConfig(app)
 const entryPoints = await globby([
 	...config.entrypoints.paths,
 	...config.entrypoints.ignore,
 ])
 
-esbuild
-	.build({
+try {
+	const context = await esbuild.context({
 		entryPoints,
 		outdir: 'dist',
 		target: ['esnext'],
@@ -70,10 +80,17 @@ esbuild
 		external: getExternal(),
 		plugins: [nativeNodeModulesPlugin, excludeVendorFromSourceMapPlugin],
 	})
-	.catch((error: unknown) => {
-		console.error(error)
-		process.exit(1)
-	})
+
+	if (watch) {
+		await context.watch()
+	} else {
+		await context.rebuild()
+		await context.dispose()
+		process.exit(0)
+	}
+} catch (error) {
+	console.error(error)
+}
 
 function getExternal() {
 	const packageJson = JSON.parse(
@@ -117,7 +134,6 @@ function getExternal() {
 		.filter((deps) => !deps.startsWith('@findmyparking/'))
 		.filter((dep) => !included.includes(dep))
 		.concat(excluded)
-	console.info(external, 'external')
 
 	return external
 }

@@ -43,7 +43,6 @@ ARG WORKSPACE
 ARG PACKAGE
 ENV NODE_ENV=production
 ENV APP_ENV=production
-ENV REMIX_BUILD_PATH=../build/index.js
 COPY --from=installer /app/apps/$PACKAGE/build build
 COPY --from=installer /app/apps/$PACKAGE/public public
 COPY --from=installer /app/apps/$PACKAGE/dist dist

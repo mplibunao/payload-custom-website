@@ -7,7 +7,7 @@ import { type Config } from '../config.ts'
 import { ServerTiming } from '../serverTiming.ts'
 
 export const remixEnvSchema = {
-	REMIX_BUILD_PATH: Type.String({ default: '../../build/index.js' }),
+	REMIX_BUILD_PATH: Type.String({ default: '../build/index.js' }),
 }
 
 export function createRemixRequestHandler(
