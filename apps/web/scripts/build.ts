@@ -134,6 +134,7 @@ function getExternal() {
 		.filter((deps) => !deps.startsWith('@findmyparking/'))
 		.filter((dep) => !included.includes(dep))
 		.concat(excluded)
+	console.info(external, 'external')
 
 	return external
 }

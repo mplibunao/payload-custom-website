@@ -8,6 +8,11 @@ import {
 } from '~/shared/schemas/index.ts'
 
 import {
+	type OverloadProtectionOpts,
+	getOverloadProtectionOpts,
+	overloadProtectionEnvSchema,
+} from '../middleware/overloadProtection.ts'
+import {
 	cloudRunLoggerOptsEnvSchema,
 	type CloudRunLoggerOpts,
 } from './logger/cloudRunLoggerOpts.ts'
@@ -46,6 +51,7 @@ export const getEnv = <T>(schema: TObject) => {
 export const baseTypeboxEnvSchema = {
 	...cloudRunLoggerOptsEnvSchema,
 	...remixEnvSchema,
+	...overloadProtectionEnvSchema,
 	NODE_ENV,
 	APP_ENV,
 	PORT,
@@ -78,7 +84,12 @@ export type Config<T extends Env = Env> = {
 	remix: {
 		buildPath: string
 	}
-}
+	payload: {
+		secret: string
+		mongoURL: string
+		local: boolean
+	}
+} & OverloadProtectionOpts
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 	return {
@@ -96,12 +107,18 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 		loggerOpts: {
 			APP_NAME: env.APP_NAME,
 			APP_VERSION: env.APP_VERSION,
-			APP_ENV: env.APP_ENV,
+			NODE_ENV: env.NODE_ENV,
 			LOGGING_LEVEL: env.LOGGING_LEVEL,
 			K_SERVICE: env.K_SERVICE,
 		},
 		remix: {
 			buildPath: env.REMIX_BUILD_PATH,
+		},
+		overloadProtection: getOverloadProtectionOpts(env),
+		payload: {
+			secret: env.PAYLOAD_SECRET,
+			mongoURL: env.MONGODB_URI,
+			local: true,
 		},
 	}
 }

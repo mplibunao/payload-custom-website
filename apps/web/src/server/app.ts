@@ -2,13 +2,21 @@ import { type ServerBuild } from '@remix-run/node'
 import compression from 'compression'
 import express, { type Express, type Response } from 'express'
 import helmet from 'helmet'
+import pino from 'pino'
+import pinoHttp from 'pino-http'
 
+import { type DependencyOverrides, registerDependencies } from './container.ts'
+import { registerLogger } from './container/registerLogger.ts'
 import { type Config } from './infra/config.ts'
+import { getCloudRunLoggerConfig } from './infra/logger/cloudRunLoggerOpts.ts'
+import { initPayloadCms } from './infra/payload/index.ts'
 import {
 	createDevRequestHandler,
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
 import { generateNonce } from './middleware/generateNonce.ts'
+import { lazyLoadMiddlewares } from './middleware/lazyLoad.ts'
+import { healthCheck } from './routes/healthcheck.ts'
 
 // eslint-disable-next-line max-statements
 export const initApp = async (
@@ -16,30 +24,31 @@ export const initApp = async (
 	{
 		config,
 		build,
-		BUILD_PATH,
-	}: { config: Config; build: ServerBuild; BUILD_PATH: string },
+		buildPath,
+		dependencyOverrides = {},
+	}: {
+		config: Config
+		build: ServerBuild
+		buildPath: string
+		dependencyOverrides?: DependencyOverrides
+	},
 ) => {
+	const logger = pino(getCloudRunLoggerConfig(config.loggerOpts))
+
+	// separate logger DI from the rest of DI since it's required for overload protection and since we want overload to go first as much as possible
+	registerLogger({ app, logger, config }, dependencyOverrides)
+	app.use(pinoHttp({ logger: app.locals.logger }))
+
+	// always put this first so it always runs first (to take off further pressure)
+	app.use(config.overloadProtection)
+
+	//const _payload = await initPayloadCms(app, config)
+
+	await lazyLoadMiddlewares(app, config)
+
 	// trust all proxies in front of express
 	// lets cookies / sessions work
 	app.set('trust proxy', true)
-
-	const lazyMiddlewareQuery = []
-
-	if (config.server.redirectHttpToHttps) {
-		const middleware = import('./middleware/httpsOnly.ts')
-		lazyMiddlewareQuery.push(middleware)
-	}
-
-	if (config.server.stripTraillingSlash) {
-		const middleware = import('./middleware/stripTrailingSlashes.ts')
-		lazyMiddlewareQuery.push(middleware)
-	}
-
-	// avoid waterfall by using Promise.all()
-	const importedMiddlewares = await Promise.all(lazyMiddlewareQuery)
-	for (let importedMiddleware of importedMiddlewares) {
-		app.use(importedMiddleware.middleware)
-	}
 
 	app.use(compression())
 	// http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
@@ -90,12 +99,14 @@ export const initApp = async (
 		}),
 	)
 
+	app.get('/health', healthCheck)
+
 	app.all(
 		'*',
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
 		config.env.NODE_ENV === 'development'
-			? await createDevRequestHandler(build, config, BUILD_PATH)
-			: createRemixRequestHandler(build, config),
+			? await createDevRequestHandler({ build, config, buildPath, app })
+			: createRemixRequestHandler({ build, config, app }),
 	)
 
 	return app

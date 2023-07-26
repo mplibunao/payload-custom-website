@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { type Static, Type } from '@sinclair/typebox'
 import { type LoggerOptions } from 'pino'
-import { APP_ENV } from '~/shared/schemas/index.ts'
+import { NODE_ENV } from '~/shared/schemas'
 
 export const cloudRunLoggerOptsEnvSchema = {
 	APP_NAME: Type.String(),
@@ -18,7 +18,7 @@ export const cloudRunLoggerOptsEnvSchema = {
 		],
 		{ default: 'info' },
 	),
-	APP_ENV,
+	NODE_ENV,
 }
 
 const loggerOptsSchema = Type.Object(cloudRunLoggerOptsEnvSchema)
@@ -50,6 +50,7 @@ export const getCloudRunLoggerConfig = (
 		}
 
 		return {
+			name: opts.APP_NAME,
 			level: 'info',
 			messageKey: 'message',
 			timestamp: () => `,"timestamp":"${new Date().toISOString()}"`,
@@ -108,13 +109,15 @@ export const getCloudRunLoggerConfig = (
 		}
 	}
 
-	if (opts.APP_ENV === 'production') {
+	if (opts.NODE_ENV === 'production') {
 		return {
+			name: opts.APP_NAME,
 			level: opts.LOGGING_LEVEL,
 		}
 	}
 
 	return {
+		name: opts.APP_NAME,
 		level: opts.LOGGING_LEVEL,
 		transport: {
 			target: 'pino-pretty',
