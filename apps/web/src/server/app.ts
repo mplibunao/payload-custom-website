@@ -5,7 +5,7 @@ import helmet from 'helmet'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 
-import { type DependencyOverrides, registerDependencies } from './container.ts'
+import { type DependencyOverrides } from './container'
 import { registerLogger } from './container/registerLogger.ts'
 import { type Config } from './infra/config.ts'
 import { getCloudRunLoggerConfig } from './infra/logger/cloudRunLoggerOpts.ts'
@@ -42,7 +42,7 @@ export const initApp = async (
 	// always put this first so it always runs first (to take off further pressure)
 	app.use(config.overloadProtection)
 
-	//const _payload = await initPayloadCms(app, config)
+	await initPayloadCms(app, config)
 
 	await lazyLoadMiddlewares(app, config)
 

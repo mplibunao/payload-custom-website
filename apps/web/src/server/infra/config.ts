@@ -16,6 +16,7 @@ import {
 	cloudRunLoggerOptsEnvSchema,
 	type CloudRunLoggerOpts,
 } from './logger/cloudRunLoggerOpts.ts'
+import { payloadEnvSchema } from './payload/index.ts'
 import { remixEnvSchema } from './remix/index.ts'
 
 /*
@@ -52,13 +53,12 @@ export const baseTypeboxEnvSchema = {
 	...cloudRunLoggerOptsEnvSchema,
 	...remixEnvSchema,
 	...overloadProtectionEnvSchema,
+	...payloadEnvSchema,
 	NODE_ENV,
 	APP_ENV,
 	PORT,
 	STRIP_TRAILING_SLASH: Type.Boolean({ default: true }),
 	REDIRECT_HTTP_TO_HTTPS: Type.Boolean({ default: false }),
-	PAYLOAD_SECRET: Type.String(),
-	MONGODB_URI: Type.String(),
 }
 
 /*
@@ -118,7 +118,7 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 		payload: {
 			secret: env.PAYLOAD_SECRET,
 			mongoURL: env.MONGODB_URI,
-			local: true,
+			local: false,
 		},
 	}
 }
