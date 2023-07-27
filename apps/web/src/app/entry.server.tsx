@@ -4,8 +4,6 @@ import isbot from 'isbot'
 import { PassThrough } from 'node:stream'
 import { renderToPipeableStream } from 'react-dom/server'
 
-import { NonceProvider } from './utils/nonce-provider.ts'
-
 const ABORT_DELAY = 5000
 
 // eslint-disable-next-line max-params
@@ -20,14 +18,11 @@ export default async function handleRequest(
 		? 'onAllReady'
 		: 'onShellReady'
 
-	const nonce = loadContext.cspNonce
 	return new Promise((resolve, reject) => {
 		let didError = false
 
 		const { pipe, abort } = renderToPipeableStream(
-			<NonceProvider value={nonce}>
-				<RemixServer context={remixContext} url={request.url} />
-			</NonceProvider>,
+			<RemixServer context={remixContext} url={request.url} />,
 			{
 				[callbackName]: () => {
 					const body = new PassThrough()

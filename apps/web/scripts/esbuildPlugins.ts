@@ -1,6 +1,9 @@
 import { type Plugin } from 'esbuild'
 import fs from 'fs'
+import { createRequire as topLevelCreateRequire } from 'module'
 import path from 'path'
+
+const require = topLevelCreateRequire(import.meta.url)
 
 // https://github.com/evanw/esbuild/issues/1685
 // exclude js files from node_modules from sourcemap

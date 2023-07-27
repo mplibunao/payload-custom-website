@@ -1,12 +1,12 @@
-const { flatRoutes } = require('remix-flat-routes')
+import { flatRoutes } from 'remix-flat-routes'
 
 /**
  * @type {import('@remix-run/dev').AppConfig}
  */
-module.exports = {
+export default {
 	appDirectory: 'src/app',
 	ignoredRouteFiles: ['**/*'],
-	serverModuleFormat: 'cjs',
+	serverModuleFormat: 'esm',
 	serverPlatform: 'node',
 	tailwind: true,
 	postcss: true,
@@ -21,16 +21,16 @@ module.exports = {
 		v2_dev: true,
 	},
 	serverDependenciesToBundle: [
-		'@sinclair/typebox',
-		'react-dom',
-		'@remix-run/css-bundle',
-		'@remix-run/router',
-		'@remix-run/server-runtime',
-		'class-variance-authority',
-		'confetti-react',
-		'isbot',
-		'tailwind-merge',
-		'remix-utils',
+		//'@sinclair/typebox',
+		//'react-dom',
+		//'@remix-run/css-bundle',
+		//'@remix-run/router',
+		//'@remix-run/server-runtime',
+		//'class-variance-authority',
+		//'confetti-react',
+		//'isbot',
+		//'tailwind-merge',
+		//'remix-utils',
 	],
 	serverMinify: true,
 	routes: async (defineRoutes) => {

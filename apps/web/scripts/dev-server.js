@@ -42,6 +42,6 @@ const runBundledServer = async () => {
 
 // Get as close to production as possible
 // Not sure but `Starting inspector on 127.0.0.1:9229 failed: address already in use` might be because we're running 2 commands. Don't notice anything wrong though
-//await Promise.all([buildServer(), runBundledServer()])
+await Promise.all([buildServer(), runBundledServer()])
 
-await runServer()
+//await runServer()

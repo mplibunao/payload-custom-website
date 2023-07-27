@@ -1,8 +1,9 @@
 import path from 'path'
-import { buildConfig } from 'payload/config.js'
+import { buildConfig } from 'payload/config'
 
 import FormSubmission from './src/cms/collections/FormSubmission'
-import { getDirname } from './src/shared/esm.ts'
+
+//import { getDirname } from './src/shared/esm.ts'
 
 // By default, Payload will boot up normally
 // and you will be provided with a base `User` collection.
@@ -11,12 +12,16 @@ export default buildConfig({
 	serverURL: 'http://localhost:3000',
 	collections: [FormSubmission],
 	typescript: {
-		outputFile: path.resolve(path.resolve(__dirname), 'src/cms/payload-types'),
+		outputFile: path.resolve(
+			//getDirname(import.meta.url),
+			'./src/cms/payload-types.ts',
+		),
 	},
 	graphQL: {
 		schemaOutputFile: path.resolve(
-			path.resolve(__dirname),
-			'src/cms/generated-schema.graphql',
+			//getDirname(import.meta.url),
+			'./src/cms/generated-schema.graphql',
 		),
 	},
+	telemetry: false,
 })

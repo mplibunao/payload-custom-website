@@ -1,5 +1,5 @@
 {
-	"extends": "tsconfig/remix-cjs.json",
+	"extends": "tsconfig/remix.json",
 	"compilerOptions": {
 		"importHelpers": true,
 		"baseUrl": ".",

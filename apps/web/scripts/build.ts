@@ -15,6 +15,8 @@ import {
  *	-a  --app <app-type> App type to build. For entrypoint configuration so we don't have to pass everything as node args
  *											 Options: `prod`
  *											 Default: `prod`
+ *  -w  --watch          Start in watch mode
+ *                       Default: false
  */
 
 type App = 'prod' | 'dev'
@@ -110,7 +112,6 @@ function getExternal() {
 		'@remix-run/router',
 		'@remix-run/server-runtime',
 		'class-variance-authority',
-		'confetti-react',
 		'isbot',
 		'tailwind-merge',
 		'remix-utils',
@@ -130,7 +131,11 @@ function getExternal() {
 		'preview-email',
 	]
 
-	const external = [...Object.keys(packageJson.dependencies)]
+	const external = [
+		...Object.keys(packageJson.dependencies),
+		// include devdependencies since dynamically importing dev-dependencies in code forces esbuild to create a chunk for that dev-dependency instead of pulling from node_modules
+		...Object.keys(packageJson.devDependencies),
+	]
 		.filter((deps) => !deps.startsWith('@findmyparking/'))
 		.filter((dep) => !included.includes(dep))
 		.concat(excluded)

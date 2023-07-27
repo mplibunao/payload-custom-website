@@ -2,54 +2,56 @@ import { type ServerBuild, broadcastDevReady } from '@remix-run/node'
 import closeWithGrace, { type Signals } from 'close-with-grace'
 import express from 'express'
 import path from 'path'
+import { getDirname } from '~/shared/esm'
 
 import { initApp } from './app'
 import { config } from './infra/config'
 
-void start()
+const dirname = getDirname(import.meta.url)
+// use absolute path so we can just pass the build path and use it anywhere without breaking hmr due to relative paths
+const buildPath = path.join(dirname, config.remix.buildPath).replace(/\\/g, '/')
 
-async function start() {
-	// use absolute path so we can just pass the build path and use it anywhere without breaking hmr due to relative paths
-	const buildPath = path
-		.join(__dirname, config.remix.buildPath)
-		.replace(/\\/g, '/')
-	let build = require(buildPath) as unknown as ServerBuild
+// this file may not exist if you haven't built yet, but it will
+// definitely exist by the time the dev or prod server actually runs.
+// since we are bundling express code, we don't want to bundle build/** together with it since remix already handles that for us (and since it breaks)
+// therefore use run-time imports. See https://esbuild.github.io/api/#non-analyzable-imports
+// we use env for build path because in dev path is `../..` while in prod `..`
+let build = (await import(buildPath)) as unknown as ServerBuild
 
-	const app = await initApp(express(), { config, build, buildPath })
+const app = await initApp(express(), { config, build, buildPath })
 
-	const server = app.listen(config.server.port, () => {
-		//console.log(`server started on ${config.server.port}`)
-		app.locals.logger.info(`server started on ${config.server.port}`)
-		if (config.env.NODE_ENV === 'development') {
-			broadcastDevReady(build)
+const server = app.listen(config.server.port, () => {
+	//console.log(`server started on ${config.server.port}`)
+	app.locals.logger.info(`server started on ${config.server.port}`)
+	if (config.env.NODE_ENV === 'development') {
+		broadcastDevReady(build)
+	}
+})
+
+// delay is the number of milliseconds for the graceful close to finish
+const delay = config.app.APP_ENV === 'production' ? 5000 : 0
+const closeListeners = closeWithGrace(
+	{ delay },
+	async ({
+		err,
+		signal,
+		manual,
+	}: {
+		err?: Error
+		signal?: Signals
+		manual?: boolean
+	}) => {
+		if (err) {
+			app.locals.logger.error(err)
 		}
-	})
 
-	// delay is the number of milliseconds for the graceful close to finish
-	const delay = config.app.APP_ENV === 'production' ? 5000 : 0
-	const closeListeners = closeWithGrace(
-		{ delay },
-		async ({
-			err,
-			signal,
-			manual,
-		}: {
-			err?: Error
-			signal?: Signals
-			manual?: boolean
-		}) => {
-			if (err) {
-				app.locals.logger.error(err)
-			}
+		app.locals.logger.info({ signal, manual }, 'closing application')
 
-			app.locals.logger.info({ signal, manual }, 'closing application')
-
-			await new Promise((resolve, reject) => {
-				server.close((e) => {
-					closeListeners.uninstall()
-					return e ? reject(e) : resolve('ok')
-				})
+		await new Promise((resolve, reject) => {
+			server.close((e) => {
+				closeListeners.uninstall()
+				return e ? reject(e) : resolve('ok')
 			})
-		},
-	)
-}
+		})
+	},
+)
