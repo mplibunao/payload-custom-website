@@ -6,6 +6,7 @@
 		"base.json",
 		"remix.json",
 		"esbuild-server.json",
-		"react-library.json"
+		"react-library.json",
+		"remix-cjs.json"
 	]
 }

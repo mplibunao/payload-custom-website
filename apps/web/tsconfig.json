@@ -1,8 +1,7 @@
 {
-	"extends": "tsconfig/remix.json",
+	"extends": "tsconfig/remix-cjs.json",
 	"compilerOptions": {
 		"importHelpers": true,
-		"jsx": "react-jsx",
 		"baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]

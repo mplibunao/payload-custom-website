@@ -11,14 +11,11 @@ export default buildConfig({
 	serverURL: 'http://localhost:3000',
 	collections: [FormSubmission],
 	typescript: {
-		outputFile: path.resolve(
-			getDirname(import.meta.url),
-			'src/cms/payload-types.ts',
-		),
+		outputFile: path.resolve(path.resolve(__dirname), 'src/cms/payload-types'),
 	},
 	graphQL: {
 		schemaOutputFile: path.resolve(
-			getDirname(import.meta.url),
+			path.resolve(__dirname),
 			'src/cms/generated-schema.graphql',
 		),
 	},
