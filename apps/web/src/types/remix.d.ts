@@ -4,7 +4,6 @@ import { type Logger } from 'pino'
 import { type ServerTiming } from '~/server/infra/serverTiming.ts'
 
 interface Context {
-	cspNonce: string
 	serverTiming: ServerTiming
 	logger: Logger
 }

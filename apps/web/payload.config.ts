@@ -2,7 +2,6 @@ import path from 'path'
 import { buildConfig } from 'payload/config.js'
 
 import FormSubmission from './src/cms/collections/FormSubmission'
-import { getDirname } from './src/shared/esm.ts'
 
 // By default, Payload will boot up normally
 // and you will be provided with a base `User` collection.

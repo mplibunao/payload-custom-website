@@ -17,6 +17,7 @@ import {
  *											 Default: `prod`
  */
 
+const ESM = false
 type App = 'prod' | 'dev'
 type Config = {
 	watch: boolean
@@ -32,7 +33,7 @@ const getConfig = (app: App): Config => {
 	const config: BuildConfig = {
 		prod: {
 			watch: false,
-			minify: true,
+			minify: false,
 			entrypoints: {
 				paths: ['src/server/index.ts'],
 				ignore: [],
@@ -51,45 +52,49 @@ const getConfig = (app: App): Config => {
 	return config[app]
 }
 
-const argv = minimist(process.argv.slice(2))
-const app = (argv.a || argv.app || 'prod') as App
-const watch = (argv.w || argv.watch || false) as boolean
+void build()
 
-const config = getConfig(app)
-const entryPoints = await globby([
-	...config.entrypoints.paths,
-	...config.entrypoints.ignore,
-])
+async function build() {
+	const argv = minimist(process.argv.slice(2))
+	const app = (argv.a || argv.app || 'prod') as App
+	const watch = (argv.w || argv.watch || false) as boolean
 
-try {
-	const context = await esbuild.context({
-		entryPoints,
-		outdir: 'dist',
-		target: ['esnext'],
-		platform: 'node',
-		sourcemap: true,
-		format: 'esm',
-		logLevel: 'info',
-		minify: config.minify,
-		splitting: true,
-		bundle: true,
-		color: true,
-		metafile: true,
-		sourcesContent: false,
-		treeShaking: true,
-		external: getExternal(),
-		plugins: [nativeNodeModulesPlugin, excludeVendorFromSourceMapPlugin],
-	})
+	const config = getConfig(app)
+	const entryPoints = await globby([
+		...config.entrypoints.paths,
+		...config.entrypoints.ignore,
+	])
 
-	if (watch) {
-		await context.watch()
-	} else {
-		await context.rebuild()
-		await context.dispose()
-		process.exit(0)
+	try {
+		const context = await esbuild.context({
+			entryPoints,
+			outdir: 'dist',
+			target: ['esnext'],
+			platform: 'node',
+			sourcemap: true,
+			format: ESM ? 'esm' : 'cjs',
+			logLevel: 'info',
+			minify: config.minify,
+			splitting: ESM ? true : false,
+			bundle: true,
+			color: true,
+			metafile: true,
+			sourcesContent: false,
+			treeShaking: true,
+			external: getExternal(),
+			plugins: [nativeNodeModulesPlugin, excludeVendorFromSourceMapPlugin],
+		})
+
+		if (watch) {
+			await context.watch()
+		} else {
+			await context.rebuild()
+			await context.dispose()
+			process.exit(0)
+		}
+	} catch (error) {
+		console.error(error)
 	}
-} catch (error) {
-	console.error(error)
 }
 
 function getExternal() {
@@ -98,23 +103,24 @@ function getExternal() {
 	) as PackageJson
 
 	// no node apis; safe to bundle
-	const included = [
-		'kysely',
-		'postgres',
-		'regexparam',
-		'react-dom',
-		'@sinclair/typebox',
-		'@vercel/edge-config',
+	const included = ESM
+		? [
+				'kysely',
+				'postgres',
+				'regexparam',
+				'react-dom',
+				'@sinclair/typebox',
+				'@vercel/edge-config',
 
-		'@remix-run/css-bundle',
-		'@remix-run/router',
-		'@remix-run/server-runtime',
-		'class-variance-authority',
-		'confetti-react',
-		'isbot',
-		'tailwind-merge',
-		'remix-utils',
-	]
+				'@remix-run/css-bundle',
+				'@remix-run/router',
+				'@remix-run/server-runtime',
+				'class-variance-authority',
+				'isbot',
+				'tailwind-merge',
+				'remix-utils',
+		  ]
+		: []
 
 	// with node apis
 	const excluded = [
@@ -130,11 +136,15 @@ function getExternal() {
 		'preview-email',
 	]
 
-	const external = [...Object.keys(packageJson.dependencies)]
+	const external = [
+		...Object.keys(packageJson.dependencies),
+		// include devdependencies since dynamically importing dev-dependencies in code forces esbuild to create a chunk for that dev-dependency instead of pulling from node_modules
+		...Object.keys(packageJson.devDependencies),
+	]
 		.filter((deps) => !deps.startsWith('@findmyparking/'))
 		.filter((dep) => !included.includes(dep))
 		.concat(excluded)
-	console.info(external, 'external')
+	//console.info(external, 'external')
 
 	return external
 }

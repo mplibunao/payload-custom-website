@@ -14,7 +14,6 @@ import {
 	createDevRequestHandler,
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
-import { generateNonce } from './middleware/generateNonce.ts'
 import { lazyLoadMiddlewares } from './middleware/lazyLoad.ts'
 import { healthCheck } from './routes/healthcheck.ts'
 
@@ -42,9 +41,8 @@ export const initApp = async (
 	// always put this first so it always runs first (to take off further pressure)
 	app.use(config.overloadProtection)
 
-	await initPayloadCms(app, config)
-
 	await lazyLoadMiddlewares(app, config)
+	await initPayloadCms(app, config)
 
 	// trust all proxies in front of express
 	// lets cookies / sessions work
@@ -69,8 +67,6 @@ export const initApp = async (
 	// Everything else (like favicon.ico) is cached for an hour. You may want to be
 	// more aggressive with this caching.
 	app.use(express.static('public', { maxAge: '1h' }))
-	app.use(generateNonce)
-
 	app.use(
 		helmet({
 			crossOriginEmbedderPolicy: false,
@@ -85,14 +81,7 @@ export const initApp = async (
 					'font-src': ["'self'"],
 					'frame-src': ["'self'"],
 					'img-src': ["'self'", 'data:'],
-					'script-src': [
-						"'strict-dynamic'",
-						"'self'",
-						(_, res) => `'nonce-${(res as Response).locals.cspNonce}'`,
-					],
-					'script-src-attr': [
-						(_, res) => `'nonce-${(res as Response).locals.cspNonce}'`,
-					],
+					'script-src': ["'self'"],
 					'upgrade-insecure-requests': null,
 				},
 			},
