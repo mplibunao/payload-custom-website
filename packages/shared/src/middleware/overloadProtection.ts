@@ -1,20 +1,24 @@
-import { Type } from '@sinclair/typebox'
+import { type Static, Type } from '@sinclair/typebox'
 import v8 from 'node:v8'
 import overload, { type HttpProtectionInstance } from 'overload-protection'
-
-import { type Env } from '../infra/config'
+import { NODE_ENV } from 'src/schemas/index.ts'
 
 export const overloadProtectionEnvSchema = {
 	HEALTHCHECK_MAX_EVENT_LOOP_DELAY: Type.Optional(
 		Type.Number({ default: 200 }),
 	),
+	NODE_ENV,
 }
+
+const OverloadProtectionSchema = Type.Object(overloadProtectionEnvSchema)
 
 export type OverloadProtectionOpts = {
 	overloadProtection: HttpProtectionInstance
 }
 
-export const getOverloadProtectionOpts = (env: Env) => {
+type Options = Static<typeof OverloadProtectionSchema>
+
+export const getOverloadProtectionOpts = (env: Options) => {
 	const v8HeapStats = v8.getHeapStatistics()
 
 	return overload('express', {

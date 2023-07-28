@@ -1,12 +1,12 @@
 import esbuild from 'esbuild'
 import fs from 'fs'
-import { globby } from 'globby'
+import { glob } from 'glob'
 import minimist from 'minimist'
 
 import {
 	excludeVendorFromSourceMapPlugin,
 	nativeNodeModulesPlugin,
-} from './esbuildPlugins'
+} from './esbuildPlugins.ts'
 
 /*
  *Usage: node ./esbuild.script.js --app prod
@@ -58,7 +58,7 @@ const app = (argv.a || argv.app || 'prod') as App
 const watch = (argv.w || argv.watch || false) as boolean
 
 const config = getConfig(app)
-const entryPoints = await globby([
+const entryPoints = await glob([
 	...config.entrypoints.paths,
 	...config.entrypoints.ignore,
 ])
@@ -136,7 +136,7 @@ function getExternal() {
 		// include devdependencies since dynamically importing dev-dependencies in code forces esbuild to create a chunk for that dev-dependency instead of pulling from node_modules
 		...Object.keys(packageJson.devDependencies),
 	]
-		.filter((deps) => !deps.startsWith('@findmyparking/'))
+		.filter((deps) => !deps.startsWith('@org/'))
 		.filter((dep) => !included.includes(dep))
 		.concat(excluded)
 	console.info(external, 'external')

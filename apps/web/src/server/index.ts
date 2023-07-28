@@ -1,15 +1,16 @@
 import { type ServerBuild, broadcastDevReady } from '@remix-run/node'
 import closeWithGrace, { type Signals } from 'close-with-grace'
+import { join } from 'desm'
 import express from 'express'
-import path from 'path'
-import { getDirname } from '~/shared/esm'
 
-import { initApp } from './app'
-import { config } from './infra/config'
+import { initApp } from './app.ts'
+import { config } from './infra/config.ts'
 
-const dirname = getDirname(import.meta.url)
 // use absolute path so we can just pass the build path and use it anywhere without breaking hmr due to relative paths
-const buildPath = path.join(dirname, config.remix.buildPath).replace(/\\/g, '/')
+const buildPath = join(import.meta.url, config.remix.buildPath).replace(
+	/\\/g,
+	'/',
+)
 
 // this file may not exist if you haven't built yet, but it will
 // definitely exist by the time the dev or prod server actually runs.
@@ -21,7 +22,6 @@ let build = (await import(buildPath)) as unknown as ServerBuild
 const app = await initApp(express(), { config, build, buildPath })
 
 const server = app.listen(config.server.port, () => {
-	//console.log(`server started on ${config.server.port}`)
 	app.locals.logger.info(`server started on ${config.server.port}`)
 	if (config.env.NODE_ENV === 'development') {
 		broadcastDevReady(build)

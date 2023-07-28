@@ -1,0 +1,97 @@
+{
+  "name": "@org/shared",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf .turbo node_modules",
+    "dev": "tsup --watch",
+    "format:fix": "prettier --ignore-path ../../.prettierignore --write 'src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}'",
+    "format:check": "prettier --ignore-path ../../.prettierignore --list-different 'src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}'",
+    "lint:check": "TIMING=1 eslint --max-warnings=0 --color --cache --cache-location .eslintcache --ignore-path ../../.eslintignore ./src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "TIMING=1 eslint --max-warnings=0 --color --cache --cache-location .eslintcache --ignore-path ../../.eslintignore ./src --ext .js,.jsx,.ts,.tsx --fix",
+    "typecheck": "tsc"
+  },
+  "devDependencies": {
+    "@total-typescript/ts-reset": "^0.4.2",
+    "@types/express": "^4.17.17",
+    "@types/express-serve-static-core": "^4.17.35",
+    "@types/node": "^20.1.4",
+    "esbuild": "^0.17.19",
+    "eslint": "^8.44.0",
+    "eslint-config-custom": "workspace:*",
+    "express": "^4.18.2",
+    "glob": "10.3.3",
+    "pino": "8.14.2",
+    "prettier": "^2.8.7",
+    "prettier-config": "workspace:*",
+    "tsconfig": "workspace:*",
+    "tsup": "7.1.0"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.28.14",
+    "@types/overload-protection": "1.2.1",
+    "env-schema": "^5.2.0",
+    "overload-protection": "1.2.3"
+  },
+  "prettier": "prettier-config",
+  "exports": {
+    "./package.json": "./package.json",
+    "./middleware/*": "./src/middleware/*.ts",
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js",
+      "require": "./dist/config.cjs",
+      "default": "./src/config.ts"
+    },
+    "./types/typeUtils": {
+      "types": "./dist/types/typeUtils.d.ts",
+      "import": "./dist/types/typeUtils.js",
+      "require": "./dist/types/typeUtils.cjs",
+      "default": "./src/types/typeUtils.ts"
+    },
+    "./schemas/index": {
+      "types": "./dist/schemas/index.d.ts",
+      "import": "./dist/schemas/index.js",
+      "require": "./dist/schemas/index.cjs",
+      "default": "./src/schemas/index.ts"
+    },
+    "./middleware/stripTrailingSlashes": {
+      "types": "./dist/middleware/stripTrailingSlashes.d.ts",
+      "import": "./dist/middleware/stripTrailingSlashes.js",
+      "require": "./dist/middleware/stripTrailingSlashes.cjs",
+      "default": "./src/middleware/stripTrailingSlashes.ts"
+    },
+    "./middleware/overloadProtection": {
+      "types": "./dist/middleware/overloadProtection.d.ts",
+      "import": "./dist/middleware/overloadProtection.js",
+      "require": "./dist/middleware/overloadProtection.cjs",
+      "default": "./src/middleware/overloadProtection.ts"
+    },
+    "./middleware/lazyLoad": {
+      "types": "./dist/middleware/lazyLoad.d.ts",
+      "import": "./dist/middleware/lazyLoad.js",
+      "require": "./dist/middleware/lazyLoad.cjs",
+      "default": "./src/middleware/lazyLoad.ts"
+    },
+    "./middleware/httpsOnly": {
+      "types": "./dist/middleware/httpsOnly.d.ts",
+      "import": "./dist/middleware/httpsOnly.js",
+      "require": "./dist/middleware/httpsOnly.cjs",
+      "default": "./src/middleware/httpsOnly.ts"
+    },
+    "./middleware/healthcheck": {
+      "types": "./dist/middleware/healthcheck.d.ts",
+      "import": "./dist/middleware/healthcheck.js",
+      "require": "./dist/middleware/healthcheck.cjs",
+      "default": "./src/middleware/healthcheck.ts"
+    },
+    "./logger/cloudRunLoggerOpts": {
+      "types": "./dist/logger/cloudRunLoggerOpts.d.ts",
+      "import": "./dist/logger/cloudRunLoggerOpts.js",
+      "require": "./dist/logger/cloudRunLoggerOpts.cjs",
+      "default": "./src/logger/cloudRunLoggerOpts.ts"
+    }
+  }
+}

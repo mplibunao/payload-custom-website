@@ -1,6 +1,5 @@
-import { type Logger } from 'pino'
-
 import {
+	type Logger,
 	type AppDependencies,
 	type DependencyOverrides,
 } from '../container/index.ts'

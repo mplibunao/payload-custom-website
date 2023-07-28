@@ -1,7 +1,6 @@
-import path from 'path'
 import { buildConfig } from 'payload/config'
-
-import FormSubmission from './src/cms/collections/FormSubmission'
+import FormSubmission from '~/collections/FormSubmission'
+import { config } from '~/infra/config'
 
 // By default, Payload will boot up normally
 // and you will be provided with a base `User` collection.
@@ -10,10 +9,14 @@ export default buildConfig({
 	serverURL: 'http://localhost:3000',
 	collections: [FormSubmission],
 	typescript: {
-		outputFile: path.resolve('./src/cms/payload-types.ts'),
+		outputFile: './src/payload-types.ts',
 	},
 	graphQL: {
-		schemaOutputFile: path.resolve('./src/cms/generated-schema.graphql'),
+		schemaOutputFile: './src/generated-schema.graphql',
+		disable: true,
 	},
 	telemetry: false,
+	express: {
+		preMiddleware: [config.overloadProtection],
+	},
 })

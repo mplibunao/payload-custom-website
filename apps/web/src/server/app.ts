@@ -1,20 +1,20 @@
+import { initPayloadCms } from '@org/cms/infra/payload'
+import { getCloudRunLoggerConfig } from '@org/shared/logger/cloudRunLoggerOpts'
+import { healthCheck } from '@org/shared/middleware/healthcheck'
+import { lazyLoadMiddlewares } from '@org/shared/middleware/lazyLoad'
 import { type ServerBuild } from '@remix-run/node'
 import compression from 'compression'
 import express, { type Express } from 'express'
-import pino from 'pino'
-import pinoHttp from 'pino-http'
+import { pino } from 'pino'
+import { pinoHttp } from 'pino-http'
 
-import { type DependencyOverrides } from './container'
+import { type DependencyOverrides } from './container/index.ts'
 import { registerLogger } from './container/registerLogger.ts'
 import { type Config } from './infra/config.ts'
-import { getCloudRunLoggerConfig } from './infra/logger/cloudRunLoggerOpts.ts'
-import { initPayloadCms } from './infra/payload/index.ts'
 import {
 	createDevRequestHandler,
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
-import { lazyLoadMiddlewares } from './middleware/lazyLoad.ts'
-import { healthCheck } from './routes/healthcheck.ts'
 
 export const initApp = async (
 	app: Express,
@@ -66,7 +66,7 @@ export const initApp = async (
 	// more aggressive with this caching.
 	app.use(express.static('public', { maxAge: '1h' }))
 
-	app.get('/health', healthCheck)
+	app.get('/health', healthCheck(app.locals.logger, config))
 
 	app.all(
 		'*',

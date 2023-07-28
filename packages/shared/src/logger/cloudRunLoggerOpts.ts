@@ -1,7 +1,7 @@
-/* eslint-disable */
 import { type Static, Type } from '@sinclair/typebox'
 import { type LoggerOptions } from 'pino'
-import { NODE_ENV } from '~/shared/schemas'
+
+import { NODE_ENV } from '../schemas/index.ts'
 
 export const cloudRunLoggerOptsEnvSchema = {
 	APP_NAME: Type.String(),

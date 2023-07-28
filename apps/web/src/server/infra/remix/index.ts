@@ -19,7 +19,7 @@ export function createRemixRequestHandler({
 	config: Config
 	app: Express
 }): RequestHandler {
-	function getLoadContext(_: Request, res: Response) {
+	function getLoadContext(_: Request, _res: Response) {
 		return {
 			serverTiming: new ServerTiming(),
 			logger: app.locals.logger,

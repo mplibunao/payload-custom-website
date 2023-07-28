@@ -1,0 +1,21 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "shared package",
+	"extends": "./base.json",
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"lib": ["esnext"],
+		"useDefineForClassFields": true,
+		"sourceMap": true,
+		"emitDecoratorMetadata": false,
+		"newLine": "lf",
+		"experimentalDecorators": false,
+		"noEmit": true,
+		"noEmitOnError": true,
+		"incremental": false
+	},
+	"include": ["src"],
+	"exclude": ["node_modules", "**/*.test.ts"]
+}

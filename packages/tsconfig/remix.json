@@ -6,9 +6,10 @@
 		"target": "esnext",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"noEmit": true,
-		"module": "esnext",
+		"module": "NodeNext",
 		"jsx": "react-jsx",
-		"emitDeclarationOnly": false
+		"emitDeclarationOnly": false,
+		"moduleResolution": "NodeNext"
 	},
 	"include": ["src"],
 	"exclude": ["node_modules"]

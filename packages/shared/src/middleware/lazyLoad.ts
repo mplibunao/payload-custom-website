@@ -1,8 +1,20 @@
+import { Type } from '@sinclair/typebox'
 import { type Express } from 'express'
 
-import { type Config } from '../infra/config.ts'
+export const lazyMiddlewareEnvSchema = {
+	STRIP_TRAILING_SLASH: Type.Boolean({ default: true }),
+	REDIRECT_HTTP_TO_HTTPS: Type.Boolean({ default: false }),
+}
 
-export const lazyLoadMiddlewares = async (app: Express, config: Config) => {
+export interface ExpressLazyMiddlewareConfig {
+	stripTrailingSlash?: boolean
+	redirectHttpToHttps?: boolean
+}
+
+export const lazyLoadMiddlewares = async (
+	app: Express,
+	config: { server: ExpressLazyMiddlewareConfig },
+) => {
 	const lazyMiddlewareQuery = []
 
 	if (config.server.redirectHttpToHttps) {
@@ -10,7 +22,7 @@ export const lazyLoadMiddlewares = async (app: Express, config: Config) => {
 		lazyMiddlewareQuery.push(middleware)
 	}
 
-	if (config.server.stripTraillingSlash) {
+	if (config.server.stripTrailingSlash) {
 		const middleware = import('./stripTrailingSlashes.ts')
 		lazyMiddlewareQuery.push(middleware)
 	}

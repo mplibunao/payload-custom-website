@@ -1,8 +1,7 @@
-import { payloadEnvSchema } from '@org/cms/infra/payload'
 import { getEnv } from '@org/shared/config'
 import {
-	type CloudRunLoggerOpts,
 	cloudRunLoggerOptsEnvSchema,
+	type CloudRunLoggerOpts,
 } from '@org/shared/logger/cloudRunLoggerOpts'
 import {
 	type ExpressLazyMiddlewareConfig,
@@ -14,14 +13,14 @@ import {
 	getOverloadProtectionOpts,
 } from '@org/shared/middleware/overloadProtection'
 import {
-	APP_ENV,
-	type App_env,
 	NODE_ENV,
+	APP_ENV,
 	PORT,
+	type App_env,
 } from '@org/shared/schemas/index'
-import { type Static, Type } from '@sinclair/typebox'
+import { Type, type Static } from '@sinclair/typebox'
 
-import { remixEnvSchema } from './remix/index.ts'
+import { payloadEnvSchema } from './payload'
 
 /*
  *TYPEBOX ENV SCHEMAS
@@ -30,7 +29,6 @@ import { remixEnvSchema } from './remix/index.ts'
  */
 export const baseTypeboxEnvSchema = {
 	...cloudRunLoggerOptsEnvSchema,
-	...remixEnvSchema,
 	...overloadProtectionEnvSchema,
 	...payloadEnvSchema,
 	...lazyMiddlewareEnvSchema,
@@ -54,9 +52,6 @@ export type Config<T extends Env = Env> = {
 		APP_ENV: App_env
 	}
 	loggerOpts: CloudRunLoggerOpts
-	remix: {
-		buildPath: string
-	}
 	server: {
 		port: number
 	} & ExpressLazyMiddlewareConfig
@@ -86,9 +81,6 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			NODE_ENV: env.NODE_ENV,
 			LOGGING_LEVEL: env.LOGGING_LEVEL,
 			K_SERVICE: env.K_SERVICE,
-		},
-		remix: {
-			buildPath: env.REMIX_BUILD_PATH,
 		},
 		overloadProtection: getOverloadProtectionOpts(env),
 		payload: {
