@@ -1,4 +1,4 @@
-import { getEnv } from '@org/shared/config'
+import { getDotEnv } from '@org/shared/config'
 import {
 	cloudRunLoggerOptsEnvSchema,
 	type CloudRunLoggerOpts,
@@ -18,9 +18,22 @@ import {
 	PORT,
 	type App_env,
 } from '@org/shared/schemas/index'
-import { Type, type Static } from '@sinclair/typebox'
+import { Type, type Static, type TObject } from '@sinclair/typebox'
+import envSchema from 'env-schema'
+import overload from 'overload-protection'
 
-import { payloadEnvSchema } from './payload'
+import { type PayloadConfigOpts, payloadEnvSchema } from './payload/init'
+
+/*
+ *DOTENV + TYPEBOX ENV SCHEMAS = ENV
+ */
+export const getEnv = <T>(schema: TObject) => {
+	return envSchema<T>({
+		dotenv: getDotEnv(),
+		schema,
+		data: process.env,
+	})
+}
 
 /*
  *TYPEBOX ENV SCHEMAS
@@ -55,12 +68,8 @@ export type Config<T extends Env = Env> = {
 	server: {
 		port: number
 	} & ExpressLazyMiddlewareConfig
-	payload: {
-		secret: string
-		mongoURL: string
-		local: boolean
-	}
-} & OverloadProtectionOpts
+} & OverloadProtectionOpts &
+	PayloadConfigOpts
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 	return {
@@ -82,7 +91,7 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			LOGGING_LEVEL: env.LOGGING_LEVEL,
 			K_SERVICE: env.K_SERVICE,
 		},
-		overloadProtection: getOverloadProtectionOpts(env),
+		overloadProtection: overload('express', getOverloadProtectionOpts(env)),
 		payload: {
 			secret: env.PAYLOAD_SECRET,
 			mongoURL: env.MONGODB_URI,

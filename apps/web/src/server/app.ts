@@ -1,4 +1,3 @@
-import { initPayloadCms } from '@org/cms/infra/payload'
 import { getCloudRunLoggerConfig } from '@org/shared/logger/cloudRunLoggerOpts'
 import { healthCheck } from '@org/shared/middleware/healthcheck'
 import { lazyLoadMiddlewares } from '@org/shared/middleware/lazyLoad'
@@ -16,6 +15,7 @@ import {
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
 
+ 
 export const initApp = async (
 	app: Express,
 	{
@@ -40,7 +40,6 @@ export const initApp = async (
 	app.use(config.overloadProtection)
 
 	await lazyLoadMiddlewares(app, config)
-	await initPayloadCms(app, config)
 
 	// trust all proxies in front of express
 	// lets cookies / sessions work

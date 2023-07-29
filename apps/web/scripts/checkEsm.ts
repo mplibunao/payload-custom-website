@@ -9,7 +9,9 @@ const packageJson = JSON.parse(
 ) as PackageJson
 
 try {
-	const deps = [...Object.keys(packageJson.dependencies)]
+	const deps = [...Object.keys(packageJson.dependencies)].filter(
+		(dep) => !dep.startsWith('@org/'),
+	)
 
 	const isEsmResult = await Promise.all(
 		deps.map(async (dep) => {
@@ -18,7 +20,10 @@ try {
 
 			const regex = /(Yes|No)$/
 			const match = regex.exec(output as unknown as string)
-			if (!match) throw new Error('Unexpected output from is-esm')
+			if (!match) {
+				console.error(chalk.red(JSON.stringify({ output, match })))
+				throw new Error('Unexpected output from is-esm')
+			}
 
 			const isEsm = match[1] === 'Yes'
 			if (isEsm) {

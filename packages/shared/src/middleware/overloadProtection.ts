@@ -1,6 +1,9 @@
 import { type Static, Type } from '@sinclair/typebox'
 import v8 from 'node:v8'
-import overload, { type HttpProtectionInstance } from 'overload-protection'
+import {
+	type HttpProtectionInstance,
+	type ProtectionConfig,
+} from 'overload-protection'
 import { NODE_ENV } from 'src/schemas/index.ts'
 
 export const overloadProtectionEnvSchema = {
@@ -18,10 +21,10 @@ export type OverloadProtectionOpts = {
 
 type Options = Static<typeof OverloadProtectionSchema>
 
-export const getOverloadProtectionOpts = (env: Options) => {
+export const getOverloadProtectionOpts = (env: Options): ProtectionConfig => {
 	const v8HeapStats = v8.getHeapStatistics()
 
-	return overload('express', {
+	return {
 		production: env.NODE_ENV === 'production', // if production is false, detailed error messages are exposed to the client
 		clientRetrySecs: 1, // Retry-After header, in seconds (0 to disable) [default 1]
 		sampleInterval: 5, // sample rate, milliseconds [default 5]
@@ -32,5 +35,5 @@ export const getOverloadProtectionOpts = (env: Options) => {
 		// or propagate an error to the framework [default false]
 		logging: 'warn', // set to string for log level or function to pass data to
 		logStatsOnReq: false, // set to true to log stats on every requests
-	})
+	}
 }

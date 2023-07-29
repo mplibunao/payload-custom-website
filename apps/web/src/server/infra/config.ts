@@ -1,5 +1,4 @@
-import { payloadEnvSchema } from '@org/cms/infra/payload'
-import { getEnv } from '@org/shared/config'
+import { getDotEnv } from '@org/shared/config'
 import {
 	type CloudRunLoggerOpts,
 	cloudRunLoggerOptsEnvSchema,
@@ -19,9 +18,22 @@ import {
 	NODE_ENV,
 	PORT,
 } from '@org/shared/schemas/index'
-import { type Static, Type } from '@sinclair/typebox'
+import { type Static, Type, type TObject } from '@sinclair/typebox'
+import envSchema from 'env-schema'
+import overload from 'overload-protection'
 
 import { remixEnvSchema } from './remix/index.ts'
+
+/*
+ *DOTENV + TYPEBOX ENV SCHEMAS = ENV
+ */
+export const getEnv = <T>(schema: TObject) => {
+	return envSchema<T>({
+		dotenv: getDotEnv(),
+		schema,
+		data: process.env,
+	})
+}
 
 /*
  *TYPEBOX ENV SCHEMAS
@@ -32,7 +44,6 @@ export const baseTypeboxEnvSchema = {
 	...cloudRunLoggerOptsEnvSchema,
 	...remixEnvSchema,
 	...overloadProtectionEnvSchema,
-	...payloadEnvSchema,
 	...lazyMiddlewareEnvSchema,
 	NODE_ENV,
 	APP_ENV,
@@ -60,11 +71,6 @@ export type Config<T extends Env = Env> = {
 	server: {
 		port: number
 	} & ExpressLazyMiddlewareConfig
-	payload: {
-		secret: string
-		mongoURL: string
-		local: boolean
-	}
 } & OverloadProtectionOpts
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
@@ -90,12 +96,7 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 		remix: {
 			buildPath: env.REMIX_BUILD_PATH,
 		},
-		overloadProtection: getOverloadProtectionOpts(env),
-		payload: {
-			secret: env.PAYLOAD_SECRET,
-			mongoURL: env.MONGODB_URI,
-			local: true,
-		},
+		overloadProtection: overload('express', getOverloadProtectionOpts(env)),
 	}
 }
 

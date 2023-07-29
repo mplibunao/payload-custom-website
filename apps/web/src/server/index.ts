@@ -11,6 +11,7 @@ const buildPath = join(import.meta.url, config.remix.buildPath).replace(
 	/\\/g,
 	'/',
 )
+console.info(buildPath, 'buildPath')
 
 // this file may not exist if you haven't built yet, but it will
 // definitely exist by the time the dev or prod server actually runs.

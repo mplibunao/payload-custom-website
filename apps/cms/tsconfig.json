@@ -15,7 +15,7 @@
 		"**/*.tsx",
 		"scripts/**.ts",
     "**/*.d.ts",
-		"../cms/payload.config.ts"
+		"src/infra/payload/config.ts"
 	],
 	"exclude": ["node_modules"]
 }

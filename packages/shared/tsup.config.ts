@@ -5,7 +5,7 @@ import { defineConfig } from 'tsup'
 
 import { nativeNodeModulesPlugin } from './scripts/esbuildPlugins'
 
-type App = 'prod'
+type App = 'prod' | 'dev'
 type Config = {
 	watch: boolean
 	minify: boolean
@@ -26,13 +26,21 @@ const getConfig = (app: App): Config => {
 				ignore: ['src/**/*.d.ts'],
 			},
 		},
+		dev: {
+			watch: false,
+			minify: false,
+			entrypoints: {
+				paths: ['src/**/*.ts'],
+				ignore: ['src/**/*.d.ts'],
+			},
+		},
 	}
 
 	return config[app]
 }
 
 export default defineConfig(async (opts) => {
-	const app = (process.env.app ?? 'prod') as App
+	const app = (process.env.APP ?? 'prod') as App
 	const config = getConfig(app)
 	const entry = await glob(config.entrypoints.paths, {
 		ignore: config.entrypoints.ignore,
@@ -43,7 +51,7 @@ export default defineConfig(async (opts) => {
 			clean: !opts.watch,
 			dts: true,
 			format: ['cjs', 'esm'],
-			minify: true,
+			minify: config.minify,
 			outDir: 'dist',
 			treeshake: true,
 			splitting: true,
