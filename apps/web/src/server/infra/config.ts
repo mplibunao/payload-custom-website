@@ -1,23 +1,27 @@
-import { getDotEnv } from '@org/shared/config'
+import {
+	type PayloadConfigOpts,
+	payloadEnvSchema,
+} from '@org/cms/lib/infra/payload/init'
+import { getDotEnv } from '@org/shared/lib/config'
 import {
 	type CloudRunLoggerOpts,
 	cloudRunLoggerOptsEnvSchema,
-} from '@org/shared/logger/cloudRunLoggerOpts'
+} from '@org/shared/lib/logger/cloudRunLoggerOpts'
 import {
 	type ExpressLazyMiddlewareConfig,
 	lazyMiddlewareEnvSchema,
-} from '@org/shared/middleware/lazyLoad'
+} from '@org/shared/lib/middleware/lazyLoad'
 import {
 	type OverloadProtectionOpts,
-	overloadProtectionEnvSchema,
 	getOverloadProtectionOpts,
-} from '@org/shared/middleware/overloadProtection'
+	overloadProtectionEnvSchema,
+} from '@org/shared/lib/middleware/overloadProtection'
 import {
 	APP_ENV,
 	type App_env,
 	NODE_ENV,
 	PORT,
-} from '@org/shared/schemas/index'
+} from '@org/shared/lib/schemas/index'
 import { type Static, Type, type TObject } from '@sinclair/typebox'
 import envSchema from 'env-schema'
 import overload from 'overload-protection'
@@ -44,6 +48,7 @@ export const baseTypeboxEnvSchema = {
 	...cloudRunLoggerOptsEnvSchema,
 	...remixEnvSchema,
 	...overloadProtectionEnvSchema,
+	...payloadEnvSchema,
 	...lazyMiddlewareEnvSchema,
 	NODE_ENV,
 	APP_ENV,
@@ -71,7 +76,8 @@ export type Config<T extends Env = Env> = {
 	server: {
 		port: number
 	} & ExpressLazyMiddlewareConfig
-} & OverloadProtectionOpts
+} & OverloadProtectionOpts &
+	PayloadConfigOpts
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 	return {
@@ -97,6 +103,11 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			buildPath: env.REMIX_BUILD_PATH,
 		},
 		overloadProtection: overload('express', getOverloadProtectionOpts(env)),
+		payload: {
+			secret: env.PAYLOAD_SECRET,
+			mongoURL: env.MONGODB_URI,
+			local: true,
+		},
 	}
 }
 

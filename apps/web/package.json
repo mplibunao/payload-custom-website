@@ -39,6 +39,7 @@
 		"express": "^4.18.2",
 		"isbot": "^3.6.12",
 		"overload-protection": "1.2.3",
+		"payload": "1.11.7",
 		"pino": "8.14.2",
 		"pino-http": "8.3.3",
 		"react": "^18.2.0",

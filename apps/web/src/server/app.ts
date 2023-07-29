@@ -1,9 +1,11 @@
-import { getCloudRunLoggerConfig } from '@org/shared/logger/cloudRunLoggerOpts'
-import { healthCheck } from '@org/shared/middleware/healthcheck'
-import { lazyLoadMiddlewares } from '@org/shared/middleware/lazyLoad'
+import { getPayloadOpts } from '@org/cms/lib/infra/payload/init'
+import { getCloudRunLoggerConfig } from '@org/shared/lib/logger/cloudRunLoggerOpts'
+import { healthCheck } from '@org/shared/lib/middleware/healthcheck'
+import { lazyLoadMiddlewares } from '@org/shared/lib/middleware/lazyLoad'
 import { type ServerBuild } from '@remix-run/node'
 import compression from 'compression'
 import express, { type Express } from 'express'
+import payload from 'payload'
 import { pino } from 'pino'
 import { pinoHttp } from 'pino-http'
 
@@ -15,7 +17,6 @@ import {
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
 
- 
 export const initApp = async (
 	app: Express,
 	{
@@ -40,6 +41,7 @@ export const initApp = async (
 	app.use(config.overloadProtection)
 
 	await lazyLoadMiddlewares(app, config)
+	await payload.init(getPayloadOpts(app, config))
 
 	// trust all proxies in front of express
 	// lets cookies / sessions work

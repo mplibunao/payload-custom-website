@@ -12,42 +12,52 @@ type App = 'prod' | 'dev'
 type Config = {
 	watch: boolean
 	minify: boolean
-	entrypoints: {
-		paths: string[]
-		ignore: string[]
-	}
 }
 type BuildConfig = Record<App, Config>
-
 const getConfig = (app: App): Config => {
 	const config: BuildConfig = {
 		prod: {
 			watch: false,
 			minify: true,
-			entrypoints: {
-				paths: ['src/**/*.ts'],
-				ignore: ['src/**/*.d.ts'],
-			},
 		},
 		dev: {
 			watch: false,
 			minify: false,
-			entrypoints: {
-				paths: ['src/**/*.ts'],
-				ignore: ['src/**/*.d.ts'],
-			},
 		},
 	}
 
 	return config[app]
 }
 
+type Modules = 'esm' | 'cjs'
+type Entrypoint = {
+	paths: string[]
+	ignore: string[]
+}
+type EntrypointConfig = Record<Modules, Entrypoint>
+const getEntrypoints = async (module: Modules): Promise<string[]> => {
+	const config: EntrypointConfig = {
+		cjs: {
+			paths: ['src/index.ts'],
+			ignore: [],
+		},
+		esm: {
+			paths: ['src/infra/payload/init.ts', 'src/collections/**/*.ts'],
+			ignore: [],
+		},
+	}
+
+	const entrypoint = config[module]
+	return glob(entrypoint.paths, {
+		ignore: entrypoint.ignore,
+	})
+}
+
 export default defineConfig(async (opts) => {
 	const app = (process.env.APP ?? 'prod') as App
 	const config = getConfig(app)
-	const entry = await glob(config.entrypoints.paths, {
-		ignore: config.entrypoints.ignore,
-	})
+	const cjsEntry = await getEntrypoints('cjs')
+	const esmEntry = await getEntrypoints('esm')
 
 	const cjsConfig = {
 		clean: !opts.watch,
@@ -58,7 +68,7 @@ export default defineConfig(async (opts) => {
 		treeshake: true,
 		splitting: true,
 		target: 'esnext',
-		entry,
+		entry: cjsEntry,
 		plugins: [nativeNodeModulesPlugin, excludeVendorFromSourceMapPlugin],
 		sourcemap: true,
 		external: getExternal(),
@@ -73,7 +83,7 @@ export default defineConfig(async (opts) => {
 		treeshake: true,
 		splitting: true,
 		target: 'esnext',
-		entry,
+		entry: esmEntry,
 		plugins: [nativeNodeModulesPlugin],
 		sourcemap: false,
 		external: getExternal(),
@@ -81,13 +91,17 @@ export default defineConfig(async (opts) => {
 			const packageJson = getPackageJson()
 			packageJson.exports = {
 				'./package.json': './package.json',
+				'./lib/*': {
+					types: './src/*.ts',
+					import: './src/*.ts',
+					default: './src/*.ts',
+				},
 			}
 
-			entry.forEach((e) => {
+			esmEntry.forEach((e) => {
 				const file = e.replace('src/', '').replace('.ts', '')
-				packageJson.exports[`./${file}`] = {
+				packageJson.exports[`./lib/${file}`] = {
 					types: `./dist/esm/${file}.d.mts`,
-					require: `./dist/cjs/${file}.js`,
 					import: `./dist/esm/${file}.mjs`,
 					default: `./${e}`,
 				}
@@ -104,7 +118,7 @@ type PackageJson = {
 	name: string
 	exports: Record<
 		string,
-		| { import: string; types: string; default: string; require: string }
+		| { default: string; require: string }
 		| { import: string; types: string; default: string }
 		| string
 	>
@@ -118,7 +132,13 @@ function getExternal() {
 	const packageJson = getPackageJson()
 
 	// no node apis; safe to bundle
-	const included = ['kysely', 'postgres', 'react-dom', '@sinclair/typebox']
+	const included = [
+		'kysely',
+		'postgres',
+		'react-dom',
+		'@sinclair/typebox',
+		'@org/shared',
+	]
 
 	// with node apis
 	const excluded = ['pg-native', 'hiredis', 'oas-validator']
@@ -128,7 +148,6 @@ function getExternal() {
 		// include devdependencies since dynamically importing dev-dependencies in code forces esbuild to create a chunk for that dev-dependency instead of pulling from node_modules
 		...Object.keys(packageJson.devDependencies),
 	]
-		.filter((deps) => !deps.startsWith('@org/'))
 		.filter((dep) => !included.includes(dep))
 		.concat(excluded)
 

@@ -164,6 +164,9 @@ importers:
       overload-protection:
         specifier: 1.2.3
         version: 1.2.3
+      payload:
+        specifier: 1.11.7
+        version: 1.11.7(@types/react@18.2.14)(esbuild@0.17.19)(typescript@5.1.6)
       pino:
         specifier: 8.14.2
         version: 8.14.2
@@ -2609,7 +2612,7 @@ packages:
     resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
     dev: false
 
-  /@emotion/react@11.11.1(react@18.2.0):
+  /@emotion/react@11.11.1(@types/react@18.2.14)(react@18.2.0):
     resolution: {integrity: sha512-5mlW1DquU5HaxjLkfkGN1GA/fvVGdyHURRiX/0FHl2cfIfRxSOfmxEH5YS43edp0OldZrZ+dkBKbngxcNCdZvA==}
     peerDependencies:
       '@types/react': '*'
@@ -2625,6 +2628,7 @@ packages:
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
       '@emotion/utils': 1.2.1
       '@emotion/weak-memoize': 0.3.1
+      '@types/react': 18.2.14
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
     dev: false
@@ -10851,7 +10855,148 @@ packages:
       react-i18next: 11.18.6(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
       react-router-dom: 5.3.4(react@18.2.0)
       react-router-navigation-prompt: 1.9.6(react-router-dom@5.3.4)(react@18.2.0)
-      react-select: 5.7.4(react-dom@18.2.0)(react@18.2.0)
+      react-select: 5.7.4(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
+      react-toastify: 8.2.0(react-dom@18.2.0)(react@18.2.0)
+      sanitize-filename: 1.6.3
+      sass: 1.64.1
+      sass-loader: 12.6.0(sass@1.64.1)(webpack@5.88.2)
+      scheduler: 0.23.0
+      scmp: 2.1.0
+      sharp: 0.31.3
+      slate: 0.91.4
+      slate-history: 0.86.0(slate@0.91.4)
+      slate-hyperscript: 0.81.3(slate@0.91.4)
+      slate-react: 0.92.0(react-dom@18.2.0)(react@18.2.0)(slate@0.91.4)
+      style-loader: 2.0.0(webpack@5.88.2)
+      swc-loader: 0.2.3(@swc/core@1.3.71)(webpack@5.88.2)
+      swc-minify-webpack-plugin: 2.1.1(@swc/core@1.3.71)(webpack@5.88.2)
+      terser-webpack-plugin: 5.3.9(@swc/core@1.3.71)(esbuild@0.17.19)(webpack@5.88.2)
+      ts-essentials: 7.0.3(typescript@5.1.6)
+      url-loader: 4.1.1(file-loader@6.2.0)(webpack@5.88.2)
+      use-context-selector: 1.4.1(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
+      uuid: 8.3.2
+      webpack: 5.88.2(@swc/core@1.3.71)(esbuild@0.17.19)(webpack-cli@4.10.0)
+      webpack-bundle-analyzer: 4.9.0
+      webpack-cli: 4.10.0(webpack-bundle-analyzer@4.9.0)(webpack@5.88.2)
+      webpack-dev-middleware: 6.0.1(webpack@5.88.2)
+      webpack-hot-middleware: 2.25.4
+    transitivePeerDependencies:
+      - '@parcel/css'
+      - '@swc/css'
+      - '@swc/helpers'
+      - '@types/react'
+      - '@webpack-cli/generators'
+      - '@webpack-cli/migrate'
+      - aws-crt
+      - bufferutil
+      - clean-css
+      - csso
+      - encoding
+      - esbuild
+      - fibers
+      - lightningcss
+      - node-sass
+      - react-native
+      - sass-embedded
+      - supports-color
+      - typescript
+      - uglify-js
+      - utf-8-validate
+      - webpack-dev-server
+    dev: false
+
+  /payload@1.11.7(@types/react@18.2.14)(esbuild@0.17.19)(typescript@5.1.6):
+    resolution: {integrity: sha512-pVImP0b8MA9VfcXDITqq8KlIVaFB81FMtt24TPrBfNqkG53cRFxnYiGRJS40p/CNVknCpSRGVBkdpKmVNQ07YQ==}
+    engines: {node: '>=14', yarn: '>=1.22 <2'}
+    hasBin: true
+    dependencies:
+      '@date-io/date-fns': 2.17.0(date-fns@2.30.0)
+      '@dnd-kit/core': 6.0.8(react-dom@18.2.0)(react@18.2.0)
+      '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.0.8)(react@18.2.0)
+      '@faceless-ui/modal': 2.0.1(react-dom@18.2.0)(react@18.2.0)
+      '@faceless-ui/scroll-info': 1.3.0(react-dom@18.2.0)(react@18.2.0)
+      '@faceless-ui/window-info': 2.1.1(react-dom@18.2.0)(react@18.2.0)
+      '@monaco-editor/react': 4.5.1(monaco-editor@0.38.0)(react-dom@18.2.0)(react@18.2.0)
+      '@swc/core': 1.3.71(@swc/helpers@0.5.1)
+      '@swc/register': 0.1.10(@swc/core@1.3.71)
+      '@types/sharp': 0.31.1
+      body-parser: 1.20.1
+      bson-objectid: 2.0.4
+      compression: 1.7.4
+      conf: 10.2.0
+      connect-history-api-fallback: 1.6.0
+      css-loader: 5.2.7(webpack@5.88.2)
+      css-minimizer-webpack-plugin: 5.0.1(esbuild@0.17.19)(webpack@5.88.2)
+      dataloader: 2.2.2
+      date-fns: 2.30.0
+      deep-equal: 2.2.2
+      deepmerge: 4.3.1
+      dotenv: 8.6.0
+      express: 4.18.2
+      express-fileupload: 1.4.0
+      express-rate-limit: 5.5.1
+      file-loader: 6.2.0(webpack@5.88.2)
+      file-type: 16.5.4
+      find-up: 4.1.0
+      flatley: 5.2.0
+      fs-extra: 10.1.0
+      get-tsconfig: 4.6.2
+      graphql: 16.7.1
+      graphql-http: 1.21.0(graphql@16.7.1)
+      graphql-playground-middleware-express: 1.7.23(express@4.18.2)
+      graphql-query-complexity: 0.12.0(graphql@16.7.1)
+      graphql-scalars: 1.22.2(graphql@16.7.1)
+      graphql-type-json: 0.3.2(graphql@16.7.1)
+      html-webpack-plugin: 5.5.3(webpack@5.88.2)
+      http-status: 1.6.2
+      i18next: 22.5.1
+      i18next-browser-languagedetector: 6.1.8
+      i18next-http-middleware: 3.3.2
+      is-hotkey: 0.2.0
+      is-plain-object: 5.0.0
+      isomorphic-fetch: 3.0.0
+      joi: 17.9.2
+      json-schema-to-typescript: 11.0.3
+      jsonwebtoken: 9.0.1
+      jwt-decode: 3.1.2
+      md5: 2.3.0
+      method-override: 3.0.0
+      micro-memoize: 4.1.2
+      mini-css-extract-plugin: 1.6.2(webpack@5.88.2)
+      minimist: 1.2.8
+      mkdirp: 1.0.4
+      monaco-editor: 0.38.0
+      mongoose: 6.11.4
+      mongoose-aggregate-paginate-v2: 1.0.6
+      mongoose-paginate-v2: 1.7.22
+      nodemailer: 6.9.4
+      object-to-formdata: 4.5.1
+      passport: 0.6.0
+      passport-anonymous: 1.0.1
+      passport-headerapikey: 1.2.2
+      passport-jwt: 4.0.1
+      passport-local: 1.0.0
+      path-browserify: 1.0.1
+      pino: 6.14.0
+      pino-pretty: 9.4.1
+      pluralize: 8.0.0
+      postcss: 8.4.26
+      postcss-loader: 6.2.1(postcss@8.4.26)(webpack@5.88.2)
+      postcss-preset-env: 9.1.0(postcss@8.4.26)
+      probe-image-size: 6.0.0
+      process: 0.11.10
+      qs: 6.11.0
+      qs-middleware: 1.0.3
+      react: 18.2.0
+      react-animate-height: 2.1.2(react-dom@18.2.0)(react@18.2.0)
+      react-datepicker: 4.16.0(react-dom@18.2.0)(react@18.2.0)
+      react-diff-viewer-continued: 3.2.6(react-dom@18.2.0)(react@18.2.0)
+      react-dom: 18.2.0(react@18.2.0)
+      react-helmet: 6.1.0(react@18.2.0)
+      react-i18next: 11.18.6(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
+      react-router-dom: 5.3.4(react@18.2.0)
+      react-router-navigation-prompt: 1.9.6(react-router-dom@5.3.4)(react@18.2.0)
+      react-select: 5.7.4(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
       react-toastify: 8.2.0(react-dom@18.2.0)(react@18.2.0)
       sanitize-filename: 1.6.3
       sass: 1.64.1
@@ -12331,7 +12476,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-select@5.7.4(react-dom@18.2.0)(react@18.2.0):
+  /react-select@5.7.4(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-NhuE56X+p9QDFh4BgeygHFIvJJszO1i1KSkg/JPcIJrbovyRtI+GuOEa4XzFCEpZRAEoEI8u/cAHK+jG/PgUzQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -12339,7 +12484,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.6
       '@emotion/cache': 11.11.0
-      '@emotion/react': 11.11.1(react@18.2.0)
+      '@emotion/react': 11.11.1(@types/react@18.2.14)(react@18.2.0)
       '@floating-ui/dom': 1.4.5
       '@types/react-transition-group': 4.4.6
       memoize-one: 6.0.0
@@ -12347,7 +12492,7 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-      use-isomorphic-layout-effect: 1.1.2(react@18.2.0)
+      use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.14)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -14281,7 +14426,7 @@ packages:
       scheduler: 0.23.0
     dev: false
 
-  /use-isomorphic-layout-effect@1.1.2(react@18.2.0):
+  /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.14)(react@18.2.0):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
@@ -14290,6 +14435,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
+      '@types/react': 18.2.14
       react: 18.2.0
     dev: false
 

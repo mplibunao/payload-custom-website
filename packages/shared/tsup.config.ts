@@ -23,7 +23,11 @@ const getConfig = (app: App): Config => {
 			minify: true,
 			entrypoints: {
 				paths: ['src/**/*.ts'],
-				ignore: ['src/**/*.d.ts'],
+				ignore: [
+					'src/**/*.d.ts',
+					'src/middleware/stripTrailingSlashes.ts',
+					'src/middleware/httpsOnly.ts',
+				],
 			},
 		},
 		dev: {
@@ -31,7 +35,11 @@ const getConfig = (app: App): Config => {
 			minify: false,
 			entrypoints: {
 				paths: ['src/**/*.ts'],
-				ignore: ['src/**/*.d.ts'],
+				ignore: [
+					'src/**/*.d.ts',
+					'src/middleware/stripTrailingSlashes.ts',
+					'src/middleware/httpsOnly.ts',
+				],
 			},
 		},
 	}
@@ -64,12 +72,16 @@ export default defineConfig(async (opts) => {
 				const packageJson = getPackageJson()
 				packageJson.exports = {
 					'./package.json': './package.json',
-					'./middleware/*': './src/middleware/*.ts',
+					'./lib/*': {
+						types: './src/*.ts',
+						import: './src/*.ts',
+						default: './src/*.ts',
+					},
 				}
 
 				entry.forEach((e) => {
 					const file = e.replace('src/', '').replace('.ts', '')
-					packageJson.exports[`./${file}`] = {
+					packageJson.exports[`./lib/${file}`] = {
 						types: `./dist/${file}.d.ts`,
 						import: `./dist/${file}.js`,
 						require: `./dist/${file}.cjs`,
@@ -87,7 +99,9 @@ type PackageJson = {
 	name: string
 	exports: Record<
 		string,
-		{ import: string; types: string; require: string; default: string } | string
+		| { import: string; types: string; require: string; default: string }
+		| { import: string; types: string; default: string }
+		| string
 	>
 	typesVersions: Record<'*', Record<string, string[]>>
 	files: string[]

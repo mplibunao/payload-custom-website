@@ -1,6 +1,5 @@
 import { Type } from '@sinclair/typebox'
 import { type Express } from 'express'
-import payload from 'payload'
 import { type InitOptions } from 'payload/config'
 
 export const payloadEnvSchema = {
@@ -16,7 +15,10 @@ export type PayloadConfigOpts = {
 	}
 }
 
-export const initPayload = (app: Express, config: PayloadConfigOpts) => {
+export const getPayloadOpts = (
+	app: Express,
+	config: PayloadConfigOpts,
+): InitOptions => {
 	const payloadConfig: InitOptions = {
 		...config.payload,
 		express: app,
@@ -28,5 +30,5 @@ export const initPayload = (app: Express, config: PayloadConfigOpts) => {
 		}
 	}
 
-	return payload.init(payloadConfig)
+	return payloadConfig
 }

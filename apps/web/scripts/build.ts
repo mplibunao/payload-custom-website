@@ -108,6 +108,8 @@ function getExternal() {
 		'@sinclair/typebox',
 		'@vercel/edge-config',
 		'desm',
+		'@org/shared',
+		'@org/cms',
 
 		'@remix-run/css-bundle',
 		'@remix-run/router',
@@ -116,7 +118,6 @@ function getExternal() {
 		'isbot',
 		'tailwind-merge',
 		'remix-utils',
-		'@org/shared',
 	]
 
 	// with node apis

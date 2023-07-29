@@ -1,23 +1,18 @@
-import { getDotEnv } from '@org/shared/config'
+import { getDotEnv } from '@org/shared/lib/config'
 import {
 	cloudRunLoggerOptsEnvSchema,
 	type CloudRunLoggerOpts,
-} from '@org/shared/logger/cloudRunLoggerOpts'
+} from '@org/shared/lib/logger/cloudRunLoggerOpts'
 import {
-	type ExpressLazyMiddlewareConfig,
 	lazyMiddlewareEnvSchema,
-} from '@org/shared/middleware/lazyLoad'
+	type ExpressLazyMiddlewareConfig,
+} from '@org/shared/lib/middleware/lazyLoad'
 import {
-	type OverloadProtectionOpts,
 	overloadProtectionEnvSchema,
+	type OverloadProtectionOpts,
 	getOverloadProtectionOpts,
-} from '@org/shared/middleware/overloadProtection'
-import {
-	NODE_ENV,
-	APP_ENV,
-	PORT,
-	type App_env,
-} from '@org/shared/schemas/index'
+} from '@org/shared/lib/middleware/overloadProtection'
+import { NODE_ENV, APP_ENV, PORT, type App_env } from '@org/shared/lib/schemas/index'
 import { Type, type Static, type TObject } from '@sinclair/typebox'
 import envSchema from 'env-schema'
 import overload from 'overload-protection'
