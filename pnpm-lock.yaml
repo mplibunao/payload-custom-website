@@ -51,9 +51,6 @@ importers:
       close-with-grace:
         specifier: ^1.2.0
         version: 1.2.0
-      compression:
-        specifier: ^1.7.4
-        version: 1.7.4
       env-schema:
         specifier: ^5.2.0
         version: 5.2.0
