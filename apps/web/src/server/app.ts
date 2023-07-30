@@ -1,6 +1,5 @@
 import { type ServerBuild } from '@remix-run/node'
-import compression from 'compression'
-import express, { type Express, type Response } from 'express'
+import express, { type Express } from 'express'
 import helmet from 'helmet'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
@@ -17,7 +16,6 @@ import {
 import { stripTrailingSlash } from './middleware/stripTrailingSlashes.ts'
 import { healthCheck } from './routes/healthcheck.ts'
 
-// eslint-disable-next-line max-statements
 export const initApp = async (
 	app: Express,
 	{
@@ -49,7 +47,6 @@ export const initApp = async (
 	// lets cookies / sessions work
 	app.set('trust proxy', true)
 
-	app.use(compression())
 	// http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
 	app.disable('x-powered-by')
 
