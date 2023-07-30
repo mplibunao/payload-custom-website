@@ -17,6 +17,7 @@ export default buildConfig({
 			path.resolve(__dirname),
 			'cms/generated-schema.graphql',
 		),
+		disable: true,
 	},
 	telemetry: false,
 })
