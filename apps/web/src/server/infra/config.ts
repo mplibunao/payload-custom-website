@@ -8,10 +8,6 @@ import {
 	cloudRunLoggerOptsEnvSchema,
 } from '@org/shared/lib/logger/cloudRunLoggerOpts'
 import {
-	type ExpressLazyMiddlewareConfig,
-	lazyMiddlewareEnvSchema,
-} from '@org/shared/lib/middleware/lazyLoad'
-import {
 	type OverloadProtectionOpts,
 	getOverloadProtectionOpts,
 	overloadProtectionEnvSchema,
@@ -49,7 +45,6 @@ export const baseTypeboxEnvSchema = {
 	...remixEnvSchema,
 	...overloadProtectionEnvSchema,
 	...payloadEnvSchema,
-	...lazyMiddlewareEnvSchema,
 	NODE_ENV,
 	APP_ENV,
 	PORT,
@@ -75,7 +70,7 @@ export type Config<T extends Env = Env> = {
 	}
 	server: {
 		port: number
-	} & ExpressLazyMiddlewareConfig
+	}
 } & OverloadProtectionOpts &
 	PayloadConfigOpts
 
@@ -89,8 +84,6 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 		},
 		server: {
 			port: env.PORT,
-			stripTrailingSlash: env.STRIP_TRAILING_SLASH,
-			redirectHttpToHttps: env.REDIRECT_HTTP_TO_HTTPS,
 		},
 		loggerOpts: {
 			APP_NAME: env.APP_NAME,

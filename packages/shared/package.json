@@ -61,17 +61,23 @@
       "require": "./dist/schemas/index.cjs",
       "default": "./src/schemas/index.ts"
     },
+    "./lib/middleware/stripTrailingSlashes": {
+      "types": "./dist/middleware/stripTrailingSlashes.d.ts",
+      "import": "./dist/middleware/stripTrailingSlashes.js",
+      "require": "./dist/middleware/stripTrailingSlashes.cjs",
+      "default": "./src/middleware/stripTrailingSlashes.ts"
+    },
     "./lib/middleware/overloadProtection": {
       "types": "./dist/middleware/overloadProtection.d.ts",
       "import": "./dist/middleware/overloadProtection.js",
       "require": "./dist/middleware/overloadProtection.cjs",
       "default": "./src/middleware/overloadProtection.ts"
     },
-    "./lib/middleware/lazyLoad": {
-      "types": "./dist/middleware/lazyLoad.d.ts",
-      "import": "./dist/middleware/lazyLoad.js",
-      "require": "./dist/middleware/lazyLoad.cjs",
-      "default": "./src/middleware/lazyLoad.ts"
+    "./lib/middleware/httpsOnly": {
+      "types": "./dist/middleware/httpsOnly.d.ts",
+      "import": "./dist/middleware/httpsOnly.js",
+      "require": "./dist/middleware/httpsOnly.cjs",
+      "default": "./src/middleware/httpsOnly.ts"
     },
     "./lib/middleware/healthcheck": {
       "types": "./dist/middleware/healthcheck.d.ts",

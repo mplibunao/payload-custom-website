@@ -23,11 +23,7 @@ const getConfig = (app: App): Config => {
 			minify: true,
 			entrypoints: {
 				paths: ['src/**/*.ts'],
-				ignore: [
-					'src/**/*.d.ts',
-					'src/middleware/stripTrailingSlashes.ts',
-					'src/middleware/httpsOnly.ts',
-				],
+				ignore: ['src/**/*.d.ts'],
 			},
 		},
 		dev: {
@@ -35,11 +31,7 @@ const getConfig = (app: App): Config => {
 			minify: false,
 			entrypoints: {
 				paths: ['src/**/*.ts'],
-				ignore: [
-					'src/**/*.d.ts',
-					'src/middleware/stripTrailingSlashes.ts',
-					'src/middleware/httpsOnly.ts',
-				],
+				ignore: ['src/**/*.d.ts'],
 			},
 		},
 	}

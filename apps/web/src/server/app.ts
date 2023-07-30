@@ -1,7 +1,7 @@
 import { getPayloadOpts } from '@org/cms/lib/infra/payload/init'
 import { getCloudRunLoggerConfig } from '@org/shared/lib/logger/cloudRunLoggerOpts'
 import { healthCheck } from '@org/shared/lib/middleware/healthcheck'
-import { lazyLoadMiddlewares } from '@org/shared/lib/middleware/lazyLoad'
+import { stripTrailingSlashes } from '@org/shared/lib/middleware/stripTrailingSlashes'
 import { type ServerBuild } from '@remix-run/node'
 import compression from 'compression'
 import express, { type Express } from 'express'
@@ -40,7 +40,8 @@ export const initApp = async (
 	// always put this first so it always runs first (to take off further pressure)
 	app.use(config.overloadProtection)
 
-	await lazyLoadMiddlewares(app, config)
+	// no ending slashes for SEO reasons
+	app.use(stripTrailingSlashes)
 	await payload.init(getPayloadOpts(app, config))
 
 	// trust all proxies in front of express
