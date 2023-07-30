@@ -26,8 +26,8 @@
 		"isEsm": "turbo isEsm --parallel"
 	},
 	"devDependencies": {
-		"prettier-config": "workspace:*",
 		"husky": "^8.0.0",
+		"prettier-config": "workspace:*",
 		"turbo": "1.8.5",
 		"typescript": "^5.1.6"
 	},
@@ -36,5 +36,10 @@
 		"node": ">=16.19.0"
 	},
 	"prettier": "prettier-config",
-	"packageManager": "pnpm@8.2.0"
+	"packageManager": "pnpm@8.2.0",
+	"pnpm": {
+		"patchedDependencies": {
+			"payload@1.11.3": "patches/payload@1.11.3.patch"
+		}
+	}
 }

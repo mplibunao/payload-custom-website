@@ -43,7 +43,7 @@ export const initApp = async (
 
 	// no ending slashes for SEO reasons
 	app.use(stripTrailingSlash)
-	await initPayloadCms(app, config)
+	await initPayloadCms(app, config, logger)
 
 	// trust all proxies in front of express
 	// lets cookies / sessions work
