@@ -18,7 +18,6 @@ async function start() {
 	const app = await initApp(express(), { config, build, buildPath })
 
 	const server = app.listen(config.server.port, () => {
-		//console.log(`server started on ${config.server.port}`)
 		app.locals.logger.info(`server started on ${config.server.port}`)
 		if (config.env.NODE_ENV === 'development') {
 			broadcastDevReady(build)

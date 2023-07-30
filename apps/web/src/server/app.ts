@@ -14,7 +14,7 @@ import {
 	createDevRequestHandler,
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
-import { lazyLoadMiddlewares } from './middleware/lazyLoad.ts'
+import { stripTrailingSlash } from './middleware/stripTrailingSlashes.ts'
 import { healthCheck } from './routes/healthcheck.ts'
 
 // eslint-disable-next-line max-statements
@@ -41,7 +41,8 @@ export const initApp = async (
 	// always put this first so it always runs first (to take off further pressure)
 	app.use(config.overloadProtection)
 
-	await lazyLoadMiddlewares(app, config)
+	// no ending slashes for SEO reasons
+	app.use(stripTrailingSlash)
 	await initPayloadCms(app, config)
 
 	// trust all proxies in front of express
@@ -88,7 +89,7 @@ export const initApp = async (
 		}),
 	)
 
-	app.get('/health', healthCheck)
+	app.get('/health', healthCheck(app.locals.logger, config))
 
 	app.all(
 		'*',

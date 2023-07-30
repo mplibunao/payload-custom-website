@@ -6,9 +6,10 @@
 		"clean": "rm -rf .turbo node_modules",
 		"build": "run-s build:*",
 		"build:remix": "remix build --sourcemap",
+		"build:payload": "cross-env PAYLOAD_CONFIG_PATH=./src/payload.config.ts payload build",
 		"build:server": "tsx ./scripts/build.ts --app 'prod'",
-		"dev": "remix dev -c \"pnpm dev:node\" --no-restart",
-		"dev:node": "nodemon --exec 'ts-node --swc -r tsconfig-paths/register ./src/server/index.ts' --watch ./src/server/index.ts",
+		"dev": "remix dev -c \"npm run dev:node\" --no-restart",
+		"dev:node": "cross-env PAYLOAD_CONFIG_PATH=./src/payload.config.ts nodemon --exec 'ts-node --swc -r tsconfig-paths/register ./src/server/index.ts' --watch src/server --watch src/shared -e ts",
 		"format:fix": "prettier --ignore-path ../../.prettierignore --write 'src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}'",
 		"format:check": "prettier --ignore-path ../../.prettierignore --list-different 'src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}'",
 		"lint:check": "TIMING=1 eslint --color --cache --cache-location .eslintcache --ignore-path ../../.eslintignore ./src --ext .js,.jsx,.ts,.tsx",
@@ -20,7 +21,6 @@
 		"isEsm": "tsx ./scripts/checkEsm.ts"
 	},
 	"dependencies": {
-		"@cspotcode/source-map-support": "0.8.1",
 		"@remix-run/css-bundle": "^1.18.1",
 		"@remix-run/express": "^1.18.1",
 		"@remix-run/node": "^1.18.1",
@@ -70,7 +70,6 @@
 		"esbuild": "^0.17.19",
 		"eslint": "^8.44.0",
 		"eslint-config-custom": "workspace:*",
-		"execa": "7.1.1",
 		"globby": "13.2.2",
 		"jsdom": "^22.1.0",
 		"minimist": "^1.2.8",

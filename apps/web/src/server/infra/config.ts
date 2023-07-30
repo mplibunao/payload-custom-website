@@ -57,8 +57,6 @@ export const baseTypeboxEnvSchema = {
 	NODE_ENV,
 	APP_ENV,
 	PORT,
-	STRIP_TRAILING_SLASH: Type.Boolean({ default: true }),
-	REDIRECT_HTTP_TO_HTTPS: Type.Boolean({ default: false }),
 }
 
 /*
@@ -77,8 +75,6 @@ export type Config<T extends Env = Env> = {
 	}
 	server: {
 		port: number
-		stripTraillingSlash?: boolean
-		redirectHttpToHttps?: boolean
 	}
 	loggerOpts: CloudRunLoggerOpts
 	remix: {
@@ -101,8 +97,6 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 		},
 		server: {
 			port: env.PORT,
-			stripTraillingSlash: env.STRIP_TRAILING_SLASH,
-			redirectHttpToHttps: env.REDIRECT_HTTP_TO_HTTPS,
 		},
 		loggerOpts: {
 			APP_NAME: env.APP_NAME,

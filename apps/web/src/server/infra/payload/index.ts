@@ -1,6 +1,7 @@
 import { Type } from '@sinclair/typebox'
 import { type Express } from 'express'
 import payload from 'payload'
+import { type InitOptions } from 'payload/config'
 
 import { type Config } from '../config'
 
@@ -10,8 +11,15 @@ export const payloadEnvSchema = {
 }
 
 export const initPayloadCms = async (app: Express, config: Config) => {
-	return payload.init({
+	const initOptions: InitOptions = {
 		...config.payload,
 		express: app,
-	})
+	}
+
+	if (!initOptions.local) {
+		initOptions.onInit = (payload) => {
+			payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
+		}
+	}
+	return payload.init(initOptions)
 }

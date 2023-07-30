@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { $ } from 'execa'
 import fs from 'fs'
 
-import { type PackageJson } from './build-server.ts'
+import { type PackageJson } from './build.ts'
 
 const packageJson = JSON.parse(
 	fs.readFileSync('./package.json', 'utf-8'),
