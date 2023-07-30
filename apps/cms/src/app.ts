@@ -1,5 +1,4 @@
 import { healthCheck } from '@org/shared/lib/middleware/healthcheck'
-import { lazyLoadMiddlewares } from '@org/shared/lib/middleware/lazyLoad'
 import { type Express } from 'express'
 import payload from 'payload'
 
@@ -15,12 +14,15 @@ export const initApp = async (
 		dependencyOverrides = {},
 	}: { config: Config; dependencyOverrides?: DependencyOverrides },
 ) => {
+	// Redirect all traffic at root to admin UI
+	app.get('/', function (_, res) {
+		res.redirect('/admin')
+	})
+
 	await payload.init(getPayloadOpts(app, config))
 
 	// separate logger DI from the rest of DI since it's required for overload protection and since we want overload to go first as much as possible
 	registerLogger({ app, logger: payload.logger, config }, dependencyOverrides)
-
-	await lazyLoadMiddlewares(app, config)
 
 	// http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
 	app.disable('x-powered-by')
