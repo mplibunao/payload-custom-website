@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload/types'
 
+import { Content } from '../blocks/Content'
 import { metaField } from '../fields/meta'
 import { slugField } from '../fields/slug'
 
@@ -19,9 +20,11 @@ export const Pages: CollectionConfig = {
 			required: true,
 		},
 		{
-			name: 'richText',
-			type: 'richText',
-			label: 'Content',
+			name: 'layout',
+			label: 'Page Layout',
+			type: 'blocks',
+			minRows: 1,
+			blocks: [Content],
 		},
 		slugField(),
 		metaField,
