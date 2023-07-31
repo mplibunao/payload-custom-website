@@ -65,26 +65,6 @@ export const initApp = async (
 	// Everything else (like favicon.ico) is cached for an hour. You may want to be
 	// more aggressive with this caching.
 	app.use(express.static('public', { maxAge: '1h' }))
-	app.use(
-		helmet({
-			crossOriginEmbedderPolicy: false,
-			contentSecurityPolicy: {
-				// NOTE: Remove reportOnly when you're ready to enforce this CSP
-				reportOnly: true,
-				directives: {
-					'connect-src': [
-						config.env.NODE_ENV === 'development' ? 'ws:' : null,
-						"'self'",
-					].filter(Boolean),
-					'font-src': ["'self'"],
-					'frame-src': ["'self'"],
-					'img-src': ["'self'", 'data:'],
-					'script-src': ["'self'"],
-					'upgrade-insecure-requests': null,
-				},
-			},
-		}),
-	)
 
 	app.get('/health', healthCheck(app.locals.logger, config))
 

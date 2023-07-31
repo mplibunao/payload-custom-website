@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload/types'
 
+import { metaField } from '../fields/meta'
 import { slugField } from '../fields/slug'
 
 export const Pages: CollectionConfig = {
@@ -23,5 +24,6 @@ export const Pages: CollectionConfig = {
 			label: 'Content',
 		},
 		slugField(),
+		metaField,
 	],
 }
