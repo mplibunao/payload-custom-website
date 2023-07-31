@@ -2,6 +2,7 @@ import path from 'path'
 import { buildConfig } from 'payload/config.js'
 
 import { collections } from './cms/collections'
+import { globals } from './cms/globals'
 
 // By default, Payload will boot up normally
 // and you will be provided with a base `User` collection.
@@ -9,14 +10,12 @@ import { collections } from './cms/collections'
 export default buildConfig({
 	serverURL: 'http://localhost:3000',
 	collections,
+	globals,
 	typescript: {
-		outputFile: path.resolve(path.resolve(__dirname), 'cms/payload-types'),
+		outputFile: path.resolve(__dirname, 'cms/payload-types'),
 	},
 	graphQL: {
-		schemaOutputFile: path.resolve(
-			path.resolve(__dirname),
-			'cms/generated-schema.graphql',
-		),
+		schemaOutputFile: path.resolve(__dirname, 'cms/generated-schema.graphql'),
 		disable: true,
 	},
 	telemetry: false,

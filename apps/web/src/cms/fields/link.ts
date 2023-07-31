@@ -30,7 +30,7 @@ export const link: LinkType = ({
 	disableLabel = false,
 	overrides = {},
 } = {}) => {
-	let linkResult: Field = {
+	const linkResult: Field = {
 		name: 'link',
 		type: 'group',
 		admin: {
@@ -76,16 +76,18 @@ export const link: LinkType = ({
 		],
 	}
 
-	let linkTypes: Field[] = [
+	const linkTypes: Field[] = [
 		{
 			name: 'reference',
 			label: 'Document to link to',
 			type: 'relationship',
-			relationTo: ['pages', 'posts', 'case-studies'],
+			// add other types of reference links here. Eg. posts, case-studies, etc
+			relationTo: ['pages'],
 			required: true,
 			maxDepth: 1,
 			admin: {
 				condition: (_, siblingData) => siblingData?.type === 'reference',
+				width: disableLabel ? undefined : '50%',
 			},
 		},
 		{
@@ -95,18 +97,12 @@ export const link: LinkType = ({
 			required: true,
 			admin: {
 				condition: (_, siblingData) => siblingData?.type === 'custom',
+				width: disableLabel ? undefined : '50%',
 			},
 		},
 	]
 
 	if (!disableLabel) {
-		if (linkTypes[0]?.admin?.width) {
-			linkTypes[0].admin.width = '50%'
-		}
-		if (linkTypes[1]?.admin?.width) {
-			linkTypes[1].admin.width = '50%'
-		}
-
 		linkResult.fields.push({
 			type: 'row',
 			fields: [
@@ -123,21 +119,17 @@ export const link: LinkType = ({
 			],
 		})
 	} else {
-		linkResult.fields = [...linkResult.fields, ...linkTypes]
+		linkResult.fields.concat(linkTypes)
 	}
 
 	if (appearances !== false) {
-		let appearanceOptionsToUse = [
-			appearanceOptions.default,
-			appearanceOptions.primary,
-			appearanceOptions.secondary,
-		]
-
-		if (appearances) {
-			appearanceOptionsToUse = appearances.map(
-				(appearance) => appearanceOptions[appearance],
-			)
-		}
+		const appearanceOptionsToUse = appearances
+			? appearances.map((appearance) => appearanceOptions[appearance])
+			: [
+					appearanceOptions.default,
+					appearanceOptions.primary,
+					appearanceOptions.secondary,
+			  ]
 
 		linkResult.fields.push({
 			name: 'appearance',

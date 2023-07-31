@@ -1,6 +1,8 @@
 import type { CollectionConfig } from 'payload/types'
 
+import { CallToAction } from '../blocks/CallToAction'
 import { Content } from '../blocks/Content'
+import { Spacer } from '../blocks/Spacer'
 import { metaField } from '../fields/meta'
 import { slugField } from '../fields/slug'
 
@@ -24,7 +26,7 @@ export const Pages: CollectionConfig = {
 			label: 'Page Layout',
 			type: 'blocks',
 			minRows: 1,
-			blocks: [Content],
+			blocks: [CallToAction, Content, Spacer],
 		},
 		slugField(),
 		metaField,

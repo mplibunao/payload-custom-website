@@ -105,7 +105,7 @@ export const Content: Block = {
 				},
 			],
 			admin: {
-				condition: (_, siblingData) => siblingData.accentLine,
+				condition: (_, siblingData) => siblingData.accentLine as boolean,
 				layout: 'horizontal',
 			},
 		},
