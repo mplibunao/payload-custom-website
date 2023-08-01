@@ -1,21 +1,5 @@
+import path from 'path'
 import { type CollectionConfig } from 'payload/types'
-
-export type Type = {
-	filename: string
-	alt: string
-	sizes: {
-		card?: {
-			filename: string
-			width: number
-			height: number
-		}
-		feature?: {
-			filename: string
-			width: number
-			height: number
-		}
-	}
-}
 
 export const Media: CollectionConfig = {
 	slug: 'media',
@@ -23,6 +7,11 @@ export const Media: CollectionConfig = {
 		read: (): boolean => true, // Everyone can read Media
 	},
 	upload: {
+		staticDir: path.resolve(__dirname, '../../../media'),
+		disableLocalStorage: process.env.NODE_ENV === 'production',
+		formatOptions: {
+			format: 'webp',
+		},
 		adminThumbnail: 'card',
 		imageSizes: [
 			{
