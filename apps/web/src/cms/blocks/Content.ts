@@ -9,7 +9,7 @@ export const Content: Block = {
 		plural: 'Content Blocks',
 	},
 	fields: [
-		backgroundColor,
+		backgroundColor(),
 		{
 			name: 'columns',
 			type: 'array',
