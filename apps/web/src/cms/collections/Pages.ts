@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload/types'
 import { CTAGrid } from '../blocks/CTAGrid'
 import { CallToAction } from '../blocks/CallToAction'
 import { Content } from '../blocks/Content'
-import { Image } from '../blocks/Image'
+import { ImageBlock } from '../blocks/Image'
 import { ImageCollage } from '../blocks/ImageCollage'
 import { ImageContentCollage } from '../blocks/ImageContentCollage'
 import { ImageGrid } from '../blocks/ImageGrid'
@@ -79,7 +79,7 @@ export const Pages: CollectionConfig = {
 				CallToAction,
 				Content,
 				CTAGrid,
-				Image,
+				ImageBlock,
 				ImageCollage,
 				ImageContentCollage,
 				ImageGrid,

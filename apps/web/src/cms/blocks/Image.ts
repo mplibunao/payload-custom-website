@@ -1,6 +1,6 @@
 import { type Block } from 'payload/types'
 
-export const Image: Block = {
+export const ImageBlock: Block = {
 	slug: 'image',
 	labels: {
 		singular: 'Image',
