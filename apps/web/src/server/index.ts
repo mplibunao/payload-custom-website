@@ -1,7 +1,10 @@
 import { type ServerBuild, broadcastDevReady } from '@remix-run/node'
 import closeWithGrace, { type Signals } from 'close-with-grace'
 import express from 'express'
+import { type Server } from 'http'
+import mongoose from 'mongoose'
 import path from 'path'
+import { type Logger } from 'pino'
 
 import { initApp } from './app'
 import { config } from './infra/config'
@@ -43,12 +46,37 @@ async function start() {
 
 			app.locals.logger.info({ signal, manual }, 'closing application')
 
-			await new Promise((resolve, reject) => {
-				server.close((e) => {
-					closeListeners.uninstall()
-					return e ? reject(e) : resolve('ok')
-				})
-			})
+			await Promise.all([
+				closeDBConnection(app.locals.logger),
+				closeServer(server, app.locals.logger),
+			])
+			closeListeners.uninstall()
 		},
 	)
+}
+
+async function closeDBConnection(logger: Logger) {
+	return new Promise((resolve, reject) => {
+		mongoose.disconnect((err) => {
+			if (err) {
+				logger.error({ err }, 'Error closing mongoose connection')
+				reject(err)
+			} else {
+				resolve('ok')
+			}
+		})
+	})
+}
+
+async function closeServer(server: Server, logger: Logger) {
+	await new Promise((resolve, reject) => {
+		server.close((error) => {
+			if (error) {
+				logger.error({ error }, 'Error closing server')
+				reject(error)
+			} else {
+				resolve('ok')
+			}
+		})
+	})
 }
