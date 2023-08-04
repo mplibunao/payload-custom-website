@@ -2,6 +2,7 @@ import {
 	type DataFunctionArgs,
 	type AppLoadContext,
 	type EntryContext,
+	Response,
 } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
 import isbot from 'isbot'
