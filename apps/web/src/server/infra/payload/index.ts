@@ -14,9 +14,23 @@ declare global {
 	}
 }
 
+export type PayloadConfig = {
+	payload: InitOptions
+}
+
 export const payloadEnvSchema = {
 	PAYLOAD_SECRET: Type.String(),
 	MONGODB_URI: Type.String(),
+	MONGODB_HEARTBEAT_FREQUENCY_MS: Type.Number({
+		default: 10_000,
+		description:
+			'Sends heartbeat to check status of conn. Emits disconnected event after heartbeat fails. Defaults to 30s',
+	}),
+	MONGODB_SOCKET_TIMEOUT_MS: Type.Number({
+		default: 300_000,
+		description:
+			'Idle timeout for the connection to be dropped. Defaults to 0 (never)',
+	}),
 }
 
 export const initPayloadCms = async (

@@ -2,7 +2,7 @@ import v8 from 'node:v8'
 import { type Logger } from 'pino'
 import { type ExpressMiddleware } from '~/types/middlewareType'
 
-import { type Config } from '../infra/config'
+import { type Config } from '../infra/config.server'
 
 export const healthCheck =
 	(logger: Logger, config: Config): ExpressMiddleware =>

@@ -7,7 +7,7 @@ import path from 'path'
 import { type Logger } from 'pino'
 
 import { initApp } from './app'
-import { config } from './infra/config'
+import { config } from './infra/config.server'
 
 void start()
 

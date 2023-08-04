@@ -2,7 +2,6 @@ import { type RequestHandler, createRequestHandler } from '@remix-run/express'
 import { broadcastDevReady, type ServerBuild } from '@remix-run/node'
 import { Type } from '@sinclair/typebox'
 import { type Request, type Response, type Express } from 'express'
-import { type Context } from '~/types/remix.js'
 
 import { type Config } from '../config.ts'
 import { ServerTiming } from '../serverTiming.ts'
@@ -20,11 +19,12 @@ export function createRemixRequestHandler({
 	config: Config
 	app: Express
 }): RequestHandler {
-	function getLoadContext(_: Request, _res: Response): Context {
+	function getLoadContext(_: Request, _res: Response) {
 		return {
 			serverTiming: new ServerTiming(),
 			logger: app.locals.logger,
 			payload: app.locals.payload,
+			serverConfig: config,
 		}
 	}
 

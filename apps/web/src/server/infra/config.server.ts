@@ -5,6 +5,7 @@ import {
 	type App_env,
 	NODE_ENV,
 	PORT,
+	SERVER_URL,
 } from '~/shared/schemas/index.ts'
 
 import {
@@ -16,7 +17,7 @@ import {
 	cloudRunLoggerOptsEnvSchema,
 	type CloudRunLoggerOpts,
 } from './logger/cloudRunLoggerOpts.ts'
-import { payloadEnvSchema } from './payload/index.ts'
+import { type PayloadConfig, payloadEnvSchema } from './payload/index.ts'
 import { remixEnvSchema } from './remix/index.ts'
 
 /*
@@ -57,6 +58,7 @@ export const baseTypeboxEnvSchema = {
 	NODE_ENV,
 	APP_ENV,
 	PORT,
+	SERVER_URL,
 }
 
 /*
@@ -80,12 +82,8 @@ export type Config<T extends Env = Env> = {
 	remix: {
 		buildPath: string
 	}
-	payload: {
-		secret: string
-		mongoURL: string
-		local: boolean
-	}
-} & OverloadProtectionOpts
+} & OverloadProtectionOpts &
+	PayloadConfig
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 	return {
@@ -113,6 +111,14 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			secret: env.PAYLOAD_SECRET,
 			mongoURL: env.MONGODB_URI,
 			local: false,
+			mongoOptions: {
+				//dbName: 'test',
+				appName: env.APP_NAME,
+				family: 4,
+				heartbeatFrequencyMS: env.MONGODB_HEARTBEAT_FREQUENCY_MS,
+				//authSource: 'admin',
+				socketTimeoutMS: env.MONGODB_SOCKET_TIMEOUT_MS,
+			},
 		},
 	}
 }

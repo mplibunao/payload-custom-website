@@ -1,12 +1,11 @@
 import { type ServerBuild } from '@remix-run/node'
 import express, { type Express } from 'express'
-import helmet from 'helmet'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 
 import { type DependencyOverrides } from './container'
 import { registerLogger } from './container/registerLogger.ts'
-import { type Config } from './infra/config.ts'
+import { type Config } from './infra/config.server.ts'
 import { getCloudRunLoggerConfig } from './infra/logger/cloudRunLoggerOpts.ts'
 import { initPayloadCms } from './infra/payload/index.ts'
 import {
