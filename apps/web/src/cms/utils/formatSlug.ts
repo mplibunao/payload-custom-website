@@ -18,7 +18,7 @@ export const formatSlug =
 		}
 
 		if (operation === 'create') {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+			// eslint-disable-next-line
 			const fallbackData = data?.[fallback] || originalDoc?.[fallback]
 
 			if (fallbackData && typeof fallbackData === 'string') {
