@@ -1,3 +1,4 @@
+/** @type {import("eslint").Linter.Config} */
 module.exports = {
 	parser: '@typescript-eslint/parser',
 	root: true,
@@ -6,4 +7,10 @@ module.exports = {
 		project: true,
 		tsconfigRootDir: __dirname,
 	},
+	overrides: [
+		{
+			files: ['src/cms/payload-types.ts'],
+			reportUnusedDisableDirectives: false,
+		},
+	],
 }

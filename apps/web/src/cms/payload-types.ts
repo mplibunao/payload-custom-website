@@ -25,28 +25,11 @@ export interface Page {
 	id: string
 	title: string
 	heroType: 'minimal' | 'contentAboveImage' | 'contentLeftOfImage'
-	layout?: (
-		| {
-				ctaFields: {
-					feature: 'none' | 'cpa'
-					links?: {
-						link: {
-							type?: 'reference' | 'custom'
-							newTab?: boolean
-							reference: {
-								value: string | Page
-								relationTo: 'pages'
-							}
-							url: string
-							label: string
-						}
-						id?: string
-					}[]
-				}
-				id?: string
-				blockName?: string
-				blockType: 'cta'
-		  }
+	heroContent: {
+		[k: string]: unknown
+	}[]
+	heroImage: string | Media
+	layout: (
 		| {
 				backgroundColor?: 'none' | 'red' | 'blue' | 'orange'
 				columns?: {
@@ -66,28 +49,16 @@ export interface Page {
 				blockType: 'content'
 		  }
 		| {
-				size: 'small' | 'medium' | 'large'
+				image: string | Media
+				type: 'card' | 'feature'
+				caption?: {
+					[k: string]: unknown
+				}[]
 				id?: string
 				blockName?: string
-				blockType: 'spacer'
+				blockType: 'image'
 		  }
 	)[]
-	slug?: string
-	meta?: {
-		title?: string
-		description?: string
-		keywords?: string
-	}
-	updatedAt: string
-	createdAt: string
-}
-export interface Study {
-	id: string
-	title: string
-	featuredImage: string | Media
-	client?: string
-	location?: string
-	categories?: string[] | Category[]
 	slug?: string
 	meta?: {
 		title?: string
@@ -126,6 +97,208 @@ export interface Media {
 			filename?: string
 		}
 	}
+}
+export interface Study {
+	id: string
+	title: string
+	featuredImage: string | Media
+	layout?: (
+		| {
+				ctaFields: {
+					backgroundColor?: 'none' | 'red' | 'blue' | 'orange'
+					content: {
+						[k: string]: unknown
+					}[]
+					feature: 'none' | 'cpa'
+					links?: {
+						link: {
+							type?: 'reference' | 'custom'
+							newTab?: boolean
+							reference: {
+								value: string | Page
+								relationTo: 'pages'
+							}
+							url: string
+							label: string
+						}
+						id?: string
+					}[]
+				}
+				id?: string
+				blockName?: string
+				blockType: 'cta'
+		  }
+		| {
+				backgroundColor?: 'none' | 'red' | 'blue' | 'orange'
+				columns?: {
+					width: 'oneThird' | 'half' | 'twoThirds' | 'full'
+					alignment: 'left' | 'center' | 'right'
+					content: {
+						[k: string]: unknown
+					}[]
+					id?: string
+				}[]
+				accentLine?: boolean
+				accentLineAlignment?: 'left' | 'right'
+				paddingTop?: 'none' | 'small' | 'medium' | 'large'
+				paddingBottom?: 'none' | 'small' | 'medium' | 'large'
+				id?: string
+				blockName?: string
+				blockType: 'content'
+		  }
+		| {
+				actions?: {
+					headline: string
+					link: {
+						type?: 'reference' | 'custom'
+						newTab?: boolean
+						reference: {
+							value: string | Page
+							relationTo: 'pages'
+						}
+						url: string
+						label: string
+						appearance?: 'default' | 'primary' | 'secondary'
+					}
+					id?: string
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'cta-grid'
+		  }
+		| {
+				image: string | Media
+				type: 'card' | 'feature'
+				caption?: {
+					[k: string]: unknown
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'image'
+		  }
+		| {
+				images?: {
+					image: string | Media
+					id?: string
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'image-collage'
+		  }
+		| {
+				backgroundColor?: 'none' | 'red' | 'blue' | 'orange'
+				content: {
+					[k: string]: unknown
+				}[]
+				enableCTA?: boolean
+				link?: {
+					type?: 'reference' | 'custom'
+					newTab?: boolean
+					reference: {
+						value: string | Page
+						relationTo: 'pages'
+					}
+					url: string
+					label: string
+					appearance?: 'default' | 'primary' | 'secondary'
+				}
+				images?: {
+					image: string | Media
+					id?: string
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'image-content-collage'
+		  }
+		| {
+				backgroundColor?: 'none' | 'red' | 'blue' | 'orange'
+				content?: {
+					[k: string]: unknown
+				}[]
+				images?: {
+					image: string | Media
+					content?: string
+					id?: string
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'image-grid'
+		  }
+		| {
+				stats?: {
+					stat?: string
+					description?: string
+					id?: string
+				}[]
+				images?: {
+					image: string | Media
+					id?: string
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'image-stat-collage'
+		  }
+		| {
+				backgroundColor?: 'none' | 'red' | 'blue' | 'orange'
+				images?: {
+					image: string | Media
+					id?: string
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'slider'
+		  }
+		| {
+				size: 'small' | 'medium' | 'large'
+				id?: string
+				blockName?: string
+				blockType: 'spacer'
+		  }
+		| {
+				topOverlap?: 'none' | 'small' | 'medium' | 'large'
+				bottomOverlap?: 'none' | 'small' | 'medium' | 'large'
+				stats?: {
+					stat?: string
+					description?: string
+					id?: string
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'statistics'
+		  }
+		| {
+				sections?: {
+					label: string
+					description: string
+					id?: string
+				}[]
+				id?: string
+				blockName?: string
+				blockType: 'sticky-content'
+		  }
+		| {
+				backgroundColor?: 'none' | 'red' | 'blue' | 'orange'
+				studies: string[] | Study[]
+				id?: string
+				blockName?: string
+				blockType: 'study-slider'
+		  }
+	)[]
+	previewImages?: {
+		image: string | Media
+		id?: string
+	}[]
+	client?: string
+	location?: string
+	categories?: string[] | Category[]
+	slug?: string
+	meta?: {
+		title?: string
+		description?: string
+		keywords?: string
+	}
+	updatedAt: string
+	createdAt: string
 }
 export interface Category {
 	id: string
