@@ -33,7 +33,12 @@ export const initApp = async (
 
 	// separate logger DI from the rest of DI since it's required for overload protection and since we want overload to go first as much as possible
 	registerLogger({ app, logger, config }, dependencyOverrides)
-	app.use(pinoHttp({ logger: app.locals.logger }))
+	app.use(
+		pinoHttp({
+			logger: app.locals.logger,
+			autoLogging: config.env.NODE_ENV === 'production',
+		}),
+	)
 
 	// always put this first so it always runs first (to take off further pressure)
 	app.use(config.overloadProtection)
