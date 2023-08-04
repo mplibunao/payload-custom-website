@@ -1,7 +1,6 @@
-import type { Config } from 'tailwindcss'
-import defaultTheme from 'tailwindcss/defaultTheme.js'
+const defaultTheme = require('tailwindcss/defaultTheme')
 
-function withPalette(palette: string) {
+function withPalette(palette) {
 	return {
 		50: `var(--${palette}-50)`,
 		100: `var(--${palette}-100)`,
@@ -16,7 +15,8 @@ function withPalette(palette: string) {
 	}
 }
 
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
 	content: [
 		'./src/components/**/*.{tsx,ts}',
 		'./src/pages/**/*.{tsx,ts}',
@@ -79,4 +79,4 @@ export default {
 			},
 		},
 	},
-} satisfies Config
+}
