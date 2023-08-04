@@ -57,3 +57,7 @@ pnpm-lock.yaml
 test-results/
 playwright-report/
 playwright/.cache/
+
+/*payload*/
+payload-types.ts
+generated-schemas.graphql

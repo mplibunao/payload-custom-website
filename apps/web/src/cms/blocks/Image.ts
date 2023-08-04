@@ -18,19 +18,16 @@ export const ImageBlock: Block = {
 			name: 'type',
 			label: 'Type',
 			type: 'radio',
-			defaultValue: 'normal',
+			defaultValue: 'card',
+			required: true,
 			options: [
 				{
-					label: 'Normal',
-					value: 'normal',
+					label: 'Card',
+					value: 'card',
 				},
 				{
-					label: 'Fullscreen',
-					value: 'fullscreen',
-				},
-				{
-					label: 'Wide',
-					value: 'wide',
+					label: 'Feature',
+					value: 'feature',
 				},
 			],
 			admin: {

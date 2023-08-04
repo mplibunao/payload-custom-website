@@ -8,6 +8,7 @@ export const Media: CollectionConfig = {
 	},
 	upload: {
 		staticDir: path.resolve(__dirname, '../../../media'),
+		staticURL: '/media',
 		disableLocalStorage: process.env.NODE_ENV === 'production',
 		formatOptions: {
 			format: 'webp',
