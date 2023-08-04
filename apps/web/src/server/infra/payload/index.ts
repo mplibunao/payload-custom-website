@@ -4,7 +4,7 @@ import payload, { type Payload } from 'payload'
 import { type InitOptions } from 'payload/config'
 import { type Logger } from 'pino'
 
-import { type Config } from '../config'
+import { type Config } from '../config.server.ts'
 
 declare global {
 	namespace Express {

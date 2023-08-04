@@ -9,7 +9,7 @@ interface Context {
 	serverTiming: ServerTiming
 	logger: Logger
 	payload: Payload
-	serverConfig: Config
+	server: Config
 }
 
 declare module '@remix-run/node' {

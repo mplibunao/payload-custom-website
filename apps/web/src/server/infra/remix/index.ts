@@ -3,7 +3,7 @@ import { broadcastDevReady, type ServerBuild } from '@remix-run/node'
 import { Type } from '@sinclair/typebox'
 import { type Request, type Response, type Express } from 'express'
 
-import { type Config } from '../config.ts'
+import { type Config } from '../config.server.ts'
 import { ServerTiming } from '../serverTiming.ts'
 
 export const remixEnvSchema = {
@@ -24,7 +24,7 @@ export function createRemixRequestHandler({
 			serverTiming: new ServerTiming(),
 			logger: app.locals.logger,
 			payload: app.locals.payload,
-			serverConfig: config,
+			config: config,
 		}
 	}
 
