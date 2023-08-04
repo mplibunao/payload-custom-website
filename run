@@ -65,6 +65,10 @@ function db:gen:types { ## Generates types from database
   pnpm -F db db:gen:types
 }
 
+function db:backup { ## Create db backup
+  mongodump -h localhost:27017 -d test --username root --password password --out=./data/ --authenticationDatabase=admin
+}
+
 function db:gen:migration { ## Generates new migration file
   pnpm -F db-migrator db:migrate create "$@"
 }
