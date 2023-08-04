@@ -4,7 +4,8 @@
 		"importHelpers": true,
 		"baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+		  "payload/generated-types": ["./src/cms/payload-types.ts"]
     }
 	},
 	"include": [
