@@ -1,3 +1,3 @@
 export default function IndexRoute(): JSX.Element {
-	return <div>IndexRoutes</div>
+	return <div className='mt-1'>IndexRoutes</div>
 }

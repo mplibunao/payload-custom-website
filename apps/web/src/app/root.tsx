@@ -38,9 +38,9 @@ export const links: LinksFunction = () => {
 	].filter(Boolean)
 }
 
-export const meta: V2_MetaFunction = ({ data }) => {
+export const meta: V2_MetaFunction = () => {
 	return [
-		{ title: data ? 'Epic Notes' : 'Error | Epic Notes' },
+		{ title: 'Epic Notes' },
 		{ name: 'description', content: `Your own captain's log` },
 	]
 }
