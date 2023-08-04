@@ -4,47 +4,51 @@ import fs from 'fs'
 
 import { type PackageJson } from './build.ts'
 
-const packageJson = JSON.parse(
-	fs.readFileSync('./package.json', 'utf-8'),
-) as PackageJson
+void main()
 
-try {
-	const deps = [...Object.keys(packageJson.dependencies)]
+async function main() {
+	const packageJson = JSON.parse(
+		fs.readFileSync('./package.json', 'utf-8'),
+	) as PackageJson
 
-	const isEsmResult = await Promise.all(
-		deps.map(async (dep) => {
-			console.log(chalk.green(`running npx is-esm ${dep}`))
-			const { stdout: output } = await $`npx is-esm ${dep}`
+	try {
+		const deps = [...Object.keys(packageJson.dependencies)]
 
-			const regex = /(Yes|No)$/
-			const match = regex.exec(output as unknown as string)
-			if (!match) throw new Error('Unexpected output from is-esm')
+		const isEsmResult = await Promise.all(
+			deps.map(async (dep) => {
+				console.log(chalk.green(`running npx is-esm ${dep}`))
+				const { stdout: output } = await $`npx is-esm ${dep}`
 
-			const isEsm = match[1] === 'Yes'
-			if (isEsm) {
-				console.log(chalk.green(`${dep} is an esm package`))
-			} else {
-				console.error(chalk.red(`${dep} is not an esm package`))
-			}
-			return { dep, isEsm, output }
-		}),
-	)
+				const regex = /(Yes|No)$/
+				const match = regex.exec(output as unknown as string)
+				if (!match) throw new Error('Unexpected output from is-esm')
 
-	const esmDeps = isEsmResult
-		.filter((result) => result.isEsm)
-		.map((result) => result.dep)
+				const isEsm = match[1] === 'Yes'
+				if (isEsm) {
+					console.log(chalk.green(`${dep} is an esm package`))
+				} else {
+					console.error(chalk.red(`${dep} is not an esm package`))
+				}
+				return { dep, isEsm, output }
+			}),
+		)
 
-	const nonEsmDeps = isEsmResult
-		.filter((result) => !result.isEsm)
-		.map((result) => result.dep)
+		const esmDeps = isEsmResult
+			.filter((result) => result.isEsm)
+			.map((result) => result.dep)
 
-	console.log("here's the list of esm packages in your package.json")
-	console.info(esmDeps)
-	console.log("here's the list of non-esm packages in your package.json")
-	console.info(nonEsmDeps)
+		const nonEsmDeps = isEsmResult
+			.filter((result) => !result.isEsm)
+			.map((result) => result.dep)
 
-	process.exit(0)
-} catch (e) {
-	console.error(e, 'error')
-	process.exit(1)
+		console.log("here's the list of esm packages in your package.json")
+		console.info(esmDeps)
+		console.log("here's the list of non-esm packages in your package.json")
+		console.info(nonEsmDeps)
+
+		process.exit(0)
+	} catch (e) {
+		console.error(e, 'error')
+		process.exit(1)
+	}
 }
