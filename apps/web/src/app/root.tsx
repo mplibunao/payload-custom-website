@@ -12,7 +12,6 @@ import {
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
-import { useNonce } from './utils/nonce-provider.ts'
 
 export const links: LinksFunction = () => {
 	return [
@@ -39,19 +38,17 @@ export const links: LinksFunction = () => {
 	].filter(Boolean)
 }
 
-export const meta: V2_MetaFunction = ({ data }) => {
+export const meta: V2_MetaFunction = () => {
 	return [
-		{ title: data ? 'Epic Notes' : 'Error | Epic Notes' },
+		{ title: 'Epic Notes' },
 		{ name: 'description', content: `Your own captain's log` },
 	]
 }
 
 function Document({
 	children,
-	nonce,
 }: {
 	children: React.ReactNode
-	nonce: string
 	env?: Record<string, string>
 }) {
 	return (
@@ -64,19 +61,17 @@ function Document({
 			</head>
 			<body>
 				{children}
-				<ScrollRestoration nonce={nonce} />
-				<Scripts nonce={nonce} />
-				<LiveReload nonce={nonce} />
+				<ScrollRestoration />
+				<Scripts />
+				<LiveReload />
 			</body>
 		</html>
 	)
 }
 
 export default function App() {
-	const nonce = useNonce()
-
 	return (
-		<Document nonce={nonce}>
+		<Document>
 			<div className='flex h-screen flex-col justify-between'>
 				<div className='flex-1'>
 					<Outlet />
@@ -87,9 +82,6 @@ export default function App() {
 }
 
 export function ErrorBoundary() {
-	// the nonce doesn't rely on the loader so we can access that
-	const nonce = useNonce()
-
 	// NOTE: you cannot use useLoaderData in an ErrorBoundary because the loader
 	// likely failed to run so we have to do the best we can.
 	// We could probably do better than this (it's possible the loader did run).
@@ -99,7 +91,7 @@ export function ErrorBoundary() {
 	// to give the user a better UX.
 
 	return (
-		<Document nonce={nonce}>
+		<Document>
 			<GeneralErrorBoundary />
 		</Document>
 	)

@@ -1,9 +1,8 @@
 import { Type } from '@sinclair/typebox'
 import v8 from 'node:v8'
 import overload, { type HttpProtectionInstance } from 'overload-protection'
-import { type AppMiddleware } from '~/types/middlewareType'
 
-import { type Env } from '../infra/config'
+import { type Env } from '../infra/config.server'
 
 export const overloadProtectionEnvSchema = {
 	HEALTHCHECK_MAX_EVENT_LOOP_DELAY: Type.Optional(

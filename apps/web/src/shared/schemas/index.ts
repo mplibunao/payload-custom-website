@@ -20,3 +20,4 @@ export type App_env = Static<typeof APP_ENV>
 
 export const PORT = Type.Number({ default: 3000, minimum: 0, maximum: 65535 })
 export const id = Type.String({ format: 'uuid' })
+export const SERVER_URL = Type.String()

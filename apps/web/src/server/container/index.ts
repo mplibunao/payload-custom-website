@@ -1,7 +1,7 @@
 import { type Express } from 'express'
 import { type Logger } from 'pino'
 
-import { type Config } from '../infra/config'
+import { type Config } from '../infra/config.server'
 
 export interface AppDependencies {
 	app: Express

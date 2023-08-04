@@ -1,11 +1,11 @@
 {
-	"extends": "tsconfig/remix.json",
+	"extends": "tsconfig/remix-cjs.json",
 	"compilerOptions": {
 		"importHelpers": true,
-		"jsx": "react-jsx",
 		"baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+		  "payload/generated-types": ["./src/cms/payload-types.ts"]
     }
 	},
 	"include": [

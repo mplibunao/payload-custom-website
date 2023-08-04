@@ -1,10 +1,13 @@
-import { type AppLoadContext, type EntryContext } from '@remix-run/node'
+import {
+	type DataFunctionArgs,
+	type AppLoadContext,
+	type EntryContext,
+	Response,
+} from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
 import isbot from 'isbot'
 import { PassThrough } from 'node:stream'
 import { renderToPipeableStream } from 'react-dom/server'
-
-import { NonceProvider } from './utils/nonce-provider.ts'
 
 const ABORT_DELAY = 5000
 
@@ -16,44 +19,125 @@ export default async function handleRequest(
 	remixContext: EntryContext,
 	loadContext: AppLoadContext,
 ) {
-	const callbackName = isbot(request.headers.get('user-agent'))
-		? 'onAllReady'
-		: 'onShellReady'
+	return isbot(request.headers.get('user-agent'))
+		? handleBotRequest(
+				request,
+				responseStatusCode,
+				responseHeaders,
+				remixContext,
+				loadContext,
+		  )
+		: handleBrowserRequest(
+				request,
+				responseStatusCode,
+				responseHeaders,
+				remixContext,
+				loadContext,
+		  )
+}
 
-	const nonce = loadContext.cspNonce
+// eslint-disable-next-line max-params
+function handleBotRequest(
+	request: Request,
+	responseStatusCode: number,
+	responseHeaders: Headers,
+	remixContext: EntryContext,
+	loadContext: AppLoadContext,
+) {
 	return new Promise((resolve, reject) => {
-		let didError = false
-
+		let shellRendered = false
 		const { pipe, abort } = renderToPipeableStream(
-			<NonceProvider value={nonce}>
-				<RemixServer context={remixContext} url={request.url} />
-			</NonceProvider>,
+			<RemixServer
+				context={remixContext}
+				url={request.url}
+				abortDelay={ABORT_DELAY}
+			/>,
 			{
-				[callbackName]: () => {
+				onAllReady() {
+					shellRendered = true
 					const body = new PassThrough()
+
 					responseHeaders.set('Content-Type', 'text/html')
 
-					// append to headers all the timings stored in the state
-					// includes all timings from lower routes
 					resolve(
 						new Response(body, {
-							headers: loadContext.serverTiming.toHeaders(responseHeaders),
-							status: didError ? 500 : responseStatusCode,
+							headers: responseHeaders,
+							status: responseStatusCode,
 						}),
 					)
+
 					pipe(body)
 				},
-				onShellError: (err: unknown) => {
-					reject(err)
+				onShellError(error: unknown) {
+					reject(error)
 				},
-				onError: (error: unknown) => {
-					didError = true
-
-					console.error(error)
+				onError(error: unknown) {
+					responseStatusCode = 500
+					// Log streaming rendering errors from inside the shell.  Don't log
+					// errors encountered during initial shell rendering since they'll
+					// reject and get logged in handleDocumentRequest.
+					if (shellRendered) {
+						loadContext.logger.error({ error, type: 'botRequest' })
+					}
 				},
 			},
 		)
 
 		setTimeout(abort, ABORT_DELAY)
 	})
+}
+
+// eslint-disable-next-line max-params
+function handleBrowserRequest(
+	request: Request,
+	responseStatusCode: number,
+	responseHeaders: Headers,
+	remixContext: EntryContext,
+	loadContext: AppLoadContext,
+) {
+	return new Promise((resolve, reject) => {
+		let shellRendered = false
+		const { pipe, abort } = renderToPipeableStream(
+			<RemixServer
+				context={remixContext}
+				url={request.url}
+				abortDelay={ABORT_DELAY}
+			/>,
+			{
+				onShellReady() {
+					shellRendered = true
+					const body = new PassThrough()
+
+					responseHeaders.set('Content-Type', 'text/html')
+
+					resolve(
+						new Response(body, {
+							headers: loadContext.serverTiming.toHeaders(responseHeaders),
+							status: responseStatusCode,
+						}),
+					)
+
+					pipe(body)
+				},
+				onShellError(error: unknown) {
+					reject(error)
+				},
+				onError(error: unknown) {
+					responseStatusCode = 500
+					// Log streaming rendering errors from inside the shell.  Don't log
+					// errors encountered during initial shell rendering since they'll
+					// reject and get logged in handleDocumentRequest.
+					if (shellRendered) {
+						loadContext.logger.error({ error, type: 'browserRequest' })
+					}
+				},
+			},
+		)
+
+		setTimeout(abort, ABORT_DELAY)
+	})
+}
+
+export function handleError(error: unknown, { context }: DataFunctionArgs) {
+	context.logger.error({ error })
 }

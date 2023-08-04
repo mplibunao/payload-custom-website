@@ -3,13 +3,11 @@
 import { defineConfig } from 'vite'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
-import { react } from './tests/setup/vitejs-plugin-react.cjs'
-
 export default defineConfig({
-	plugins: [react(), tsconfigPaths()],
+	plugins: [tsconfigPaths()],
 	css: { postcss: { plugins: [] } },
 	test: {
-		include: ['./app/**/*.test.{ts,tsx}'],
+		include: ['./src/**/*.test.{ts,tsx}'],
 		environment: 'jsdom',
 		coverage: {
 			include: ['src/app/**/*.{ts,tsx}'],
@@ -20,13 +18,8 @@ export default defineConfig({
 				'src/tests/**/*',
 				'src/**/*.{spec,test}.{ts,tsx}',
 			],
-			forceRerunTriggers: [
-				'**/package.json/**',
-				//'**vitest.config.*/**',
-				'src/**/*.ts',
-			],
-			open: false,
 		},
+		passWithNoTests: true,
 	},
 	mode: 'test',
 })

@@ -1,24 +1,20 @@
 import { type ServerBuild } from '@remix-run/node'
-import compression from 'compression'
-import express, { type Express, type Response } from 'express'
-import helmet from 'helmet'
+import express, { type Express } from 'express'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 
-import { type DependencyOverrides, registerDependencies } from './container.ts'
+import { type DependencyOverrides } from './container'
 import { registerLogger } from './container/registerLogger.ts'
-import { type Config } from './infra/config.ts'
+import { type Config } from './infra/config.server.ts'
 import { getCloudRunLoggerConfig } from './infra/logger/cloudRunLoggerOpts.ts'
 import { initPayloadCms } from './infra/payload/index.ts'
 import {
 	createDevRequestHandler,
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
-import { generateNonce } from './middleware/generateNonce.ts'
-import { lazyLoadMiddlewares } from './middleware/lazyLoad.ts'
+import { stripTrailingSlash } from './middleware/stripTrailingSlashes.ts'
 import { healthCheck } from './routes/healthcheck.ts'
 
-// eslint-disable-next-line max-statements
 export const initApp = async (
 	app: Express,
 	{
@@ -37,20 +33,24 @@ export const initApp = async (
 
 	// separate logger DI from the rest of DI since it's required for overload protection and since we want overload to go first as much as possible
 	registerLogger({ app, logger, config }, dependencyOverrides)
-	app.use(pinoHttp({ logger: app.locals.logger }))
+	app.use(
+		pinoHttp({
+			logger: app.locals.logger,
+			autoLogging: config.env.NODE_ENV === 'production',
+		}),
+	)
 
 	// always put this first so it always runs first (to take off further pressure)
 	app.use(config.overloadProtection)
 
-	//const _payload = await initPayloadCms(app, config)
-
-	await lazyLoadMiddlewares(app, config)
+	// no ending slashes for SEO reasons
+	app.use(stripTrailingSlash)
+	await initPayloadCms(app, config, logger)
 
 	// trust all proxies in front of express
 	// lets cookies / sessions work
 	app.set('trust proxy', true)
 
-	app.use(compression())
 	// http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
 	app.disable('x-powered-by')
 
@@ -69,37 +69,8 @@ export const initApp = async (
 	// Everything else (like favicon.ico) is cached for an hour. You may want to be
 	// more aggressive with this caching.
 	app.use(express.static('public', { maxAge: '1h' }))
-	app.use(generateNonce)
 
-	app.use(
-		helmet({
-			crossOriginEmbedderPolicy: false,
-			contentSecurityPolicy: {
-				// NOTE: Remove reportOnly when you're ready to enforce this CSP
-				reportOnly: true,
-				directives: {
-					'connect-src': [
-						config.env.NODE_ENV === 'development' ? 'ws:' : null,
-						"'self'",
-					].filter(Boolean),
-					'font-src': ["'self'"],
-					'frame-src': ["'self'"],
-					'img-src': ["'self'", 'data:'],
-					'script-src': [
-						"'strict-dynamic'",
-						"'self'",
-						(_, res) => `'nonce-${(res as Response).locals.cspNonce}'`,
-					],
-					'script-src-attr': [
-						(_, res) => `'nonce-${(res as Response).locals.cspNonce}'`,
-					],
-					'upgrade-insecure-requests': null,
-				},
-			},
-		}),
-	)
-
-	app.get('/health', healthCheck)
+	app.get('/health', healthCheck(app.locals.logger, config))
 
 	app.all(
 		'*',

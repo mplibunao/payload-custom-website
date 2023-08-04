@@ -1,12 +1,15 @@
 import '@remix-run/node'
 
+import { type Payload } from 'payload'
 import { type Logger } from 'pino'
+import { type Config } from '~/server/infra/config.server'
 import { type ServerTiming } from '~/server/infra/serverTiming.ts'
 
 interface Context {
-	cspNonce: string
 	serverTiming: ServerTiming
 	logger: Logger
+	payload: Payload
+	config: Config
 }
 
 declare module '@remix-run/node' {

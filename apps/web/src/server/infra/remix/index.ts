@@ -3,7 +3,7 @@ import { broadcastDevReady, type ServerBuild } from '@remix-run/node'
 import { Type } from '@sinclair/typebox'
 import { type Request, type Response, type Express } from 'express'
 
-import { type Config } from '../config.ts'
+import { type Config } from '../config.server.ts'
 import { ServerTiming } from '../serverTiming.ts'
 
 export const remixEnvSchema = {
@@ -19,11 +19,12 @@ export function createRemixRequestHandler({
 	config: Config
 	app: Express
 }): RequestHandler {
-	function getLoadContext(_: Request, res: Response) {
+	function getLoadContext(_: Request, _res: Response) {
 		return {
-			cspNonce: res.locals.cspNonce,
 			serverTiming: new ServerTiming(),
 			logger: app.locals.logger,
+			payload: app.locals.payload,
+			config: config,
 		}
 	}
 
@@ -53,18 +54,9 @@ export async function createDevRequestHandler({
 }): Promise<RequestHandler> {
 	function handleServerUpdate() {
 		// 1. re-import the server build
-		import(`${buildPath}?t=${Date.now()}`)
-			.then((res: ServerBuild) => {
-				build = res
-				// 2. tell dev server that this app server is now up-to-date and ready
-				broadcastDevReady(build)
-			})
-			.catch((err) => {
-				app.locals.logger.error(
-					err,
-					'Something went wrong re-importing the server build',
-				)
-			})
+		build = reimportServer(buildPath)
+		// 2. tell dev server that this app server is now up-to-date and ready
+		broadcastDevReady(build)
 	}
 
 	const { default: chokidar } = await import('chokidar')
@@ -81,4 +73,17 @@ export async function createDevRequestHandler({
 			next(error)
 		}
 	}
+}
+
+// CJS require cache busting
+function reimportServer(BUILD_PATH: string): ServerBuild {
+	// 1. manually remove the server build from the require cache
+	Object.keys(require.cache).forEach((key) => {
+		if (key.startsWith(BUILD_PATH)) {
+			delete require.cache[key]
+		}
+	})
+
+	// 2. re-import the server build
+	return require(BUILD_PATH) as unknown as ServerBuild
 }

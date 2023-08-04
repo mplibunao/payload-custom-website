@@ -10,10 +10,10 @@ module.exports = {
 	endOfLine: 'lf',
 	tabWidth: 2,
 	plugins: [
-		//require('prettier-plugin-tailwindcss'),
+		require('prettier-plugin-tailwindcss'),
 		require('@ianvs/prettier-plugin-sort-imports'),
 	],
 	importOrder: ['^\\$/(.*)$', '^[../]', '^[./]'],
 	importOrderSeparation: true,
-	//tailwindConfig: '../../packages/tailwind-config',
+	tailwindConfig: '../../apps/web/tailwind.config.js',
 }
