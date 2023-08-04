@@ -1,17 +1,15 @@
-const { flatRoutes } = require('remix-flat-routes')
-
 /**
  * @type {import('@remix-run/dev').AppConfig}
  */
 module.exports = {
 	appDirectory: 'src/app',
-	ignoredRouteFiles: ['**/*'],
+	//ignoredRouteFiles: ['**/*'],
 	serverModuleFormat: 'cjs',
 	serverPlatform: 'node',
 	tailwind: true,
 	postcss: true,
 	// add paths outside of appDirectory to watchPaths so we get hmr/hdr
-	watchPaths: ['./tailwind.config.ts'],
+	watchPaths: ['./tailwind.config.js'],
 	future: {
 		v2_headers: true,
 		v2_meta: true,
@@ -32,15 +30,15 @@ module.exports = {
 	//'remix-utils',
 	//],
 	serverMinify: true,
-	routes: async (defineRoutes) => {
-		return flatRoutes('routes', defineRoutes, {
-			appDir: 'src/app',
-			ignoredRouteFiles: [
-				'.*',
-				'**/*.css',
-				'**/*.test.{js,jsx,ts,tsx}',
-				'**/__*.*',
-			],
-		})
-	},
+	//routes: async (defineRoutes) => {
+	//return flatRoutes('routes', defineRoutes, {
+	//appDir: 'src/app',
+	//ignoredRouteFiles: [
+	//'.*',
+	//'**/*.css',
+	//'**/*.test.{js,jsx,ts,tsx}',
+	//'**/__*.*',
+	//],
+	//})
+	//},
 }
