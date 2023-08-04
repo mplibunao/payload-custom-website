@@ -13,7 +13,7 @@
 		"dev:types": "cross-env PAYLOAD_CONFIG_PATH=./src/payload.config.ts nodemon --exec 'payload generate:types' --watch src/cms -e ts --ignore src/cms/payload-types.ts --ignroe src/cms/generated-schema.graphql",
 		"format:fix": "prettier --ignore-path ../../.prettierignore --write 'src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}'",
 		"format:check": "prettier --ignore-path ../../.prettierignore --list-different 'src/**/*.{js,jsx,ts,tsx,md,mdx,graphql,css,scss,yaml,json}'",
-		"lint:check": "TIMING=1 eslint --color --cache --cache-location .eslintcache --ignore-path ../../.eslintignore ./src --ext .js,.jsx,.ts,.tsx",
+		"lint:check": "TIMING=1 eslint --color --cache --cache-location .eslintcache --ignore-path ../../.eslintignore ./src --ext .js,.jsx,.ts,.tsx --max-warnings=0",
 		"lint:fix": "TIMING=1 eslint --color --cache --cache-location .eslintcache --ignore-path ../../.eslintignore ./src --ext .js,.jsx,.ts,.tsx --fix",
 		"start": "cross-env NODE_ENV=production node .",
 		"test": "vitest --coverage --bail=1",
