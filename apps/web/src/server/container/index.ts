@@ -1,7 +1,17 @@
 import { type Express } from 'express'
 import { type Logger } from 'pino'
+import { SiteInfoLoader } from '~/app/modules/site/site.datasource.server'
 
 import { type Config } from '../infra/config.server'
+
+declare global {
+	namespace Express {
+		interface Locals {
+			siteInfoLoader: SiteInfoLoader
+			config: Config
+		}
+	}
+}
 
 export interface AppDependencies {
 	app: Express
@@ -16,6 +26,13 @@ export interface Dependencies {
 export type DependencyOverrides = Partial<Dependencies>
 
 export const registerDependencies = (
-	_dependencies: AppDependencies,
-	_dependencyOverrides: DependencyOverrides,
-) => {}
+	{ app, logger, config }: AppDependencies,
+	_dependencyOverrides: DependencyOverrides = {},
+) => {
+	const siteInfoLoader = new SiteInfoLoader({
+		logger,
+		payload: app.locals.payload,
+	})
+	app.locals.siteInfoLoader = siteInfoLoader
+	app.locals.config = config
+}

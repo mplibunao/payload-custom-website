@@ -1,5 +1,10 @@
 import { cssBundleHref } from '@remix-run/css-bundle'
-import { type LinksFunction, type V2_MetaFunction } from '@remix-run/node'
+import {
+	type LinksFunction,
+	type V2_MetaFunction,
+	json,
+	type DataFunctionArgs,
+} from '@remix-run/node'
 import {
 	Links,
 	LiveReload,
@@ -7,49 +12,98 @@ import {
 	Outlet,
 	Scripts,
 	ScrollRestoration,
+	useLoaderData,
 } from '@remix-run/react'
 
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
+import { type SiteInfo } from './modules/site/site.repository.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
+import { formatOgTypeMeta } from './utils/seo.ts'
 
 export const links: LinksFunction = () => {
-	return [
+	const rootLinks = [
 		// Preload CSS as a resource to avoid render blocking
 		{ rel: 'preload', href: fontStylestylesheetUrl, as: 'style' },
 		{ rel: 'preload', href: tailwindStylesheetUrl, as: 'style' },
-		cssBundleHref ? { rel: 'preload', href: cssBundleHref, as: 'style' } : null,
 		{ rel: 'mask-icon', href: '/favicons/mask-icon.svg' },
+		{ rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
 		{
-			rel: 'alternate icon',
+			rel: 'icon',
+			type: 'image/svg+xml',
+			href: '/favicons/favicon.svg',
+			sizes: 'any',
+		},
+		{
+			rel: 'icon',
 			type: 'image/png',
 			href: '/favicons/favicon-32x32.png',
+			sizes: '32x32',
 		},
-		{ rel: 'apple-touch-icon', href: '/favicons/apple-touch-icon.png' },
+		{
+			rel: 'icon',
+			type: 'image/png',
+			href: '/favicons/favicon-16x16.png',
+			sizes: '16x16',
+		},
+		{
+			rel: 'apple-touch-icon',
+			href: '/favicons/apple-touch-icon.png',
+			sizes: '180x180',
+		},
 		{
 			rel: 'manifest',
 			href: '/site.webmanifest',
 			crossOrigin: 'use-credentials',
 		} as const, // necessary to make typescript happy
-		{ rel: 'icon', type: 'image/svg+xml', href: '/favicons/favicon.svg' },
 		{ rel: 'stylesheet', href: fontStylestylesheetUrl },
 		{ rel: 'stylesheet', href: tailwindStylesheetUrl },
-		cssBundleHref ? { rel: 'stylesheet', href: cssBundleHref } : null,
-	].filter(Boolean)
+	]
+
+	if (cssBundleHref) {
+		rootLinks.push({ rel: 'preload', href: cssBundleHref, as: 'style' })
+		rootLinks.push({ rel: 'stylesheet', href: cssBundleHref })
+	}
+
+	return rootLinks
 }
 
-export const meta: V2_MetaFunction = () => {
-	return [
-		{ title: 'Epic Notes' },
-		{ name: 'description', content: `Your own captain's log` },
+export const loader = async ({ context, request }: DataFunctionArgs) => {
+	return json({
+		siteInfo: context.siteInfo,
+		requestInfo: {
+			path: new URL(request.url).pathname,
+		},
+		url: request.url,
+	})
+}
+
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+	const rootMeta = [
+		{ title: data?.siteInfo?.title },
+		{ name: 'description', content: data?.siteInfo?.description },
+		{ name: 'twitter:title', content: data?.siteInfo.title },
+		{ name: 'twitter:description', content: data?.siteInfo.description },
+		{ name: 'og:title', content: data?.siteInfo.title },
+		{ name: 'og:url', content: data?.url },
+		{ name: 'og:description', content: data?.siteInfo.description },
+		{ name: 'og:type', content: 'website' },
 	]
+
+	if (data?.siteInfo.ogImage) {
+		rootMeta.push({ name: 'og:image', content: data.siteInfo.ogImage })
+		rootMeta.push({ name: 'twitter:image', content: data.siteInfo.ogImage })
+	}
+
+	return rootMeta
 }
 
 function Document({
 	children,
+	siteInfo,
 }: {
 	children: React.ReactNode
-	env?: Record<string, string>
+	siteInfo?: SiteInfo
 }) {
 	return (
 		<html lang='en' className={`h-full overflow-x-hidden`}>
@@ -57,6 +111,30 @@ function Document({
 				<Meta />
 				<meta charSet='utf-8' />
 				<meta name='viewport' content='width=device-width,initial-scale=1' />
+				<meta name='msapplication-TileColor' content='#da532c' />
+				<meta
+					name='msapplication-config'
+					content='/favicons/browserconfig.xml'
+				/>
+				<meta name='theme-color' content='#ffffff' />
+				<meta
+					name='apple-mobile-web-app-status-bar-style'
+					content='black-translucent'
+				/>
+
+				{/* twitter card */}
+				<meta name='twitter:card' content='summary_large_image' />
+				{siteInfo?.twitter && (
+					<>
+						<meta name='twitter:creator' content={siteInfo.twitter} />
+						<meta name='twitter:site' content={siteInfo.twitter} />
+					</>
+				)}
+
+				{/* facebook cards */}
+				<meta property='og:site_name' content={siteInfo?.title} />
+				<meta property='og:locale' content='en_US' />
+
 				<Links />
 			</head>
 			<body>
@@ -70,8 +148,9 @@ function Document({
 }
 
 export default function App() {
+	const data = useLoaderData<typeof loader>()
 	return (
-		<Document>
+		<Document siteInfo={data.siteInfo}>
 			<div className='flex h-screen flex-col justify-between'>
 				<div className='flex-1'>
 					<Outlet />

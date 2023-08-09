@@ -19,11 +19,25 @@ export const Media: CollectionConfig = {
 				name: 'card',
 				width: 640,
 				height: 480,
+				formatOptions: {
+					format: 'webp',
+				},
 			},
 			{
 				name: 'feature',
 				width: 1024,
 				height: 576,
+				formatOptions: {
+					format: 'webp',
+				},
+			},
+			{
+				name: 'og',
+				width: 1200,
+				height: 630,
+				formatOptions: {
+					format: 'webp',
+				},
 			},
 		],
 	},

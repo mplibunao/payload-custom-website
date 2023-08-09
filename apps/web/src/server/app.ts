@@ -3,7 +3,7 @@ import express, { type Express } from 'express'
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 
-import { type DependencyOverrides } from './container'
+import { registerDependencies, type DependencyOverrides } from './container'
 import { registerLogger } from './container/registerLogger.ts'
 import { type Config } from './infra/config.server.ts'
 import { getCloudRunLoggerConfig } from './infra/logger/cloudRunLoggerOpts.ts'
@@ -12,9 +12,11 @@ import {
 	createDevRequestHandler,
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
+import { getSiteInfo } from './middleware/getSiteInfo.ts'
 import { stripTrailingSlash } from './middleware/stripTrailingSlashes.ts'
 import { healthCheck } from './routes/healthcheck.ts'
 
+// eslint-disable-next-line max-statements
 export const initApp = async (
 	app: Express,
 	{
@@ -45,7 +47,17 @@ export const initApp = async (
 
 	// no ending slashes for SEO reasons
 	app.use(stripTrailingSlash)
+
+	// Redirect all traffic at root to home page
+	app.get('/', function (_, res) {
+		res.redirect('/home')
+	})
+
 	await initPayloadCms(app, config, logger)
+
+	registerDependencies({ app, config, logger })
+	// eslint-disable-next-line @typescript-eslint/no-misused-promises
+	app.use(getSiteInfo)
 
 	// trust all proxies in front of express
 	// lets cookies / sessions work

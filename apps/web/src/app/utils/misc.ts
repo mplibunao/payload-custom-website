@@ -1,5 +1,12 @@
-import { useFormAction, useNavigation } from '@remix-run/react'
+import { type SerializeFrom } from '@remix-run/node'
+import {
+	useFormAction,
+	useMatches,
+	useNavigation,
+	useRouteLoaderData,
+} from '@remix-run/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { type RouteId } from '~/types/route-id'
 
 export function getErrorMessage(error: unknown) {
 	if (typeof error === 'string') return error
@@ -118,4 +125,23 @@ export function useDebounce<
 			),
 		[delay],
 	)
+}
+
+export function useRouteLoaderDataTyped<T = unknown>(routeId: RouteId) {
+	return useRouteLoaderData(routeId) as SerializeFrom<T>
+}
+
+/**
+ * This base hook is used in other hooks to quickly search for specific data
+ * across all loader data using useMatches.
+ * @param {string} id The route id
+ * @returns {JSON|undefined} The route r data or undefined if not found
+ */
+export function useMatchesData<T>(id: RouteId): T | undefined {
+	const matchingRoutes = useMatches()
+	const route = useMemo(
+		() => matchingRoutes.find((route) => route.id === id),
+		[matchingRoutes, id],
+	)
+	return route?.data as T
 }

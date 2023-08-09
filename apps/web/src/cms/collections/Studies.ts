@@ -14,6 +14,7 @@ import { Statistics } from '../blocks/Statistics'
 import { StickyContent } from '../blocks/StickyContent'
 import { StudySlider } from '../blocks/StudySlider'
 import { metaField } from '../fields/meta'
+import { ogImage } from '../fields/meta/ogImage'
 import { slugField } from '../fields/slug'
 
 export const Studies: CollectionConfig = {
@@ -93,6 +94,6 @@ export const Studies: CollectionConfig = {
 			},
 		},
 		slugField(),
-		metaField,
+		metaField(undefined, undefined, { fields: [ogImage()] }),
 	],
 }

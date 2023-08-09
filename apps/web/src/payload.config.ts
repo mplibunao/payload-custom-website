@@ -29,6 +29,7 @@ export default buildConfig({
 				alias: {
 					...config.resolve?.alias,
 					express: mockModulePath,
+					'~': path.resolve(__dirname),
 				},
 			},
 		}),

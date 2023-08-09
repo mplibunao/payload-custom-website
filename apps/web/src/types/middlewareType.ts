@@ -5,3 +5,9 @@ export type ExpressMiddleware = (
 	res: Response,
 	next: NextFunction,
 ) => void
+
+export type AsyncExpressMiddleware = (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => Promise<void>

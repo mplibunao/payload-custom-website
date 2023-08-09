@@ -1,9 +1,10 @@
+const { routeExtensions } = require('remix-custom-routes')
+const path = require('path')
 /**
  * @type {import('@remix-run/dev').AppConfig}
  */
 module.exports = {
 	appDirectory: 'src/app',
-	//ignoredRouteFiles: ['**/*'],
 	serverModuleFormat: 'cjs',
 	serverPlatform: 'node',
 	tailwind: true,
@@ -18,27 +19,10 @@ module.exports = {
 		v2_routeConvention: true,
 		v2_dev: true,
 	},
-	//serverDependenciesToBundle: [
-	//'@sinclair/typebox',
-	//'react-dom',
-	//'@remix-run/css-bundle',
-	//'@remix-run/router',
-	//'@remix-run/server-runtime',
-	//'class-variance-authority',
-	//'isbot',
-	//'tailwind-merge',
-	//'remix-utils',
-	//],
 	serverMinify: true,
-	//routes: async (defineRoutes) => {
-	//return flatRoutes('routes', defineRoutes, {
-	//appDir: 'src/app',
-	//ignoredRouteFiles: [
-	//'.*',
-	//'**/*.css',
-	//'**/*.test.{js,jsx,ts,tsx}',
-	//'**/__*.*',
-	//],
-	//})
-	//},
+	routes: async (_defineRoutes) => {
+		const appDirectory = path.join(__dirname, 'src/app')
+
+		return routeExtensions(appDirectory)
+	},
 }

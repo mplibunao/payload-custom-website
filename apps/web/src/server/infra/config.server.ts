@@ -82,6 +82,10 @@ export type Config<T extends Env = Env> = {
 	remix: {
 		buildPath: string
 	}
+	site: {
+		title: string
+		description: string
+	}
 } & OverloadProtectionOpts &
 	PayloadConfig
 
@@ -119,6 +123,10 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 				//authSource: 'admin',
 				socketTimeoutMS: env.MONGODB_SOCKET_TIMEOUT_MS,
 			},
+		},
+		site: {
+			title: 'Payload Custom Website',
+			description: 'Layout builder using payload and remix',
 		},
 	}
 }

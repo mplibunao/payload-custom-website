@@ -6,7 +6,12 @@
     "paths": {
       "~/*": ["./src/*"],
 		  "payload/generated-types": ["./src/cms/payload-types.ts"]
-    }
+    },
+		"plugins": [
+      {
+        "name": "typescript-remix-routes-plugin"
+      }
+    ]
 	},
 	"include": [
 		"src",

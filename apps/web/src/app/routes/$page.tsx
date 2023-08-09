@@ -1,12 +1,61 @@
-import { type DataFunctionArgs } from '@remix-run/node'
+import {
+	json,
+	type DataFunctionArgs,
+	type V2_MetaFunction,
+} from '@remix-run/node'
 import { Link, useLoaderData, useLocation } from '@remix-run/react'
 
 import { RenderBlocks } from '../components/Blocks/RenderBlocks'
 import { GeneralErrorBoundary } from '../components/error-boundary'
 import { NotFound } from '../utils/http.server'
+import { getMetaTitle, mergeTitle, formatOgTypeMeta } from '../utils/seo'
 
-export const loader = async ({ context, params }: DataFunctionArgs) => {
+export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+	const pageMeta = [
+		{
+			title: mergeTitle(data?.siteInfo?.title, data?.page?.meta?.title),
+		},
+		{
+			name: 'description',
+			content: data?.page?.meta?.description ?? data?.siteInfo?.description,
+		},
+		{
+			name: 'twitter:title',
+			content: getMetaTitle(data?.siteInfo?.title, data?.page?.meta?.title),
+		},
+		{
+			name: 'twitter:description',
+			content: data?.page?.meta?.description ?? data?.siteInfo?.description,
+		},
+		{
+			name: 'twitter:image',
+			content: data?.page?.meta?.ogImage ?? data?.siteInfo.ogImage,
+		},
+		{
+			name: 'og:title',
+			content: mergeTitle(data?.siteInfo.title, data?.page?.meta?.title),
+		},
+		{ name: 'og:url', content: data?.url },
+		{
+			name: 'og:description',
+			content: data?.page?.meta?.description ?? data?.siteInfo?.description,
+		},
+		{
+			name: 'og:image',
+			content: data?.page?.meta?.ogImage ?? data?.siteInfo.ogImage,
+		},
+	]
+
+	return formatOgTypeMeta(data?.page?.meta, pageMeta)
+}
+
+export const loader = async ({
+	context,
+	params,
+	request,
+}: DataFunctionArgs) => {
 	if (!params.page) throw NotFound('Page Not Found')
+
 	const res = await context.payload.find({
 		collection: 'pages',
 		overrideAccess: false,
@@ -15,9 +64,11 @@ export const loader = async ({ context, params }: DataFunctionArgs) => {
 
 	if (res.docs.length === 0) throw NotFound('Page Not Found')
 
-	return {
+	return json({
 		page: res.docs[0],
-	}
+		siteInfo: context.siteInfo,
+		url: request.url,
+	})
 }
 
 export default function DynamicPageRoute(): JSX.Element {
