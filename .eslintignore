@@ -10,3 +10,4 @@ vitest.config.ts
 *.js
 src/client/react-query/*
 playwright-report
+remix-routes.d.ts

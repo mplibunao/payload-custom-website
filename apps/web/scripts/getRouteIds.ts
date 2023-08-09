@@ -1,6 +1,5 @@
 import { type Static, Type } from '@sinclair/typebox'
 import { TypeCompiler } from '@sinclair/typebox/compiler'
-import chalk from 'chalk'
 import { writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 

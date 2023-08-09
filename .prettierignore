@@ -61,3 +61,6 @@ playwright/.cache/
 /*payload*/
 payload-types.ts
 generated-schemas.graphql
+
+/*remix*/
+remix-routes.d.ts

@@ -19,7 +19,6 @@ import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { type SiteInfo } from './modules/site/site.repository.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
-import { formatOgTypeMeta } from './utils/seo.ts'
 
 export const links: LinksFunction = () => {
 	const rootLinks = [
@@ -68,7 +67,7 @@ export const links: LinksFunction = () => {
 	return rootLinks
 }
 
-export const loader = async ({ context, request }: DataFunctionArgs) => {
+export const loader = ({ context, request }: DataFunctionArgs) => {
 	return json({
 		siteInfo: context.siteInfo,
 		requestInfo: {
