@@ -21,7 +21,7 @@
 		"typecheck": "tsc",
 		"isEsm": "tsx ./scripts/checkEsm.ts",
 		"routeJson": "remix routes --json",
-		"routes": "run-p route:*",
+		"routes": "run-p routes:* && pnpm format:fix",
 		"routes:path": "remix-routes -o ./src/types",
 		"routes:id": "tsx ./scripts/getRouteIds.ts"
 	},

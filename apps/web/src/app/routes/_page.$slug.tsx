@@ -3,10 +3,10 @@ import {
 	type DataFunctionArgs,
 	type V2_MetaFunction,
 } from '@remix-run/node'
-import { Link, useLoaderData, useLocation } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
 import { RenderBlocks } from '../components/Blocks/RenderBlocks'
-import { GeneralErrorBoundary } from '../components/error-boundary'
+import { Grid, GridContainer } from '../components/Layout/Grid'
 import { NotFound } from '../utils/http.server'
 import { getMetaTitle, mergeTitle, formatOgTypeMeta } from '../utils/seo'
 
@@ -54,12 +54,12 @@ export const loader = async ({
 	params,
 	request,
 }: DataFunctionArgs) => {
-	if (!params.page) throw NotFound('Page Not Found')
+	if (!params.slug) throw NotFound('Page Not Found')
 
 	const res = await context.payload.find({
 		collection: 'pages',
 		overrideAccess: false,
-		where: { slug: { equals: params.page } },
+		where: { slug: { equals: params.slug } },
 	})
 
 	if (res.docs.length === 0) throw NotFound('Page Not Found')
@@ -76,35 +76,14 @@ export default function DynamicPageRoute(): JSX.Element {
 	if (!page?.layout) throw new Error('Layout not found')
 
 	return (
-		<main>
-			<header>
-				<h1>{page.title}</h1>
-			</header>
-
+		<>
 			<RenderBlocks layout={page.layout} />
-		</main>
-	)
-}
-
-export function ErrorBoundary() {
-	const location = useLocation()
-	return (
-		<GeneralErrorBoundary
-			statusHandlers={{
-				404: () => (
-					<div className='flex flex-col gap-6'>
-						<div className='flex flex-col gap-3'>
-							<h1>We can't find this page:</h1>
-							<pre className='whitespace-pre-wrap break-all text-body-lg'>
-								{location.pathname}
-							</pre>
-						</div>
-						<Link to='/' className='text-body-md underline'>
-							Back to home
-						</Link>
-					</div>
-				),
-			}}
-		/>
+			<GridContainer>
+				<Grid>
+					<div className='col-span-6'>Here is some first-column content</div>
+					<div className='col-span-6'>Here is some first-column content</div>
+				</Grid>
+			</GridContainer>
+		</>
 	)
 }
