@@ -77,7 +77,7 @@ export default function DynamicPageRoute(): JSX.Element {
 	if (!page?.layout) throw new Error('Layout not found')
 
 	return (
-		<>
+		<main>
 			<header>
 				<h1>{page?.title}</h1>
 			</header>
@@ -88,7 +88,7 @@ export default function DynamicPageRoute(): JSX.Element {
 					<div className='col-span-6'>Here is some first-column content</div>
 				</Grid>
 			</GridContainer>
-		</>
+		</main>
 	)
 }
 

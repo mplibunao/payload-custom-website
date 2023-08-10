@@ -2,7 +2,7 @@ import { Outlet } from '@remix-run/react'
 
 export default function PageRoute(): JSX.Element {
 	return (
-		<main>
+		<>
 			<header className='p-8 flex justify-between'>
 				<div>logo</div>
 				<div>menu</div>
@@ -11,6 +11,6 @@ export default function PageRoute(): JSX.Element {
 			<Outlet />
 
 			<footer>Footer</footer>
-		</main>
+		</>
 	)
 }
