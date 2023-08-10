@@ -73,10 +73,16 @@ export const loader = async ({
 
 export default function DynamicPageRoute(): JSX.Element {
 	const { page } = useLoaderData<typeof loader>()
-	return page?.layout ? (
-		<RenderBlocks layout={page.layout} />
-	) : (
-		<ErrorBoundary />
+	if (!page?.layout) throw new Error('Layout not found')
+
+	return (
+		<main>
+			<header>
+				<h1>{page.title}</h1>
+			</header>
+
+			<RenderBlocks layout={page.layout} />
+		</main>
 	)
 }
 

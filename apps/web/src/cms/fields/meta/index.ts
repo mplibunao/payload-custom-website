@@ -2,6 +2,7 @@ import { type GroupField, type Field } from 'payload/types'
 import { deepMerge } from '~/cms/utils/deepMerge'
 
 import { blockFields } from '../blockFields'
+import { baseMetaField } from './base'
 import { profileField } from './profile'
 import { tagField } from './tag'
 import { videoField } from './video'
@@ -39,22 +40,12 @@ export const metaField: MetaField = (
 			name: 'meta',
 			label: 'Meta',
 			type: 'group',
+			admin: {
+				description:
+					'These fields help improve Search Engine Optimization or SEO',
+			},
 			fields: [
-				{
-					name: 'title',
-					label: 'Title',
-					type: 'text',
-					required,
-					admin: {
-						description: 'Page title',
-					},
-				},
-				{
-					name: 'description',
-					label: 'Description',
-					type: 'textarea',
-					required,
-				},
+				...baseMetaField({ required }),
 				{
 					name: 'type',
 					label: 'Type',

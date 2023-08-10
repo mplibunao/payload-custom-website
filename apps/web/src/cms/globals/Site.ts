@@ -1,6 +1,7 @@
 import { type GlobalConfig } from 'payload/types'
 
 import { blockFields } from '../fields/blockFields'
+import { baseMetaField } from '../fields/meta/base'
 import { ogImage } from '../fields/meta/ogImage'
 
 export const Site: GlobalConfig = {
@@ -10,21 +11,7 @@ export const Site: GlobalConfig = {
 		blockFields({
 			name: 'meta',
 			fields: [
-				{
-					name: 'title',
-					label: 'Title',
-					type: 'text',
-					required: true,
-					admin: {
-						description: 'Page title',
-					},
-				},
-				{
-					name: 'description',
-					label: 'Description',
-					type: 'textarea',
-					required: true,
-				},
+				...baseMetaField({ required: true }),
 				{
 					name: 'twitter',
 					label: 'Twitter handle',
