@@ -14,9 +14,12 @@ export const getSiteInfo: AsyncExpressMiddleware = async (req, _, next) => {
 	const siteInfo = await app.locals.siteInfoLoader.get('')
 	req.siteInfo = {
 		...siteInfo,
-		title: siteInfo?.title ?? app.locals.config.site.title,
-		description: siteInfo?.description ?? app.locals.config.site.description,
-		twitter: siteInfo?.twitter,
+		meta: {
+			title: siteInfo?.meta.title ?? app.locals.config.site.title,
+			description:
+				siteInfo?.meta.description ?? app.locals.config.site.description,
+			twitter: siteInfo?.meta.twitter,
+		},
 	}
 
 	next()

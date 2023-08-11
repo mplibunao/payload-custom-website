@@ -2,7 +2,14 @@ import { type SelectField, type Field } from 'payload/types'
 
 import { deepMerge } from '../utils/deepMerge'
 
-export type Type = 'orange' | 'red' | 'none' | 'blue'
+export type Colors =
+	| 'orange'
+	| 'red'
+	| 'none'
+	| 'blue'
+	| 'yellow'
+	| 'gray'
+	| 'black'
 
 type Args = {
 	overrides?: Partial<SelectField>
@@ -30,6 +37,18 @@ export const backgroundColor = ({ overrides = {} }: Args = {}): Field =>
 				{
 					label: 'Orange',
 					value: 'orange',
+				},
+				{
+					label: 'Yellow',
+					value: 'yellow',
+				},
+				{
+					label: 'Gray',
+					value: 'gray',
+				},
+				{
+					label: 'Black',
+					value: 'black',
 				},
 			],
 		},

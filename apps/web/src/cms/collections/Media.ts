@@ -7,8 +7,8 @@ export const Media: CollectionConfig = {
 		read: (): boolean => true, // Everyone can read Media
 	},
 	upload: {
-		staticDir: path.resolve(__dirname, '../../../media'),
-		staticURL: '/media',
+		staticDir: path.resolve(__dirname, '../../../media/assets'),
+		staticURL: '/media/assets',
 		disableLocalStorage: process.env.NODE_ENV === 'production',
 		formatOptions: {
 			format: 'webp',

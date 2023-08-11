@@ -34,8 +34,8 @@
 		"@remix-run/server-runtime": "^1.18.1",
 		"@sinclair/typebox": "^0.28.14",
 		"@tailwindcss/typography": "0.5.9",
-		"class-variance-authority": "^0.6.1",
 		"close-with-grace": "^1.2.0",
+		"cva": "npm:class-variance-authority@0.7.0",
 		"env-schema": "^5.2.0",
 		"escape-html": "1.0.3",
 		"express": "^4.18.2",
@@ -51,6 +51,7 @@
 		"remix-custom-routes": "1.0.1",
 		"remix-utils": "^6.6.0",
 		"slate": "0.94.1",
+		"svgo": "3.0.2",
 		"tailwind-merge": "^1.13.2",
 		"tslib": "2.6.1"
 	},

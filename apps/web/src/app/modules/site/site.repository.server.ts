@@ -5,8 +5,11 @@ type Dependencies = {
 	payload: Payload
 }
 
-export type SiteInfo = Omit<Site['meta'], 'ogImage'> & {
-	ogImage?: string
+export type SiteInfo = {
+	logo?: Site['logo']
+	meta: Omit<Site['meta'], 'ogImage'> & {
+		ogImage?: string
+	}
 }
 
 export const getSiteInfo = async ({
@@ -19,7 +22,10 @@ export const getSiteInfo = async ({
 			: undefined
 
 	return {
-		...site.meta,
-		ogImage,
+		logo: site.logo,
+		meta: {
+			...site.meta,
+			ogImage,
+		},
 	}
 }

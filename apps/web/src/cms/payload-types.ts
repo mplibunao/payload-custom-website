@@ -13,6 +13,7 @@ export interface Config {
     media: Media;
     'form-submissions': FormSubmission;
     categories: Category;
+    logo: Logo;
     users: User;
   };
   globals: {
@@ -32,7 +33,7 @@ export interface Page {
   heroImage: string | Media;
   layout: (
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange';
+        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
         columns?: {
           width: 'oneThird' | 'half' | 'twoThirds' | 'full';
           alignment: 'left' | 'center' | 'right';
@@ -329,7 +330,7 @@ export interface Study {
   layout?: (
     | {
         ctaFields: {
-          backgroundColor?: 'none' | 'red' | 'blue' | 'orange';
+          backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
           content: {
             [k: string]: unknown;
           }[];
@@ -353,7 +354,7 @@ export interface Study {
         blockType: 'cta';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange';
+        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
         columns?: {
           width: 'oneThird' | 'half' | 'twoThirds' | 'full';
           alignment: 'left' | 'center' | 'right';
@@ -410,7 +411,7 @@ export interface Study {
         blockType: 'image-collage';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange';
+        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
         content: {
           [k: string]: unknown;
         }[];
@@ -435,7 +436,7 @@ export interface Study {
         blockType: 'image-content-collage';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange';
+        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
         content?: {
           [k: string]: unknown;
         }[];
@@ -463,7 +464,7 @@ export interface Study {
         blockType: 'image-stat-collage';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange';
+        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
         images?: {
           image: string | Media;
           id?: string;
@@ -501,7 +502,7 @@ export interface Study {
         blockType: 'sticky-content';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange';
+        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
         studies: string[] | Study[];
         id?: string;
         blockName?: string;
@@ -534,6 +535,21 @@ export interface FormSubmission {
   source?: string;
   updatedAt: string;
   createdAt: string;
+}
+export interface Logo {
+  id: string;
+  alt: string;
+  padding?: 'none' | '4px' | '8px' | '12px' | '16px';
+  backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+  inline?: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string;
+  filename?: string;
+  mimeType?: string;
+  filesize?: number;
+  width?: number;
+  height?: number;
 }
 export interface User {
   id: string;
@@ -604,6 +620,7 @@ export interface Site {
     twitter?: string;
     ogImage: string | Media;
   };
+  logo: string | Logo;
   updatedAt?: string;
   createdAt?: string;
 }

@@ -79,19 +79,22 @@ export const loader = ({ context, request }: DataFunctionArgs) => {
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 	const rootMeta = [
-		{ title: data?.siteInfo?.title },
-		{ name: 'description', content: data?.siteInfo?.description },
-		{ name: 'twitter:title', content: data?.siteInfo.title },
-		{ name: 'twitter:description', content: data?.siteInfo.description },
-		{ name: 'og:title', content: data?.siteInfo.title },
+		{ title: data?.siteInfo.meta.title },
+		{ name: 'description', content: data?.siteInfo.meta.description },
+		{ name: 'twitter:title', content: data?.siteInfo.meta.title },
+		{ name: 'twitter:description', content: data?.siteInfo.meta.description },
+		{ name: 'og:title', content: data?.siteInfo.meta.title },
 		{ name: 'og:url', content: data?.url },
-		{ name: 'og:description', content: data?.siteInfo.description },
+		{ name: 'og:description', content: data?.siteInfo.meta.description },
 		{ name: 'og:type', content: 'website' },
 	]
 
-	if (data?.siteInfo.ogImage) {
-		rootMeta.push({ name: 'og:image', content: data.siteInfo.ogImage })
-		rootMeta.push({ name: 'twitter:image', content: data.siteInfo.ogImage })
+	if (data?.siteInfo.meta.ogImage) {
+		rootMeta.push({ name: 'og:image', content: data.siteInfo.meta.ogImage })
+		rootMeta.push({
+			name: 'twitter:image',
+			content: data.siteInfo.meta.ogImage,
+		})
 	}
 
 	return rootMeta
@@ -123,15 +126,15 @@ function Document({
 
 				{/* twitter card */}
 				<meta name='twitter:card' content='summary_large_image' />
-				{siteInfo?.twitter && (
+				{siteInfo?.meta.twitter && (
 					<>
-						<meta name='twitter:creator' content={siteInfo.twitter} />
-						<meta name='twitter:site' content={siteInfo.twitter} />
+						<meta name='twitter:creator' content={siteInfo.meta.twitter} />
+						<meta name='twitter:site' content={siteInfo.meta.twitter} />
 					</>
 				)}
 
 				{/* facebook cards */}
-				<meta property='og:site_name' content={siteInfo?.title} />
+				<meta property='og:site_name' content={siteInfo?.meta.title} />
 				<meta property='og:locale' content='en_US' />
 
 				<Links />

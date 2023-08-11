@@ -32,5 +32,15 @@ export const Site: GlobalConfig = {
 				ogImage({ required: true }),
 			],
 		}),
+		{
+			name: 'logo',
+			label: 'Logo',
+			type: 'upload',
+			relationTo: 'logo',
+			required: true,
+			admin: {
+				description: 'Requires svg format',
+			},
+		},
 	],
 }

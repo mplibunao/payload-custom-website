@@ -1,8 +1,8 @@
-export type GridContainerProps = {
+export type ContainerProps = {
 	children?: React.ReactNode
 }
 
-export const GridContainer = (props: GridContainerProps): JSX.Element => {
+export const Container = (props: ContainerProps): JSX.Element => {
 	return <div className='max-w-4xl mx-auto'>{props.children}</div>
 }
 

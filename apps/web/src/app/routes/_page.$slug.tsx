@@ -3,10 +3,10 @@ import {
 	type DataFunctionArgs,
 	type V2_MetaFunction,
 } from '@remix-run/node'
-import { useLoaderData, useLocation } from '@remix-run/react'
+import { Link, useLoaderData, useLocation } from '@remix-run/react'
 
 import { RenderBlocks } from '../components/Blocks/RenderBlocks'
-import { Grid, GridContainer } from '../components/Layout/Grid'
+import { Grid, Container } from '../components/Layout'
 import { GeneralErrorBoundary } from '../components/error-boundary'
 import { NotFound } from '../utils/http.server'
 import { getMetaTitle, mergeTitle, formatOgTypeMeta } from '../utils/seo'
@@ -14,36 +14,42 @@ import { getMetaTitle, mergeTitle, formatOgTypeMeta } from '../utils/seo'
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 	const pageMeta = [
 		{
-			title: mergeTitle(data?.siteInfo?.title, data?.page?.meta?.title),
+			title: mergeTitle(data?.siteInfo?.meta.title, data?.page?.meta?.title),
 		},
 		{
 			name: 'description',
-			content: data?.page?.meta?.description ?? data?.siteInfo?.description,
+			content:
+				data?.page?.meta?.description ?? data?.siteInfo?.meta.description,
 		},
 		{
 			name: 'twitter:title',
-			content: getMetaTitle(data?.siteInfo?.title, data?.page?.meta?.title),
+			content: getMetaTitle(
+				data?.siteInfo?.meta.title,
+				data?.page?.meta?.title,
+			),
 		},
 		{
 			name: 'twitter:description',
-			content: data?.page?.meta?.description ?? data?.siteInfo?.description,
+			content:
+				data?.page?.meta?.description ?? data?.siteInfo?.meta.description,
 		},
 		{
 			name: 'twitter:image',
-			content: data?.page?.meta?.ogImage ?? data?.siteInfo.ogImage,
+			content: data?.page?.meta?.ogImage ?? data?.siteInfo.meta.ogImage,
 		},
 		{
 			name: 'og:title',
-			content: mergeTitle(data?.siteInfo.title, data?.page?.meta?.title),
+			content: mergeTitle(data?.siteInfo.meta.title, data?.page?.meta?.title),
 		},
 		{ name: 'og:url', content: data?.url },
 		{
 			name: 'og:description',
-			content: data?.page?.meta?.description ?? data?.siteInfo?.description,
+			content:
+				data?.page?.meta?.description ?? data?.siteInfo?.meta.description,
 		},
 		{
 			name: 'og:image',
-			content: data?.page?.meta?.ogImage ?? data?.siteInfo.ogImage,
+			content: data?.page?.meta?.ogImage ?? data?.siteInfo.meta.ogImage,
 		},
 	]
 
@@ -82,12 +88,12 @@ export default function DynamicPageRoute(): JSX.Element {
 				<h1>{page?.title}</h1>
 			</header>
 			<RenderBlocks layout={page.layout} />
-			<GridContainer>
+			<Container>
 				<Grid>
 					<div className='col-span-6'>Here is some first-column content</div>
 					<div className='col-span-6'>Here is some first-column content</div>
 				</Grid>
-			</GridContainer>
+			</Container>
 		</main>
 	)
 }
