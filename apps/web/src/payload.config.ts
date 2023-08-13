@@ -1,6 +1,7 @@
 import path from 'path'
 import { buildConfig } from 'payload/config.js'
 
+import { Logo } from './app/components/Icon/Logo'
 import { collections } from './cms/collections'
 import { globals } from './cms/globals'
 
@@ -22,9 +23,15 @@ export default buildConfig({
 	},
 	telemetry: false,
 	admin: {
+		components: {
+			graphics: {
+				Icon: Logo,
+				Logo,
+			},
+		},
 		meta: {
 			favicon: '/favicon.ico',
-			titleSuffix: process.env.SITE_TITLE,
+			titleSuffix: `| ${process.env.SITE_TITLE as string}`,
 		},
 		autoLogin:
 			process.env.PAYLOAD_ENABLE_AUTOLOGIN === 'true'
@@ -41,9 +48,8 @@ export default buildConfig({
 					...config.resolve?.alias,
 					express: mockModulePath,
 					'~': path.resolve(__dirname),
-					os: mockModulePath,
-					fs: mockModulePath,
-					url: mockModulePath,
+					react: path.join(__dirname, '../node_modules/react'),
+					'react-dom': path.join(__dirname, '../node_modules/react-dom'),
 				},
 			},
 		}),

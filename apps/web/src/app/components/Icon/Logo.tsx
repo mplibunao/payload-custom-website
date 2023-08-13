@@ -1,3 +1,6 @@
+// @ts-ignore
+import React from 'react'
+// ^ this is needed when replacing components in payload
 import { twMerge } from 'tailwind-merge'
 
 import { type IconProps, Icon } from './Icon'
