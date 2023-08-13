@@ -1,6 +1,10 @@
 import { type Static, Type, type TObject } from '@sinclair/typebox'
 import envSchema from 'env-schema'
 import {
+	type SiteEnv,
+	SiteEnvSchema,
+} from '~/app/modules/site/siteEnv.server.ts'
+import {
 	APP_ENV,
 	type App_env,
 	NODE_ENV,
@@ -55,6 +59,7 @@ export const baseTypeboxEnvSchema = {
 	...remixEnvSchema,
 	...overloadProtectionEnvSchema,
 	...payloadEnvSchema,
+	...SiteEnvSchema,
 	NODE_ENV,
 	APP_ENV,
 	PORT,
@@ -82,12 +87,9 @@ export type Config<T extends Env = Env> = {
 	remix: {
 		buildPath: string
 	}
-	site: {
-		title: string
-		description: string
-	}
 } & OverloadProtectionOpts &
-	PayloadConfig
+	PayloadConfig &
+	SiteEnv
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 	return {
@@ -125,8 +127,8 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			},
 		},
 		site: {
-			title: 'Payload Custom Website',
-			description: 'Layout builder using payload and remix',
+			title: env.SITE_TITLE,
+			description: env.SITE_DESCRIPTION,
 		},
 	}
 }

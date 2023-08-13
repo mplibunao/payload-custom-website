@@ -22,6 +22,17 @@ export default buildConfig({
 	},
 	telemetry: false,
 	admin: {
+		meta: {
+			favicon: '/favicon.ico',
+			titleSuffix: process.env.SITE_TITLE,
+		},
+		autoLogin:
+			process.env.PAYLOAD_ENABLE_AUTOLOGIN === 'true'
+				? {
+						email: 'admin@example.com',
+						password: 'admin',
+				  }
+				: false,
 		webpack: (config) => ({
 			...config,
 			resolve: {
