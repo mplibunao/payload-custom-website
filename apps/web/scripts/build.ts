@@ -35,7 +35,7 @@ const getConfig = (app: App): Config => {
 			watch: false,
 			minify: true,
 			entrypoints: {
-				paths: ['src/server/index.ts', 'src/payload.config.ts'],
+				paths: ['src/server/index.ts'],
 				ignore: [],
 			},
 		},
@@ -43,7 +43,7 @@ const getConfig = (app: App): Config => {
 			watch: false,
 			minify: false,
 			entrypoints: {
-				paths: ['src/server/index.ts', 'src/payload.config.ts'],
+				paths: ['src/server/index.ts'],
 				ignore: [],
 			},
 		},
