@@ -33,7 +33,6 @@ export default buildConfig({
 					os: mockModulePath,
 					fs: mockModulePath,
 					url: mockModulePath,
-					svgo: mockModulePath,
 				},
 			},
 		}),

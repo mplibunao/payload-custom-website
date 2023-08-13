@@ -6,7 +6,6 @@ type Dependencies = {
 }
 
 export type SiteInfo = {
-	logo?: Site['logo']
 	meta: Omit<Site['meta'], 'ogImage'> & {
 		ogImage?: string
 	}
@@ -22,7 +21,6 @@ export const getSiteInfo = async ({
 			: undefined
 
 	return {
-		logo: site.logo,
 		meta: {
 			...site.meta,
 			ogImage,
