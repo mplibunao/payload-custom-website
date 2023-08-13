@@ -59,8 +59,8 @@ function db:backup { ## Create db backup
   mongodump -h localhost:27017 -d test --username root --password password --out=./data/ --authenticationDatabase=admin
 }
 
-function web:icons { ## Runs icon pipeline
-  pnpm -F web icons
+function icons { ## Runs icon pipeline
+  pnpm icons
 }
 
 function dc:run { ## Docker: Runs [SERVICE] for one-off commands; Does not use ports specified in the service config preventing port collisions;

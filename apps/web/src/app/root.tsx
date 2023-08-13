@@ -15,6 +15,7 @@ import {
 	useLoaderData,
 } from '@remix-run/react'
 
+import svgSprite from './components/Icon/sprite.svg'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { type SiteInfo } from './modules/site/site.repository.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
@@ -22,6 +23,8 @@ import tailwindStylesheetUrl from './styles/tailwind.css'
 
 export const links: LinksFunction = () => {
 	const rootLinks = [
+		// Preload svg sprite as a resource to avoid render blocking
+		{ rel: 'preload', href: svgSprite, as: 'image' },
 		// Preload CSS as a resource to avoid render blocking
 		{ rel: 'preload', href: fontStylestylesheetUrl, as: 'style' },
 		{ rel: 'preload', href: tailwindStylesheetUrl, as: 'style' },

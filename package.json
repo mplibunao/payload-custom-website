@@ -24,7 +24,8 @@
 		"typecheck": "turbo run typecheck",
 		"prepare": "husky install",
 		"isEsm": "turbo isEsm --parallel",
-		"routes": "turbo run routes"
+		"routes": "turbo run routes",
+		"icons": "turbo run icons"
 	},
 	"devDependencies": {
 		"husky": "^8.0.0",

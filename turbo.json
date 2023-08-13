@@ -82,6 +82,9 @@
 			],
 			"outputs": ["src/types/route-id.d.ts", "src/types/remix-routes.d.ts"]
 		},
+		"icons": {
+			"inputs": ["src/icons/raw/**/*.svg", "src/app/components/Icon/types.ts"],
+			"outputs": ["src/icons/processed/**"]
 		}
 	}
 }

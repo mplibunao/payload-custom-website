@@ -23,7 +23,8 @@
 		"routeJson": "remix routes --json",
 		"routes": "run-p routes:* && pnpm format:fix",
 		"routes:path": "remix-routes -o ./src/types",
-		"routes:id": "tsx ./scripts/getRouteIds.ts"
+		"routes:id": "tsx ./scripts/getRouteIds.ts",
+		"icons": "node ./scripts/buildIcons.js && pnpm format:fix"
 	},
 	"dependencies": {
 		"@remix-run/css-bundle": "^1.18.1",
@@ -51,7 +52,6 @@
 		"remix-custom-routes": "1.0.1",
 		"remix-utils": "^6.6.0",
 		"slate": "0.94.1",
-		"svgo": "3.0.2",
 		"tailwind-merge": "^1.13.2",
 		"tslib": "2.6.1"
 	},
@@ -83,6 +83,7 @@
 		"eslint-config-custom": "workspace:*",
 		"execa": "7.2.0",
 		"globby": "13.2.2",
+		"icon-pipeline": "0.1.3",
 		"jsdom": "^22.1.0",
 		"minimist": "^1.2.8",
 		"nodemon": "3.0.1",

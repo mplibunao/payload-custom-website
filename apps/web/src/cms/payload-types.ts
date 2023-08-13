@@ -13,7 +13,6 @@ export interface Config {
     media: Media;
     'form-submissions': FormSubmission;
     categories: Category;
-    logo: Logo;
     users: User;
   };
   globals: {
@@ -536,21 +535,6 @@ export interface FormSubmission {
   updatedAt: string;
   createdAt: string;
 }
-export interface Logo {
-  id: string;
-  alt: string;
-  padding?: 'none' | '4px' | '8px' | '12px' | '16px';
-  backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
-  inline?: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string;
-  filename?: string;
-  mimeType?: string;
-  filesize?: number;
-  width?: number;
-  height?: number;
-}
 export interface User {
   id: string;
   updatedAt: string;
@@ -620,7 +604,6 @@ export interface Site {
     twitter?: string;
     ogImage: string | Media;
   };
-  logo: string | Logo;
   updatedAt?: string;
   createdAt?: string;
 }
