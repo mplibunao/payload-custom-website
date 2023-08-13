@@ -5,6 +5,8 @@ import { Logo } from './app/components/Icon/Logo'
 import { collections } from './cms/collections'
 import { globals } from './cms/globals'
 
+import './app/styles/payloadTailwind.css'
+
 const mockModulePath = path.resolve(__dirname, 'tests/mocks/emptyModuleMock.js')
 
 // By default, Payload will boot up normally
@@ -51,6 +53,16 @@ export default buildConfig({
 					react: path.join(__dirname, '../node_modules/react'),
 					'react-dom': path.join(__dirname, '../node_modules/react-dom'),
 				},
+			},
+			module: {
+				...config.module,
+				rules: [
+					...(config.module?.rules ?? []),
+					{
+						test: /\tailwind.css$/i,
+						use: ['css-loader', 'postcss-loader'],
+					},
+				],
 			},
 		}),
 	},

@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:root {
+		--font-sans: Lausanne, Lausanne Fallback;
+		--antique: #fff9f2;
+		--white: #ffffff;
+		--gray: #181818;
+		--red: #ff322c;
+		--blue: #9ed1d8;
+		--yellow: #ffef5e;
+		--orange: #fcb449;
+	}
+}
