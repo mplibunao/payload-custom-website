@@ -23,7 +23,8 @@
 		"ci": "./run ci",
 		"typecheck": "turbo run typecheck",
 		"prepare": "husky install",
-		"isEsm": "turbo isEsm --parallel"
+		"isEsm": "turbo isEsm --parallel",
+		"routes": "turbo run routes"
 	},
 	"devDependencies": {
 		"husky": "^8.0.0",

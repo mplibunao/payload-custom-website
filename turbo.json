@@ -35,6 +35,14 @@
 				"tsconfig.json"
 			]
 		},
+		"routes": {
+			"inputs": [
+				"src/app/routes/**/*.tsx",
+				"src/app/**/*.route.tsx",
+				"scripts/getRouteIds.ts"
+			],
+			"outputs": ["src/types/route-id.d.ts", "src/types/remix-routes.d.ts"]
+		},
 		"lint:fix": {
 			"outputs": [".eslintcache"],
 			"dependsOn": [],

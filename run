@@ -44,6 +44,10 @@ function ci { ## Runs ci
   pnpm test || return $?
 }
 
+function routes { ## Generates route types and helpers
+  pnpm routes
+}
+
 function db:reset { ## Reset database. Destroy then start it back up
   echo "destroying database"
   dc:destroy -y
@@ -51,26 +55,8 @@ function db:reset { ## Reset database. Destroy then start it back up
   dc:up
 }
 
-function db:setup { ## Setup database. Run migrations, Generate types and seed database
-  echo "setting up database"
-  pnpm -F db-migrator db:migrate:dev 
-  pnpm -F db db:gen:types
-}
-
-function db:migrate { ## Runs migration command
-  pnpm -F db-migrator db:migrate "$@"
-}
-
-function db:gen:types { ## Generates types from database
-  pnpm -F db db:gen:types
-}
-
 function db:backup { ## Create db backup
   mongodump -h localhost:27017 -d test --username root --password password --out=./data/ --authenticationDatabase=admin
-}
-
-function db:gen:migration { ## Generates new migration file
-  pnpm -F db-migrator db:migrate create "$@"
 }
 
 function web:icons { ## Runs icon pipeline
