@@ -63,7 +63,7 @@ export const baseTypeboxEnvSchema = {
 	NODE_ENV,
 	APP_ENV,
 	PORT,
-	SERVER_URL,
+	PAYLOAD_PUBLIC_SERVER_URL: SERVER_URL,
 }
 
 /*
@@ -127,8 +127,8 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			},
 		},
 		site: {
-			title: env.SITE_TITLE,
-			description: env.SITE_DESCRIPTION,
+			title: env.PAYLOAD_PUBLIC_SITE_TITLE,
+			description: env.PAYLOAD_PUBLIC_SITE_DESCRIPTION,
 		},
 	}
 }

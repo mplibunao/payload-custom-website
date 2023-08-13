@@ -5,6 +5,6 @@ export type SiteEnv = {
 }
 
 export const SiteEnvSchema = {
-	SITE_TITLE: Type.String(),
-	SITE_DESCRIPTION: Type.String(),
+	PAYLOAD_PUBLIC_SITE_TITLE: Type.String(),
+	PAYLOAD_PUBLIC_SITE_DESCRIPTION: Type.String(),
 }

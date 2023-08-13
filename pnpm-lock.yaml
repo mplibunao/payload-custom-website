@@ -175,9 +175,6 @@ importers:
       css-loader:
         specifier: 6.8.1
         version: 6.8.1(webpack@5.88.2)
-      dotenv:
-        specifier: 16.3.1
-        version: 16.3.1
       esbuild:
         specifier: ^0.17.19
         version: 0.17.19

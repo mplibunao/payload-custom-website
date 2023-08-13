@@ -33,10 +33,10 @@ export default buildConfig({
 		},
 		meta: {
 			favicon: '/favicon.ico',
-			titleSuffix: `| ${process.env.SITE_TITLE as string}`,
+			titleSuffix: `| ${process.env.PAYLOAD_PUBLIC_SITE_TITLE as string}`,
 		},
 		autoLogin:
-			process.env.PAYLOAD_ENABLE_AUTOLOGIN === 'true'
+			process.env.PAYLOAD_PUBLIC_ENABLE_AUTOLOGIN === 'true'
 				? {
 						email: 'admin@example.com',
 						password: 'admin',
