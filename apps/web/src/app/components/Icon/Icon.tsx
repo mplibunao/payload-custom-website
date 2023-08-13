@@ -1,5 +1,6 @@
 import { type SVGProps } from 'react'
 
+import href from './sprite.svg'
 import { type IconId } from './types'
 
 export type IconProps = SVGProps<SVGSVGElement> & {
@@ -18,7 +19,7 @@ export const Icon = ({
 	return (
 		<>
 			<svg aria-hidden={hideIcon} focusable={!hideIcon} {...props}>
-				<use href={`/sprite.svg#${id}`} />
+				<use href={`${href}#${id}`} />
 			</svg>
 			{label ? <span className='sr-only'>{label}</span> : null}
 		</>
