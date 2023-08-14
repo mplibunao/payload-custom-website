@@ -55,6 +55,7 @@
 		"remix-utils": "^6.6.0",
 		"slate": "0.94.1",
 		"tailwind-merge": "^1.13.2",
+		"tailwindcss-animate": "1.0.6",
 		"tslib": "2.6.1"
 	},
 	"devDependencies": {
