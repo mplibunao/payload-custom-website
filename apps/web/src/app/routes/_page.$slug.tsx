@@ -7,9 +7,9 @@ import { useLoaderData } from '@remix-run/react'
 
 import { RenderBlocks } from '../components/Blocks/RenderBlocks'
 import { Grid, Container } from '../components/Layout'
-import { ErrorBoundary as NotFoundErrorBoundary } from './$'
 import { NotFound } from '../utils/http.server'
 import { getMetaTitle, mergeTitle, formatOgTypeMeta } from '../utils/seo'
+import { ErrorBoundary as NotFoundErrorBoundary } from './$'
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 	const pageMeta = [
