@@ -32,7 +32,10 @@ export interface Page {
   heroImage: string | Media;
   layout: (
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+        backgroundColor: {
+          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+          colorPicker: string;
+        };
         columns?: {
           width: 'oneThird' | 'half' | 'twoThirds' | 'full';
           alignment: 'left' | 'center' | 'right';
@@ -329,7 +332,10 @@ export interface Study {
   layout?: (
     | {
         ctaFields: {
-          backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+          backgroundColor: {
+            backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+            colorPicker: string;
+          };
           content: {
             [k: string]: unknown;
           }[];
@@ -353,7 +359,10 @@ export interface Study {
         blockType: 'cta';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+        backgroundColor: {
+          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+          colorPicker: string;
+        };
         columns?: {
           width: 'oneThird' | 'half' | 'twoThirds' | 'full';
           alignment: 'left' | 'center' | 'right';
@@ -410,7 +419,10 @@ export interface Study {
         blockType: 'image-collage';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+        backgroundColor: {
+          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+          colorPicker: string;
+        };
         content: {
           [k: string]: unknown;
         }[];
@@ -435,7 +447,10 @@ export interface Study {
         blockType: 'image-content-collage';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+        backgroundColor: {
+          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+          colorPicker: string;
+        };
         content?: {
           [k: string]: unknown;
         }[];
@@ -463,7 +478,10 @@ export interface Study {
         blockType: 'image-stat-collage';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+        backgroundColor: {
+          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+          colorPicker: string;
+        };
         images?: {
           image: string | Media;
           id?: string;
@@ -501,7 +519,10 @@ export interface Study {
         blockType: 'sticky-content';
       }
     | {
-        backgroundColor?: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+        backgroundColor: {
+          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+          colorPicker: string;
+        };
         studies: string[] | Study[];
         id?: string;
         blockName?: string;

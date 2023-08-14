@@ -1,0 +1,32 @@
+@import '~payload/scss';
+
+.add-color.btn {
+	margin: 0;
+	padding: 0;
+	border: $style-stroke-width-m solid #fff;
+}
+
+.custom-color-picker {
+	&__btn.btn {
+		margin: base(0.25);
+
+		&:first-of-type {
+			margin-left: unset;
+		}
+	}
+
+	&__input {
+		// Payload exports a mixin from the vars file for quickly applying formInput rules to the class for our input
+		@include formInput;
+	}
+}
+
+.chip {
+	border: $style-stroke-width-m solid #fff;
+	box-shadow: none;
+
+	&--selected {
+		//box-shadow: 0 0 0 $style-stroke-width-m $color-dark-gray;
+		box-shadow: 0 0 3px 3px var(--theme-success-400);
+	}
+}

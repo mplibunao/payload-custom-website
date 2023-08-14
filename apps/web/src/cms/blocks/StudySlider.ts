@@ -1,6 +1,6 @@
 import { type Block } from 'payload/types'
 
-import { backgroundColor } from '../fields/backgroundColor'
+import { colorField } from '../fields/ColorPicker/colorPickerField'
 
 export const StudySlider: Block = {
 	slug: 'study-slider',
@@ -9,7 +9,7 @@ export const StudySlider: Block = {
 		plural: 'Study Sliders',
 	},
 	fields: [
-		backgroundColor(),
+		colorField({ name: 'backgroundColor', label: 'Background Color' }),
 		{
 			name: 'studies',
 			type: 'relationship',

@@ -1,6 +1,6 @@
 import { type Block } from 'payload/types'
 
-import { backgroundColor } from '../fields/backgroundColor'
+import { colorField } from '../fields/ColorPicker/colorPickerField'
 import { link } from '../fields/link'
 
 export const ImageContentCollage: Block = {
@@ -10,7 +10,7 @@ export const ImageContentCollage: Block = {
 		plural: 'Image Content Collages',
 	},
 	fields: [
-		backgroundColor(),
+		colorField({ name: 'backgroundColor', label: 'Background Color' }),
 		{
 			name: 'content',
 			type: 'richText',

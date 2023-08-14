@@ -1,6 +1,6 @@
 import type { Block } from 'payload/types'
 
-import { backgroundColor } from '../fields/backgroundColor'
+import { colorField } from '../fields/ColorPicker/colorPickerField'
 import { blockFields } from '../fields/blockFields'
 import { linkGroup } from '../fields/linkGroup'
 
@@ -14,7 +14,7 @@ export const CallToAction: Block = {
 		blockFields({
 			name: 'ctaFields',
 			fields: [
-				backgroundColor(),
+				colorField({ name: 'backgroundColor', label: 'Background Color' }),
 				{
 					name: 'content',
 					type: 'richText',

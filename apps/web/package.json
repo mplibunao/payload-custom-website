@@ -29,6 +29,7 @@
 		"icons": "node ./scripts/buildIcons.js && pnpm format:fix"
 	},
 	"dependencies": {
+		"@radix-ui/react-tooltip": "1.0.6",
 		"@remix-run/css-bundle": "^1.18.1",
 		"@remix-run/express": "^1.18.1",
 		"@remix-run/node": "^1.18.1",

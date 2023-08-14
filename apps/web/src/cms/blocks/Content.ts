@@ -1,6 +1,6 @@
 import { type Block } from 'payload/types'
 
-import { backgroundColor } from '../fields/backgroundColor'
+import { colorField } from '../fields/ColorPicker/colorPickerField'
 
 export const Content: Block = {
 	slug: 'content',
@@ -9,7 +9,7 @@ export const Content: Block = {
 		plural: 'Content Blocks',
 	},
 	fields: [
-		backgroundColor(),
+		colorField({ name: 'backgroundColor', label: 'Background Color' }),
 		{
 			name: 'columns',
 			type: 'array',
