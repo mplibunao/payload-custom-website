@@ -12,7 +12,7 @@ export const Logo = ({
 	return (
 		<Icon
 			id='logo'
-			className={twMerge('bg-red w-14 h-14 p-4', className)}
+			className={twMerge('bg-red w-14 h-14 p-4 rounded-lg', className)}
 			label='logo'
 			role='img'
 			{...props}
