@@ -31,7 +31,7 @@ export function ErrorBoundary() {
 								{location.pathname}
 							</pre>
 						</div>
-						<Link to='/' className='text-body-md underline'>
+						<Link to='/home' className='text-body-md underline'>
 							Back to home
 						</Link>
 					</div>
