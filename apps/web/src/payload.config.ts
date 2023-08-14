@@ -7,6 +7,8 @@ import { globals } from './cms/globals'
 
 import './app/styles/payloadTailwind.css'
 
+import { BackButton } from './cms/components/BackButton'
+
 const mockModulePath = path.resolve(__dirname, 'tests/mocks/emptyModuleMock.js')
 
 // By default, Payload will boot up normally
@@ -26,11 +28,13 @@ export default buildConfig({
 	telemetry: false,
 	admin: {
 		components: {
+			beforeNavLinks: [BackButton],
 			graphics: {
 				Icon: Logo,
 				Logo,
 			},
 		},
+		css: path.resolve(__dirname, 'cms/payload.css'),
 		meta: {
 			favicon: '/favicon.ico',
 			titleSuffix: `| ${process.env.PAYLOAD_PUBLIC_SITE_TITLE as string}`,

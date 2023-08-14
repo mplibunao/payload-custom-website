@@ -1,1 +1,1 @@
-export type IconId = 'logo'
+export type IconId = 'chevron-left' | 'logo'

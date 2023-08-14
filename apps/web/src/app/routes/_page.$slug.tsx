@@ -3,11 +3,11 @@ import {
 	type DataFunctionArgs,
 	type V2_MetaFunction,
 } from '@remix-run/node'
-import { Link, useLoaderData, useLocation } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
 import { RenderBlocks } from '../components/Blocks/RenderBlocks'
 import { Grid, Container } from '../components/Layout'
-import { GeneralErrorBoundary } from '../components/error-boundary'
+import { ErrorBoundary as NotFoundErrorBoundary } from './$'
 import { NotFound } from '../utils/http.server'
 import { getMetaTitle, mergeTitle, formatOgTypeMeta } from '../utils/seo'
 
@@ -99,24 +99,5 @@ export default function DynamicPageRoute(): JSX.Element {
 }
 
 export function ErrorBoundary() {
-	const location = useLocation()
-	return (
-		<GeneralErrorBoundary
-			statusHandlers={{
-				404: () => (
-					<div className='flex flex-col gap-6'>
-						<div className='flex flex-col gap-3'>
-							<h1>We can't find this page:</h1>
-							<pre className='whitespace-pre-wrap break-all text-body-lg'>
-								{location.pathname}
-							</pre>
-						</div>
-						<Link to='/' className='text-body-md underline'>
-							Back to home
-						</Link>
-					</div>
-				),
-			}}
-		/>
-	)
+	return <NotFoundErrorBoundary />
 }
