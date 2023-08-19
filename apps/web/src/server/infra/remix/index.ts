@@ -1,13 +1,13 @@
 import { type RequestHandler, createRequestHandler } from '@remix-run/express'
 import { broadcastDevReady, type ServerBuild } from '@remix-run/node'
-import { Type } from '@sinclair/typebox'
 import { type Request, type Response, type Express } from 'express'
+import { z } from 'zod'
 
 import { type Config } from '../config.server.ts'
 import { ServerTiming } from '../serverTiming.ts'
 
 export const remixEnvSchema = {
-	REMIX_BUILD_PATH: Type.String({ default: '../build/index.js' }),
+	REMIX_BUILD_PATH: z.string().default('../build/index.js'),
 }
 
 export function createRemixRequestHandler({

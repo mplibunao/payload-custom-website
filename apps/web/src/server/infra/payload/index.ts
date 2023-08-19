@@ -1,8 +1,8 @@
-import { Type } from '@sinclair/typebox'
 import { type Express } from 'express'
 import payload, { type Payload } from 'payload'
 import { type InitOptions } from 'payload/config'
 import { type Logger } from 'pino'
+import { z } from 'zod'
 
 import { type Config } from '../config.server.ts'
 
@@ -19,19 +19,13 @@ export type PayloadConfig = {
 }
 
 export const payloadEnvSchema = {
-	PAYLOAD_SECRET: Type.String(),
-	MONGODB_URI: Type.String(),
-	MONGODB_HEARTBEAT_FREQUENCY_MS: Type.Number({
-		default: 10_000,
-		description:
-			'Sends heartbeat to check status of conn. Emits disconnected event after heartbeat fails. Defaults to 30s',
-	}),
-	MONGODB_SOCKET_TIMEOUT_MS: Type.Number({
-		default: 300_000,
-		description:
-			'Idle timeout for the connection to be dropped. Defaults to 0 (never)',
-	}),
-	PAYLOAD_PUBLIC_ENABLE_AUTOLOGIN: Type.Boolean({ default: false }),
+	PAYLOAD_SECRET: z.string(),
+	MONGODB_URI: z.string(),
+	//'Sends heartbeat to check status of conn. Emits disconnected event after heartbeat fails. Defaults to 30s',
+	MONGODB_HEARTBEAT_FREQUENCY_MS: z.coerce.number().optional().default(10_000),
+	// 'Idle timeout for the connection to be dropped. Defaults to 0 (never)'
+	MONGODB_SOCKET_TIMEOUT_MS: z.coerce.number().optional().default(300_000),
+	PAYLOAD_PUBLIC_ENABLE_AUTOLOGIN: z.coerce.boolean().default(false),
 }
 
 export const initPayloadCms = async (

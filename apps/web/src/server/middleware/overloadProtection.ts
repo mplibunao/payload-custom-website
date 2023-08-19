@@ -1,13 +1,11 @@
-import { Type } from '@sinclair/typebox'
 import v8 from 'node:v8'
 import overload, { type HttpProtectionInstance } from 'overload-protection'
+import { z } from 'zod'
 
 import { type Env } from '../infra/config.server'
 
 export const overloadProtectionEnvSchema = {
-	HEALTHCHECK_MAX_EVENT_LOOP_DELAY: Type.Optional(
-		Type.Number({ default: 200 }),
-	),
+	HEALTHCHECK_MAX_EVENT_LOOP_DELAY: z.coerce.number().optional().default(200),
 }
 
 export type OverloadProtectionOpts = {

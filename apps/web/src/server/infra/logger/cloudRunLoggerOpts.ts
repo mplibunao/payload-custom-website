@@ -1,29 +1,28 @@
 /* eslint-disable */
-import { type Static, Type } from '@sinclair/typebox'
 import { type LoggerOptions } from 'pino'
+import { z } from 'zod'
 import { NODE_ENV } from '~/shared/schemas'
 
 export const cloudRunLoggerOptsEnvSchema = {
-	APP_NAME: Type.String(),
-	APP_VERSION: Type.String({ default: '0.0.0' }),
-	K_SERVICE: Type.Optional(Type.String()),
-	LOGGING_LEVEL: Type.Union(
-		[
-			Type.Literal('fatal'),
-			Type.Literal('error'),
-			Type.Literal('warn'),
-			Type.Literal('info'),
-			Type.Literal('debug'),
-			Type.Literal('trace'),
-		],
-		{ default: 'info' },
-	),
+	K_SERVICE: z.string().optional(),
+	APP_NAME: z.string(),
+	APP_VERSION: z.string().default('0.0.0'),
+	LOGGING_LEVEL: z
+		.union([
+			z.literal('fatal'),
+			z.literal('error'),
+			z.literal('warn'),
+			z.literal('info'),
+			z.literal('debug'),
+			z.literal('trace'),
+		])
+		.default('info'),
 	NODE_ENV,
 }
 
-const loggerOptsSchema = Type.Object(cloudRunLoggerOptsEnvSchema)
+const loggerOptsSchema = z.object(cloudRunLoggerOptsEnvSchema)
 
-export type CloudRunLoggerOpts = Static<typeof loggerOptsSchema>
+export type CloudRunLoggerOpts = z.infer<typeof loggerOptsSchema>
 
 interface ErrorReportingFields {
 	'@type': string

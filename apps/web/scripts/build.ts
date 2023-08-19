@@ -105,12 +105,7 @@ function getExternal() {
 	// no node apis; safe to bundle
 	const included = ESM
 		? [
-				'kysely',
-				'postgres',
-				'regexparam',
 				'react-dom',
-				'@sinclair/typebox',
-				'@vercel/edge-config',
 
 				'@remix-run/css-bundle',
 				'@remix-run/router',

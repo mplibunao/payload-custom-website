@@ -45,9 +45,6 @@ importers:
       '@remix-run/server-runtime':
         specifier: ^1.18.1
         version: 1.18.1
-      '@sinclair/typebox':
-        specifier: ^0.28.14
-        version: 0.28.20
       '@tailwindcss/typography':
         specifier: 0.5.9
         version: 0.5.9(tailwindcss@3.3.2)
@@ -57,9 +54,9 @@ importers:
       cva:
         specifier: npm:class-variance-authority@0.7.0
         version: /class-variance-authority@0.7.0
-      env-schema:
-        specifier: ^5.2.0
-        version: 5.2.0
+      dotenv:
+        specifier: 16.3.1
+        version: 16.3.1
       escape-html:
         specifier: 1.0.3
         version: 1.0.3
@@ -98,7 +95,7 @@ importers:
         version: 1.0.1
       remix-utils:
         specifier: ^6.6.0
-        version: 6.6.0(@remix-run/react@1.18.1)(@remix-run/server-runtime@1.18.1)(react@18.2.0)(typescript@5.1.6)(zod@3.21.4)
+        version: 6.6.0(@remix-run/react@1.18.1)(@remix-run/server-runtime@1.18.1)(react@18.2.0)(typescript@5.1.6)(zod@3.22.2)
       slate:
         specifier: 0.94.1
         version: 0.94.1
@@ -111,6 +108,9 @@ importers:
       tslib:
         specifier: 2.6.1
         version: 2.6.1
+      zod:
+        specifier: 3.22.2
+        version: 3.22.2
     devDependencies:
       '@remix-run/dev':
         specifier: ^1.18.1
@@ -3824,10 +3824,6 @@ packages:
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
 
-  /@sinclair/typebox@0.28.20:
-    resolution: {integrity: sha512-QCF3BGfacwD+3CKhGsMeixnwOmX4AWgm61nKkNdRStyLVu0mpVFYlDSY8gVBOOED1oSwzbJauIWl/+REj8K5+w==}
-    dev: false
-
   /@sindresorhus/is@4.6.0:
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
     engines: {node: '>=10'}
@@ -6911,11 +6907,6 @@ packages:
       is-obj: 2.0.0
     dev: false
 
-  /dotenv-expand@9.0.0:
-    resolution: {integrity: sha512-uW8Hrhp5ammm9x7kBLR6jDfujgaDarNA02tprvZdyrJ7MpdzD1KyrIHG4l+YoC2fJ2UcdFdNWNWIjt+sexBHJw==}
-    engines: {node: '>=12'}
-    dev: false
-
   /dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
@@ -7001,14 +6992,6 @@ packages:
   /env-paths@2.2.1:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
     engines: {node: '>=6'}
-    dev: false
-
-  /env-schema@5.2.0:
-    resolution: {integrity: sha512-36/6cZ+zIbcPA2ANrzp7vTz2bS8/zdZaq2RPFqJVtCGJ4P55EakgJ1BeKP8RMvEmM7ndrnHdJXzL3J1dHrEm1w==}
-    dependencies:
-      ajv: 8.12.0
-      dotenv: 16.3.1
-      dotenv-expand: 9.0.0
     dev: false
 
   /envinfo@7.10.0:
@@ -13115,7 +13098,7 @@ packages:
       typescript-remix-routes-plugin: 1.0.1
     dev: true
 
-  /remix-utils@6.6.0(@remix-run/react@1.18.1)(@remix-run/server-runtime@1.18.1)(react@18.2.0)(typescript@5.1.6)(zod@3.21.4):
+  /remix-utils@6.6.0(@remix-run/react@1.18.1)(@remix-run/server-runtime@1.18.1)(react@18.2.0)(typescript@5.1.6)(zod@3.22.2):
     resolution: {integrity: sha512-4r4ifahU61Aa54m6Yu8B8GTzXyo+9RUzkFZdBNZOErpZ1LUMQ/ng4LeCJX2M6m4obdMjq0ot0pPlnAzeZOSttg==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -13132,7 +13115,7 @@ packages:
       schema-dts: 1.1.2(typescript@5.1.6)
       type-fest: 2.19.0
       uuid: 8.3.2
-      zod: 3.21.4
+      zod: 3.22.2
     transitivePeerDependencies:
       - typescript
     dev: false
@@ -15512,8 +15495,8 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod@3.21.4:
-    resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+  /zod@3.22.2:
+    resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
     dev: false
 
   /zwitch@2.0.4:

@@ -1,5 +1,5 @@
-import { type Static, Type, type TObject } from '@sinclair/typebox'
-import envSchema from 'env-schema'
+import dotenv from 'dotenv'
+import { type ZodFormattedError, z } from 'zod'
 import {
 	type SiteEnv,
 	SiteEnvSchema,
@@ -25,36 +25,11 @@ import { type PayloadConfig, payloadEnvSchema } from './payload/index.ts'
 import { remixEnvSchema } from './remix/index.ts'
 
 /*
- *DOTENV + TYPEBOX ENV SCHEMAS = ENV
- */
-export const getDotEnv = () => {
-	if (Boolean(process.env.CI) || process.env.APP_ENV === 'production') {
-		return false
-	}
-
-	if (process.env.APP_ENV === 'test') {
-		return {
-			path: '.env.test',
-		}
-	}
-
-	return true
-}
-
-export const getEnv = <T>(schema: TObject) => {
-	return envSchema<T>({
-		dotenv: getDotEnv(),
-		schema,
-		data: process.env,
-	})
-}
-
-/*
- *TYPEBOX ENV SCHEMAS
- *Object version (No Type.Object()) allows us to extend the env for other usage outside of serving requests like scripts
+ *ZOD ENV SCHEMAS
+ *Object version (No z.object()) allows us to extend the env for other usage outside of serving requests like scripts
  *Import this if you want to add other env variables
  */
-export const baseTypeboxEnvSchema = {
+export const baseZodEnvSchema = {
 	...cloudRunLoggerOptsEnvSchema,
 	...remixEnvSchema,
 	...overloadProtectionEnvSchema,
@@ -69,9 +44,38 @@ export const baseTypeboxEnvSchema = {
 /*
  *This is the default env schema for normal usage
  */
-const typeboxEnvSchema = Type.Object(baseTypeboxEnvSchema)
+const zodEnvSchema = z.object(baseZodEnvSchema)
 
-export type Env = Static<typeof typeboxEnvSchema>
+export type Env = z.infer<typeof zodEnvSchema>
+
+/*
+ *DOTENV + ZOD ENV SCHEMAS = ENV
+ */
+export const getDotEnv = () => {
+	if (Boolean(process.env.CI) || process.env.APP_ENV === 'production') {
+		return process.env
+	}
+
+	if (process.env.APP_ENV === 'test') {
+		return dotenv.config({ path: '.env.test' }).parsed
+	}
+
+	return dotenv.config().parsed
+}
+
+export const getEnv = () => {
+	const env = getDotEnv()
+	const validatedEnv = zodEnvSchema.safeParse(env)
+	if (!validatedEnv.success) {
+		console.error(
+			'❌ Invalid environment variables:\n',
+			...formatErrors(validatedEnv.error.format()),
+		)
+		throw new Error('Invalid environment variables')
+	}
+
+	return validatedEnv.data
+}
 
 export type Config<T extends Env = Env> = {
 	env: T
@@ -134,7 +138,20 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 }
 
 /*
- *This is the default config using the default typebox schema
+ *This is the default config using the default zod schema
  */
-const env = getEnv<Env>(typeboxEnvSchema)
+const env = getEnv()
 export const config = mapEnvToConfig(env)
+
+export function formatErrors(
+	errors: ZodFormattedError<Map<string, string>, string>,
+) {
+	return Object.entries(errors)
+		.map(([name, value]) => {
+			if (value && '_errors' in value)
+				return `${name}: ${value._errors.join(', ')}\n`
+
+			return null
+		})
+		.filter(Boolean)
+}

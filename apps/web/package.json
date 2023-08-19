@@ -36,11 +36,10 @@
 		"@remix-run/react": "^1.18.1",
 		"@remix-run/router": "^1.7.1",
 		"@remix-run/server-runtime": "^1.18.1",
-		"@sinclair/typebox": "^0.28.14",
 		"@tailwindcss/typography": "0.5.9",
 		"close-with-grace": "^1.2.0",
 		"cva": "npm:class-variance-authority@0.7.0",
-		"env-schema": "^5.2.0",
+		"dotenv": "16.3.1",
 		"escape-html": "1.0.3",
 		"express": "^4.18.2",
 		"isbot": "^3.6.12",
@@ -57,7 +56,8 @@
 		"slate": "0.94.1",
 		"tailwind-merge": "^1.13.2",
 		"tailwindcss-animate": "1.0.6",
-		"tslib": "2.6.1"
+		"tslib": "2.6.1",
+		"zod": "3.22.2"
 	},
 	"devDependencies": {
 		"@remix-run/dev": "^1.18.1",
