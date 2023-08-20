@@ -5,5 +5,8 @@ module.exports = {
   },
   "logo": {
     "filename": "logo.svg"
+  },
+  "menu": {
+    "filename": "menu.svg"
   }
 }

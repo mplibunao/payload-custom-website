@@ -20,7 +20,7 @@ async function makeIcons() {
 			/* Includes the sprite.js && sprite.svg in original icon directory */
 			includeSpriteInSrc: false,
 			/* Turn off additional svg classes added for advanced styling */
-			// disableClasses: true,
+			disableClasses: true,
 			/* Namespace of icon IDs. Will prefix icon names. Example 'foo.svg' will become 'company-foo' */
 			// namespace: 'company'
 		})

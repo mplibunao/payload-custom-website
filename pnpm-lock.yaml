@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 patchedDependencies:
+  icon-pipeline@0.1.3:
+    hash: 4mmiln3lretepdgfie2xi55bhq
+    path: patches/icon-pipeline@0.1.3.patch
   payload@1.11.3:
     hash: fsrchy4okrl2rd5pksrgxvosfe
     path: patches/payload@1.11.3.patch
@@ -201,7 +204,7 @@ importers:
         version: 13.2.2
       icon-pipeline:
         specifier: 0.1.3
-        version: 0.1.3
+        version: 0.1.3(patch_hash=4mmiln3lretepdgfie2xi55bhq)
       jsdom:
         specifier: ^22.1.0
         version: 22.1.0
@@ -8679,7 +8682,7 @@ packages:
       '@babel/runtime': 7.22.6
     dev: false
 
-  /icon-pipeline@0.1.3:
+  /icon-pipeline@0.1.3(patch_hash=4mmiln3lretepdgfie2xi55bhq):
     resolution: {integrity: sha512-EnaAoMaitaznAntlx9BZ0LVLn8lUkzC6ghNYViDxWuCnyspmaE6ClXJKeENXm98fyjx50zNjlpzd65r95at7pA==}
     dependencies:
       brotli-size: 4.0.0
@@ -8693,6 +8696,7 @@ packages:
       rimraf: 2.7.1
       svgo: 1.3.2
     dev: true
+    patched: true
 
   /iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}

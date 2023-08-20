@@ -11,6 +11,7 @@
 		"db:migrate:dev": "pnpm -F pg-manager db:migrate:dev",
 		"cli": "pnpm -F cli cli",
 		"clean": "turbo run clean --parallel",
+		"clean:turbo": "turbo run clean:turbo --parallel",
 		"build": "turbo run build",
 		"dev": "turbo run dev --no-cache --continue",
 		"db:gen:types": "turbo run db:gen:types",
@@ -42,7 +43,8 @@
 	"packageManager": "pnpm@8.2.0",
 	"pnpm": {
 		"patchedDependencies": {
-			"payload@1.11.3": "patches/payload@1.11.3.patch"
+			"payload@1.11.3": "patches/payload@1.11.3.patch",
+			"icon-pipeline@0.1.3": "patches/icon-pipeline@0.1.3.patch"
 		}
 	}
 }

@@ -1,0 +1,19 @@
+diff --git a/lib/svg/config.js b/lib/svg/config.js
+index 3ea0c481342fe5dd5d9a5596955ceb4e051473f7..15d5bbe7b030481046b5949d2747bcf9074d7b25 100644
+--- a/lib/svg/config.js
++++ b/lib/svg/config.js
+@@ -89,13 +89,8 @@ module.exports = function svgoConfig(className) {
+       removeDimensions: true,
+     },
+     {
+-      addClassesToSVGElement: {
+-        className
+-      }
++      removeAttrs: {attrs: 'class'},
+     }
+-      // {
+-      //   removeAttrs: {attrs: '(stroke|fill)'},
+-      // }
+     ]
+   }
+ }
