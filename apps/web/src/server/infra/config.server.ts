@@ -1,75 +1,30 @@
-import { type Static, Type, type TObject } from '@sinclair/typebox'
-import envSchema from 'env-schema'
-import {
-	type SiteEnv,
-	SiteEnvSchema,
-} from '~/app/modules/site/siteEnv.server.ts'
-import {
-	APP_ENV,
-	type App_env,
-	NODE_ENV,
-	PORT,
-	SERVER_URL,
-} from '~/shared/schemas/index.ts'
+import { type Static } from '@sinclair/typebox'
+import dotenv from 'dotenv'
+import { type SiteEnv } from '~/app/modules/site/siteEnv.server.ts'
+import { type App_env } from '~/shared/schemas/index.ts'
+import { envSchema } from '~/shared/validation/compiledAjv.js'
 
 import {
 	type OverloadProtectionOpts,
 	getOverloadProtectionOpts,
-	overloadProtectionEnvSchema,
 } from '../middleware/overloadProtection.ts'
-import {
-	cloudRunLoggerOptsEnvSchema,
-	type CloudRunLoggerOpts,
-} from './logger/cloudRunLoggerOpts.ts'
-import { type PayloadConfig, payloadEnvSchema } from './payload/index.ts'
-import { remixEnvSchema } from './remix/index.ts'
+import { type typeboxEnvSchema } from './configSchema.ts'
+import { type CloudRunLoggerOpts } from './logger/cloudRunLoggerOpts.ts'
+import { type PayloadConfig } from './payload/index.ts'
 
-/*
- *DOTENV + TYPEBOX ENV SCHEMAS = ENV
- */
 export const getDotEnv = () => {
 	if (Boolean(process.env.CI) || process.env.APP_ENV === 'production') {
-		return false
+		return process.env
 	}
 
 	if (process.env.APP_ENV === 'test') {
-		return {
+		return dotenv.config({
 			path: '.env.test',
-		}
+		}).parsed
 	}
 
-	return true
+	return dotenv.config().parsed
 }
-
-export const getEnv = <T>(schema: TObject) => {
-	return envSchema<T>({
-		dotenv: getDotEnv(),
-		schema,
-		data: process.env,
-	})
-}
-
-/*
- *TYPEBOX ENV SCHEMAS
- *Object version (No Type.Object()) allows us to extend the env for other usage outside of serving requests like scripts
- *Import this if you want to add other env variables
- */
-export const baseTypeboxEnvSchema = {
-	...cloudRunLoggerOptsEnvSchema,
-	...remixEnvSchema,
-	...overloadProtectionEnvSchema,
-	...payloadEnvSchema,
-	...SiteEnvSchema,
-	NODE_ENV,
-	APP_ENV,
-	PORT,
-	PAYLOAD_PUBLIC_SERVER_URL: SERVER_URL,
-}
-
-/*
- *This is the default env schema for normal usage
- */
-const typeboxEnvSchema = Type.Object(baseTypeboxEnvSchema)
 
 export type Env = Static<typeof typeboxEnvSchema>
 
@@ -133,8 +88,10 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 	}
 }
 
-/*
- *This is the default config using the default typebox schema
- */
-const env = getEnv<Env>(typeboxEnvSchema)
-export const config = mapEnvToConfig(env)
+const env = getDotEnv()
+
+if (!envSchema(env)) {
+	// @ts-expect-error
+	throw new Error(JSON.stringify(envSchema.errors))
+}
+export const config = mapEnvToConfig(env as unknown as Env)

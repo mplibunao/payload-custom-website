@@ -67,6 +67,7 @@ export const colorField = ({
 				type: 'text',
 				label: false,
 				validate: validateColor,
+				defaultValue: 'none',
 				required: true,
 				admin: {
 					components: {

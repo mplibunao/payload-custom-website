@@ -85,6 +85,13 @@
 		"icons": {
 			"inputs": ["src/icons/raw/**/*.svg", "src/app/components/Icon/types.ts"],
 			"outputs": ["src/icons/processed/**"]
+		},
+		"compile": {
+			"inputs": [
+				"src/server/infra/configSchema.ts",
+				"scripts/compileAjvSchemas.ts"
+			],
+			"outputs": ["src/shared/validation/compiledAjv.js"]
 		}
 	}
 }
