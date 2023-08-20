@@ -28,9 +28,11 @@
 		"routes:path": "remix-routes -o ./src/types",
 		"routes:id": "tsx ./scripts/getRouteIds.ts",
 		"icons": "node ./scripts/buildIcons.js && prettier --ignore-path ../../.prettierignore --write 'src/app/components/Icon/types.ts'",
-		"compile": "tsx ./scripts/compileAjvSchemas.ts"
+		"compile": "tsx ./scripts/compileAjvSchemas.ts",
+		"ui:add": "pnpm dlx shadcn-ui@latest add"
 	},
 	"dependencies": {
+		"@radix-ui/react-slot": "1.0.2",
 		"@radix-ui/react-tooltip": "1.0.6",
 		"@remix-run/css-bundle": "^1.18.1",
 		"@remix-run/express": "^1.18.1",
