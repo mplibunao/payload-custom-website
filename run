@@ -37,7 +37,15 @@ END
   node -e "console.log(crypto.randomBytes($bytes).toString('hex'));"
 }
 
-function ci { ## Runs ci
+function codegen { ## Runs all codegen steps (routes, icons, compile)
+  pnpm icons || return $?
+  pnpm routes || return $?
+  pnpm compile || return $?
+}
+
+
+function ci { ## Runs codegen steps and ci
+  codegen
   pnpm typecheck || return $?
   pnpm lint:check || return $?
   pnpm format:check || return $?
@@ -61,6 +69,10 @@ function db:backup { ## Create db backup
 
 function icons { ## Runs icon pipeline
   pnpm icons
+}
+
+function compile { ## Compile schemas
+  pnpm compile
 }
 
 function dc:run { ## Docker: Runs [SERVICE] for one-off commands; Does not use ports specified in the service config preventing port collisions;

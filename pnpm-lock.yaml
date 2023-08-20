@@ -57,9 +57,9 @@ importers:
       cva:
         specifier: npm:class-variance-authority@0.7.0
         version: /class-variance-authority@0.7.0
-      env-schema:
-        specifier: ^5.2.0
-        version: 5.2.0
+      dotenv:
+        specifier: 16.3.1
+        version: 16.3.1
       escape-html:
         specifier: 1.0.3
         version: 1.0.3
@@ -166,6 +166,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: ^0.33.0
         version: 0.33.0(vitest@0.33.0)
+      ajv:
+        specifier: 8.12.0
+        version: 8.12.0
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.14(postcss@8.4.27)
@@ -5272,7 +5275,6 @@ packages:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
       uri-js: 4.4.1
-    dev: false
 
   /ansi-escapes@4.3.2:
     resolution: {integrity: sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==}
@@ -6911,11 +6913,6 @@ packages:
       is-obj: 2.0.0
     dev: false
 
-  /dotenv-expand@9.0.0:
-    resolution: {integrity: sha512-uW8Hrhp5ammm9x7kBLR6jDfujgaDarNA02tprvZdyrJ7MpdzD1KyrIHG4l+YoC2fJ2UcdFdNWNWIjt+sexBHJw==}
-    engines: {node: '>=12'}
-    dev: false
-
   /dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
@@ -7001,14 +6998,6 @@ packages:
   /env-paths@2.2.1:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
     engines: {node: '>=6'}
-    dev: false
-
-  /env-schema@5.2.0:
-    resolution: {integrity: sha512-36/6cZ+zIbcPA2ANrzp7vTz2bS8/zdZaq2RPFqJVtCGJ4P55EakgJ1BeKP8RMvEmM7ndrnHdJXzL3J1dHrEm1w==}
-    dependencies:
-      ajv: 8.12.0
-      dotenv: 16.3.1
-      dotenv-expand: 9.0.0
     dev: false
 
   /envinfo@7.10.0:
@@ -9402,7 +9391,6 @@ packages:
 
   /json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
-    dev: false
 
   /json-schema-typed@7.0.3:
     resolution: {integrity: sha512-7DE8mpG+/fVw+dTpjbxnx47TaMnDfOI1jwft9g1VybltZCduyRQPJPvc+zzKY9WPHxhPWczyFuYa6I8Mw4iU5A==}
@@ -13150,7 +13138,6 @@ packages:
   /require-from-string@2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
-    dev: false
 
   /require-like@0.1.2:
     resolution: {integrity: sha512-oyrU88skkMtDdauHDuKVrgR+zuItqr6/c//FXzvmxRGMexSDc6hNvJInGW3LL46n+8b50RykrvwSUIIQH2LQ5A==}

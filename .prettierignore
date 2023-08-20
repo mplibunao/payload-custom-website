@@ -64,3 +64,5 @@ generated-schemas.graphql
 
 /*remix*/
 remix-routes.d.ts
+
+compiledAjv.js
