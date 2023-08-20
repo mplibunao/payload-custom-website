@@ -33,6 +33,7 @@
 	},
 	"dependencies": {
 		"@radix-ui/react-slot": "1.0.2",
+		"@radix-ui/react-toggle": "1.0.3",
 		"@radix-ui/react-tooltip": "1.0.6",
 		"@remix-run/css-bundle": "^1.18.1",
 		"@remix-run/express": "^1.18.1",

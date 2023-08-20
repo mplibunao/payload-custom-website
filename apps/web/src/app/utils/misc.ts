@@ -8,6 +8,8 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { type RouteId } from '~/types/route-id'
 
+export { twMerge as cn } from 'tailwind-merge'
+
 export function getErrorMessage(error: unknown) {
 	if (typeof error === 'string') return error
 	if (
