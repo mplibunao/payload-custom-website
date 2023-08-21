@@ -95,6 +95,10 @@
 				"scripts/compileAjvSchemas.ts"
 			],
 			"outputs": ["src/shared/validation/compiledAjv.js"]
+		},
+		"tw:gen": {
+			"inputs": ["src/app/styles/tailwind.css"],
+			"outputs": ["tailwindcss-extend.cjs"]
 		}
 	}
 }
