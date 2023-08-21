@@ -29,7 +29,8 @@
 		"routes:id": "tsx ./scripts/getRouteIds.ts",
 		"icons": "node ./scripts/buildIcons.js && prettier --ignore-path ../../.prettierignore --write 'src/app/components/Icon/types.ts'",
 		"compile": "tsx ./scripts/compileAjvSchemas.ts",
-		"ui:add": "pnpm dlx shadcn-ui@latest add"
+		"ui:add": "pnpm dlx shadcn-ui@latest add",
+		"tw:gen": "tailwindcss-extend -p src/app/styles/tailwind.css"
 	},
 	"dependencies": {
 		"@radix-ui/react-slot": "1.0.2",
@@ -106,6 +107,7 @@
 		"prettier-config": "workspace:*",
 		"remix-routes": "1.4.4",
 		"tailwindcss": "^3.3.2",
+		"tailwindcss-extend": "0.0.3",
 		"ts-node": "10.9.1",
 		"tsconfig": "workspace:*",
 		"tsconfig-paths": "4.2.0",

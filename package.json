@@ -27,7 +27,8 @@
 		"isEsm": "turbo isEsm --parallel",
 		"routes": "turbo run routes",
 		"icons": "turbo run icons",
-		"compile": "turbo run compile"
+		"compile": "turbo run compile",
+		"tw:gen": "turbo run tw:gen"
 	},
 	"devDependencies": {
 		"husky": "^8.0.0",

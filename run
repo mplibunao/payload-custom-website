@@ -37,7 +37,12 @@ END
   node -e "console.log(crypto.randomBytes($bytes).toString('hex'));"
 }
 
-function codegen { ## Runs all codegen steps (routes, icons, compile)
+function tw:gen { ## Generate tailwind @component plugins for intellisense support
+  pnpm tw:gen
+}
+
+function codegen { ## Runs all codegen steps (tw:gen, routes, icons, compile)
+  pnpm tw:gen || return $?
   pnpm icons || return $?
   pnpm routes || return $?
   pnpm compile || return $?

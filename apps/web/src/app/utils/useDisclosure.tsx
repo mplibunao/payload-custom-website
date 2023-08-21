@@ -4,7 +4,7 @@ export const useDisclosure = () => {
 	const [isOpen, setIsOpen] = React.useState(false)
 	const onClose = () => setIsOpen(false)
 	const onOpen = () => setIsOpen(true)
-	const onToggle = () => setIsOpen((value) => !value)
+	const onToggle = () => setIsOpen(!isOpen)
 
 	return {
 		isOpen,

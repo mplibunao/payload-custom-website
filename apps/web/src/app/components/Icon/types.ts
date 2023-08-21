@@ -1,1 +1,1 @@
-export type IconId = 'chevron-left' | 'logo' | 'menu'
+export type IconId = 'logo'
