@@ -37,6 +37,7 @@ export const link: LinkType = ({
 			hideGutter: true,
 			...(overrides?.admin || {}),
 		},
+		interfaceName: 'PageLink',
 		fields: [
 			{
 				type: 'row',
@@ -79,7 +80,7 @@ export const link: LinkType = ({
 	const linkTypes: Field[] = [
 		{
 			name: 'reference',
-			label: 'Document to link to',
+			label: 'Page or Document to link to',
 			type: 'relationship',
 			// add other types of reference links here. Eg. posts, case-studies, etc
 			relationTo: ['pages'],

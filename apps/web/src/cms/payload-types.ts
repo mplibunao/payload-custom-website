@@ -63,7 +63,7 @@ export interface Page {
         blockType: 'image';
       }
   )[];
-  slug?: string;
+  slug: string;
   meta: Meta;
   updatedAt: string;
   createdAt: string;
@@ -341,16 +341,7 @@ export interface Study {
           }[];
           feature: 'none' | 'cpa';
           links?: {
-            link: {
-              type?: 'reference' | 'custom';
-              newTab?: boolean;
-              reference: {
-                value: string | Page;
-                relationTo: 'pages';
-              };
-              url: string;
-              label: string;
-            };
+            link: PageLink;
             id?: string;
           }[];
         };
@@ -382,17 +373,7 @@ export interface Study {
     | {
         actions?: {
           headline: string;
-          link: {
-            type?: 'reference' | 'custom';
-            newTab?: boolean;
-            reference: {
-              value: string | Page;
-              relationTo: 'pages';
-            };
-            url: string;
-            label: string;
-            appearance?: 'default' | 'primary' | 'secondary';
-          };
+          link: PageLink;
           id?: string;
         }[];
         id?: string;
@@ -427,17 +408,7 @@ export interface Study {
           [k: string]: unknown;
         }[];
         enableCTA?: boolean;
-        link?: {
-          type?: 'reference' | 'custom';
-          newTab?: boolean;
-          reference: {
-            value: string | Page;
-            relationTo: 'pages';
-          };
-          url: string;
-          label: string;
-          appearance?: 'default' | 'primary' | 'secondary';
-        };
+        link?: PageLink;
         images?: {
           image: string | Media;
           id?: string;
@@ -536,15 +507,26 @@ export interface Study {
   client?: string;
   location?: string;
   categories?: string[] | Category[];
-  slug?: string;
+  slug: string;
   meta: Meta;
   updatedAt: string;
   createdAt: string;
 }
+export interface PageLink {
+  type?: 'reference' | 'custom';
+  newTab?: boolean;
+  reference: {
+    value: string | Page;
+    relationTo: 'pages';
+  };
+  url: string;
+  label: string;
+  appearance?: 'default' | 'primary' | 'secondary';
+}
 export interface Category {
   id: string;
   title: string;
-  slug?: string;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -572,17 +554,7 @@ export interface User {
 export interface MegaMenu {
   id: string;
   nav?: {
-    link: {
-      type?: 'reference' | 'custom';
-      newTab?: boolean;
-      reference: {
-        value: string | Page;
-        relationTo: 'pages';
-      };
-      url: string;
-      label: string;
-      appearance?: 'default' | 'primary' | 'secondary';
-    };
+    link: PageLink;
     id?: string;
   }[];
   updatedAt?: string;
@@ -601,17 +573,7 @@ export interface SocialMedia {
 export interface Footer {
   id: string;
   nav?: {
-    link: {
-      type?: 'reference' | 'custom';
-      newTab?: boolean;
-      reference: {
-        value: string | Page;
-        relationTo: 'pages';
-      };
-      url: string;
-      label: string;
-      appearance?: 'default' | 'primary' | 'secondary';
-    };
+    link: PageLink;
     id?: string;
   }[];
   updatedAt?: string;

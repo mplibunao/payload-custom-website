@@ -210,7 +210,9 @@ export default function App() {
 			<div className='flex h-screen flex-col justify-between'>
 				<div className='flex-1'>
 					<Header socialMedia={data.socialMedia} megaMenu={data.megaMenu} />
-					<Outlet />
+					<div className='pt-[10rem]'>
+						<Outlet />
+					</div>
 				</div>
 			</div>
 		</Document>

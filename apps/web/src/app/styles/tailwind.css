@@ -207,4 +207,8 @@
 	.disabled {
 		@apply cursor-not-allowed border-neutral-200 bg-neutral-50 text-neutral-500 opacity-60;
 	}
+
+	.pointer-events-all {
+		pointer-events: all;
+	}
 }
