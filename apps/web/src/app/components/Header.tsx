@@ -1,16 +1,21 @@
 import * as Toggle from '@radix-ui/react-toggle'
 import { Link } from '@remix-run/react'
 import { twMerge } from 'tailwind-merge'
+import { type MegaMenu, type SocialMedia } from '~/cms/payload-types'
 
 import { useDisclosure } from '../utils/useDisclosure'
 import { Logo } from './Icon/Logo'
 
-export interface HeaderProps {}
+export interface HeaderProps {
+	megaMenu?: MegaMenu
+	socialMedia: SocialMedia['links']
+}
 
+//z-30 fixed top-0 left-0 right-0 pointer-events-none
 export const Header = (_props: HeaderProps): JSX.Element => {
 	const { isOpen: modalIsOpen, onToggle } = useDisclosure()
 	return (
-		<header className='p-8 flex justify-between'>
+		<header className='p-10 md:p-12 flex justify-between'>
 			<Link to='/home' prefetch='intent'>
 				<Logo />
 			</Link>
@@ -41,7 +46,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 		<svg
 			xmlns='http://www.w3.org/2000/svg'
 			stroke='currentColor'
-			stroke-width='2'
+			strokeWidth='2'
 			className='overflow-visible h-6 w-6 text-antique'
 			viewBox='0 0 30 24'
 			aria-hidden
@@ -49,7 +54,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 		>
 			<line
 				x2='30'
-				vector-effect='non-scaling-stroke'
+				vectorEffect='non-scaling-stroke'
 				className={twMerge(
 					'transition-all duration-[400ms] origin-center stroke-[color:var(--antique)] stroke-[2px]',
 					modalIsOpen ? 'opacity-0 translate-x-0 translate-y-[-0.75rem]' : '',
@@ -59,7 +64,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 				y1='12'
 				x2='30'
 				y2='12'
-				vector-effect='non-scaling-stroke'
+				vectorEffect='non-scaling-stroke'
 				className={twMerge(
 					'transition-all duration-[400ms] origin-center stroke-[color:var(--antique)] stroke-[2px]',
 					modalIsOpen ? 'opacity-100 rotate-45' : '',
@@ -69,7 +74,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 				y1='12'
 				x2='30'
 				y2='12'
-				vector-effect='non-scaling-stroke'
+				vectorEffect='non-scaling-stroke'
 				className={twMerge(
 					'transition-all duration-[400ms] origin-center stroke-[color:var(--antique)] stroke-[2px]',
 					modalIsOpen ? 'opacity-100 -rotate-45' : 'opacity-0',
@@ -79,7 +84,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 				y1='24'
 				x2='30'
 				y2='24'
-				vector-effect='non-scaling-stroke'
+				vectorEffect='non-scaling-stroke'
 				className={twMerge(
 					'transition-all duration-[400ms] origin-center stroke-[color:var(--antique)] stroke-[2px]',
 					modalIsOpen ? 'opacity-0 translate-x-0 translate-y-3' : '',

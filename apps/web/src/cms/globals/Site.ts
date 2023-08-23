@@ -7,6 +7,15 @@ import { ogImage } from '../fields/meta/ogImage'
 export const Site: GlobalConfig = {
 	slug: 'site',
 	label: 'Site Config',
+	hooks: {
+		afterChange: [
+			async ({ req, doc }) => {
+				await req.app.locals.siteService.invalidate()
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+				return doc
+			},
+		],
+	},
 	fields: [
 		blockFields({
 			name: 'meta',

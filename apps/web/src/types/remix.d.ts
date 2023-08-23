@@ -1,17 +1,10 @@
 import '@remix-run/node'
 
-import { type Payload } from 'payload'
-import { type Logger } from 'pino'
-import { type SiteInfo } from '~/app/modules/site/site.repository.server'
-import { type Config } from '~/server/infra/config.server'
+import { type Express } from 'express'
 import { type ServerTiming } from '~/server/infra/serverTiming.ts'
 
-interface Context {
+interface Context extends Express.Locals {
 	serverTiming: ServerTiming
-	logger: Logger
-	payload: Payload
-	config: Config
-	siteInfo: SiteInfo
 }
 
 declare module '@remix-run/node' {

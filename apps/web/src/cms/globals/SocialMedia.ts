@@ -1,8 +1,18 @@
 import { type GlobalConfig } from 'payload/types'
+import { SOCIAL_MEDIA_KEY } from '~/constants/globalsCacheKeys'
 
 export const SocialMedia: GlobalConfig = {
 	slug: 'social-media',
 	label: 'Social Media',
+	hooks: {
+		afterChange: [
+			async ({ req, doc }) => {
+				await req.app.locals.cacheService.update(doc, [SOCIAL_MEDIA_KEY])
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+				return doc
+			},
+		],
+	},
 	fields: [
 		{
 			type: 'array',

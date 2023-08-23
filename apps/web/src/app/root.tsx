@@ -2,8 +2,8 @@ import { cssBundleHref } from '@remix-run/css-bundle'
 import {
 	type LinksFunction,
 	type V2_MetaFunction,
-	json,
 	type DataFunctionArgs,
+	json,
 } from '@remix-run/node'
 import {
 	Links,
@@ -14,10 +14,17 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from '@remix-run/react'
+import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
+import {
+	FOOTER_KEY,
+	MEGA_MENU_KEY,
+	SOCIAL_MEDIA_KEY,
+} from '~/constants/globalsCacheKeys.ts'
 
+import { Header } from './components/Header.tsx'
 import svgSprite from './components/Icon/sprite.svg'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
-import { type SiteInfo } from './modules/site/site.repository.server.ts'
+import { type SiteInfo } from './modules/site/site.service.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
 
@@ -70,29 +77,73 @@ export const links: LinksFunction = () => {
 	return rootLinks
 }
 
-export const loader = ({ context, request }: DataFunctionArgs) => {
+export const loader = async ({ context, request }: DataFunctionArgs) => {
+	const { payload, cacheService } = context
+
+	const [megaMenuData, footer, socialMediaData, siteInfoData] =
+		await Promise.allSettled([
+			cacheService.exec(
+				() => payload.findGlobal({ slug: 'mega-menu' }),
+				[MEGA_MENU_KEY],
+			),
+			cacheService.exec(
+				() => payload.findGlobal({ slug: 'footer' }),
+				[FOOTER_KEY],
+			),
+			cacheService.exec(
+				() => payload.findGlobal({ slug: 'social-media' }),
+				[SOCIAL_MEDIA_KEY],
+			),
+			context.siteService.getSiteInfo(),
+		])
+
+	const siteInfo =
+		siteInfoData.status === 'fulfilled' ? siteInfoData.value : undefined
+	const socialMedia =
+		(socialMediaData.status === 'fulfilled' && socialMediaData.value?.links) ||
+		[]
+	const megaMenu =
+		megaMenuData.status === 'fulfilled' ? megaMenuData.value : undefined
+
 	return json({
-		siteInfo: context.siteInfo,
+		siteInfo,
 		requestInfo: {
 			path: new URL(request.url).pathname,
 		},
 		url: request.url,
+		megaMenu,
+		footer,
+		socialMedia,
 	})
 }
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
-	const rootMeta = [
-		{ title: data?.siteInfo.meta.title },
-		{ name: 'description', content: data?.siteInfo.meta.description },
-		{ name: 'twitter:title', content: data?.siteInfo.meta.title },
-		{ name: 'twitter:description', content: data?.siteInfo.meta.description },
-		{ name: 'og:title', content: data?.siteInfo.meta.title },
-		{ name: 'og:url', content: data?.url },
-		{ name: 'og:description', content: data?.siteInfo.meta.description },
+	const rootMeta: V2_ServerRuntimeMetaDescriptor[] = [
 		{ name: 'og:type', content: 'website' },
 	]
+	if (!data) return rootMeta
 
-	if (data?.siteInfo.meta.ogImage) {
+	rootMeta.push({ name: 'og:url', content: data.url })
+
+	if (data.siteInfo) {
+		rootMeta.push({ title: data.siteInfo.meta.title })
+		rootMeta.push({
+			name: 'description',
+			content: data.siteInfo.meta.description,
+		})
+		rootMeta.push({ name: 'twitter:title', content: data.siteInfo.meta.title })
+		rootMeta.push({
+			name: 'twitter:description',
+			content: data.siteInfo.meta.description,
+		})
+		rootMeta.push({ name: 'og:title', content: data.siteInfo.meta.title })
+		rootMeta.push({
+			name: 'og:description',
+			content: data.siteInfo.meta.description,
+		})
+	}
+
+	if (data?.siteInfo?.meta.ogImage) {
 		rootMeta.push({ name: 'og:image', content: data.siteInfo.meta.ogImage })
 		rootMeta.push({
 			name: 'twitter:image',
@@ -155,9 +206,10 @@ function Document({
 export default function App() {
 	const data = useLoaderData<typeof loader>()
 	return (
-		<Document siteInfo={data.siteInfo}>
+		<Document siteInfo={data.siteInfo ?? undefined}>
 			<div className='flex h-screen flex-col justify-between'>
 				<div className='flex-1'>
+					<Header socialMedia={data.socialMedia} megaMenu={data.megaMenu} />
 					<Outlet />
 				</div>
 			</div>

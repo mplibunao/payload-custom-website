@@ -1,29 +1,31 @@
-import { type Payload } from 'payload'
+import { Loader, type DataSource } from 'layered-loader'
 import { type Site } from '~/cms/payload-types'
+import { type LoaderCacheDeps } from '~/server/infra/cache.server'
 
-type Dependencies = {
-	payload: Payload
+type Dependencies = LoaderCacheDeps<Site>
+
+export const getSiteInfo = (deps: Pick<Dependencies, 'payload'>) => {
+	return deps.payload.findGlobal({ slug: 'site' })
 }
 
-export type SiteInfo = {
-	meta: Omit<Site['meta'], 'ogImage'> & {
-		ogImage?: string
+const SiteInfoDataSource = (deps: Dependencies): DataSource<Site> => {
+	return {
+		name: 'Site Loader',
+		get() {
+			return getSiteInfo(deps)
+		},
 	}
 }
 
-export const getSiteInfo = async ({
-	payload,
-}: Dependencies): Promise<SiteInfo> => {
-	const site = await payload.findGlobal({ slug: 'site' })
-	const ogImage =
-		typeof site.meta.ogImage !== 'string'
-			? site.meta.ogImage.sizes?.og?.url
-			: undefined
-
-	return {
-		meta: {
-			...site.meta,
-			ogImage,
-		},
+export class SiteInfoLoader extends Loader<Site> {
+	constructor(deps: Dependencies) {
+		super({
+			inMemoryCache: deps.inMemoryCacheConfig,
+			dataSources: [SiteInfoDataSource(deps)],
+			logger: deps.logger,
+			notificationConsumer: deps.notificationConsumer,
+			notificationPublisher: deps.notificationPublisher,
+			asyncCache: deps.redisCache,
+		})
 	}
 }

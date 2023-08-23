@@ -11,6 +11,7 @@ import {
 import { type typeboxEnvSchema } from './configSchema.ts'
 import { type CloudRunLoggerOpts } from './logger/cloudRunLoggerOpts.ts'
 import { type PayloadConfig } from './payload/index.ts'
+import { type RedisOpts } from './redis.ts'
 
 export const getDotEnv = () => {
 	if (Boolean(process.env.CI) || process.env.APP_ENV === 'production') {
@@ -42,6 +43,7 @@ export type Config<T extends Env = Env> = {
 	remix: {
 		buildPath: string
 	}
+	redis: RedisOpts
 } & OverloadProtectionOpts &
 	PayloadConfig &
 	SiteEnv
@@ -84,6 +86,12 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 		site: {
 			title: env.PAYLOAD_PUBLIC_SITE_TITLE,
 			description: env.PAYLOAD_PUBLIC_SITE_DESCRIPTION,
+		},
+		redis: {
+			REDIS_URL: env.REDIS_URL,
+			REDIS_ENABLE_AUTO_PIPELINING: env.REDIS_ENABLE_AUTO_PIPELINING,
+			REDIS_MAX_RETRIES_PER_REQ: env.REDIS_MAX_RETRIES_PER_REQ,
+			REDIS_CONNECT_TIMEOUT: env.REDIS_CONNECT_TIMEOUT,
 		},
 	}
 }

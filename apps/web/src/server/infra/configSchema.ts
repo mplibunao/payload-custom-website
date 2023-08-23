@@ -5,6 +5,7 @@ import { NODE_ENV, APP_ENV, PORT, SERVER_URL } from '~/shared/schemas'
 import { overloadProtectionEnvSchema } from '../middleware/overloadProtection'
 import { cloudRunLoggerOptsEnvSchema } from './logger/cloudRunLoggerOpts'
 import { payloadEnvSchema } from './payload'
+import { redisEnvSchema } from './redis'
 import { remixEnvSchema } from './remix'
 
 /*
@@ -18,6 +19,7 @@ export const baseTypeboxEnvSchema = {
 	...overloadProtectionEnvSchema,
 	...payloadEnvSchema,
 	...SiteEnvSchema,
+	...redisEnvSchema,
 	NODE_ENV,
 	APP_ENV,
 	PORT,

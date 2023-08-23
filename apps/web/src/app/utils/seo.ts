@@ -5,9 +5,6 @@ import { type Meta } from '~/cms/payload-types'
 export const mergeTitle = (siteTitle?: string, pageTitle?: string) =>
 	pageTitle ? `${pageTitle} | ${siteTitle as string}` : siteTitle
 
-export const getMetaTitle = (siteTitle?: string, pageTitle?: string) =>
-	pageTitle ? pageTitle : siteTitle
-
 type MetaResult = ReturnType<V2_MetaFunction>
 type MetaMapper = (meta: Meta, metaResult: MetaResult) => MetaResult
 

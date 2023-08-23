@@ -12,7 +12,6 @@ import {
 	createDevRequestHandler,
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
-import { getSiteInfo } from './middleware/getSiteInfo.ts'
 import { stripTrailingSlash } from './middleware/stripTrailingSlashes.ts'
 import { healthCheck } from './routes/healthcheck.ts'
 
@@ -48,16 +47,9 @@ export const initApp = async (
 	// no ending slashes for SEO reasons
 	app.use(stripTrailingSlash)
 
-	// Redirect all traffic at root to home page
-	app.get('/', function (_, res) {
-		res.redirect('/home')
-	})
-
 	await initPayloadCms(app, config, logger)
 
 	registerDependencies({ app, config, logger })
-	// eslint-disable-next-line @typescript-eslint/no-misused-promises
-	app.use(getSiteInfo)
 
 	// trust all proxies in front of express
 	// lets cookies / sessions work
@@ -81,6 +73,11 @@ export const initApp = async (
 	// Everything else (like favicon.ico) is cached for an hour. You may want to be
 	// more aggressive with this caching.
 	app.use(express.static('public', { maxAge: '1h' }))
+
+	// Redirect all traffic at root to home page
+	app.get('/', function (_, res) {
+		res.redirect('/home')
+	})
 
 	app.get('/health', healthCheck(app.locals.logger, config))
 

@@ -15,7 +15,7 @@ const mockModulePath = path.resolve(__dirname, 'tests/mocks/emptyModuleMock.js')
 // and you will be provided with a base `User` collection.
 // But, here is where you define how you'd like Payload to work!
 export default buildConfig({
-	serverURL: process.env.SERVER_URL,
+	serverURL: process.env.PUBLIC_SERVER_URL,
 	collections,
 	globals,
 	typescript: {

@@ -4,54 +4,63 @@ import {
 	type V2_MetaFunction,
 } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 
 import { RenderBlocks } from '../components/Blocks/RenderBlocks'
 import { Grid, Container } from '../components/Layout'
 import { NotFound } from '../utils/http.server'
-import { getMetaTitle, mergeTitle, formatOgTypeMeta } from '../utils/seo'
+import { mergeTitle, formatOgTypeMeta } from '../utils/seo'
 import { ErrorBoundary as NotFoundErrorBoundary } from './$'
 
+// eslint-disable-next-line max-statements
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
-	const pageMeta = [
-		{
-			title: mergeTitle(data?.siteInfo?.meta.title, data?.page?.meta?.title),
-		},
-		{
-			name: 'description',
-			content:
-				data?.page?.meta?.description ?? data?.siteInfo?.meta.description,
-		},
-		{
-			name: 'twitter:title',
-			content: getMetaTitle(
-				data?.siteInfo?.meta.title,
-				data?.page?.meta?.title,
-			),
-		},
-		{
-			name: 'twitter:description',
-			content:
-				data?.page?.meta?.description ?? data?.siteInfo?.meta.description,
-		},
-		{
-			name: 'twitter:image',
-			content: data?.page?.meta?.ogImage ?? data?.siteInfo.meta.ogImage,
-		},
-		{
-			name: 'og:title',
-			content: mergeTitle(data?.siteInfo.meta.title, data?.page?.meta?.title),
-		},
-		{ name: 'og:url', content: data?.url },
-		{
-			name: 'og:description',
-			content:
-				data?.page?.meta?.description ?? data?.siteInfo?.meta.description,
-		},
-		{
-			name: 'og:image',
-			content: data?.page?.meta?.ogImage ?? data?.siteInfo.meta.ogImage,
-		},
+	if (!data) return formatOgTypeMeta(undefined, [])
+	const title = mergeTitle(data.siteInfo?.meta.title, data.page?.meta?.title)
+	const description =
+		data.page?.meta?.description ?? data.siteInfo?.meta.description
+	const ogImage = data.page?.meta?.ogImage ?? data.siteInfo?.meta.ogImage
+
+	const pageMeta: V2_ServerRuntimeMetaDescriptor[] = [
+		{ name: 'og:url', content: data.url },
 	]
+
+	if (title) {
+		pageMeta.push({ title })
+		pageMeta.push({
+			name: 'twitter:title',
+			content: title,
+		})
+		pageMeta.push({
+			name: 'og:title',
+			content: title,
+		})
+	}
+
+	if (description) {
+		pageMeta.push({
+			name: 'description',
+			content: description,
+		})
+		pageMeta.push({
+			name: 'twitter:description',
+			content: description,
+		})
+		pageMeta.push({
+			name: 'og:description',
+			content: description,
+		})
+	}
+
+	if (ogImage) {
+		pageMeta.push({
+			name: 'twitter:image',
+			content: ogImage,
+		})
+		pageMeta.push({
+			name: 'og:image',
+			content: ogImage,
+		})
+	}
 
 	return formatOgTypeMeta(data?.page?.meta, pageMeta)
 }
@@ -63,17 +72,26 @@ export const loader = async ({
 }: DataFunctionArgs) => {
 	if (!params.slug) throw NotFound('Page Not Found')
 
-	const res = await context.payload.find({
-		collection: 'pages',
-		overrideAccess: false,
-		where: { slug: { equals: params.slug } },
-	})
+	const [page, siteInfoData] = await Promise.allSettled([
+		context.payload.find({
+			collection: 'pages',
+			overrideAccess: false,
+			where: { slug: { equals: params.slug } },
+		}),
 
-	if (res.docs.length === 0) throw NotFound('Page Not Found')
+		context.siteService.getSiteInfo(),
+	])
+
+	if (page.status === 'rejected' || page.value.docs.length === 0) {
+		throw NotFound('Page Not Found')
+	}
+
+	const siteInfo =
+		siteInfoData.status === 'fulfilled' ? siteInfoData.value : undefined
 
 	return json({
-		page: res.docs[0],
-		siteInfo: context.siteInfo,
+		page: page.value.docs[0],
+		siteInfo,
 		url: request.url,
 	})
 }
