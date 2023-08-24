@@ -1,1 +1,1 @@
-export type IconId = 'logo'
+export type IconId = 'arrow' | 'letstalk' | 'logo'

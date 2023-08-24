@@ -211,4 +211,21 @@
 	.pointer-events-all {
 		pointer-events: all;
 	}
+
+	.pt-header {
+		@apply pt-[6.5rem] md:pt-[8.5rem];
+		/*padding-top: ;*/
+	}
+
+	/*
+	 *Animations
+	 */
+	.rotating-text {
+		@apply absolute bottom-0 left-0 right-0 top-0 h-full w-full animate-spin text-antique transition-opacity duration-300 ease-linear;
+		animation-duration: 20s;
+	}
+
+	.arrow-animate {
+		transform: rotate(-45deg) translate3d(25%, 0, 0);
+	}
 }

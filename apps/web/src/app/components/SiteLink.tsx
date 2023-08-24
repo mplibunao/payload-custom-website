@@ -1,10 +1,12 @@
 import { Link } from '@remix-run/react'
+import { type RemixLinkProps } from '@remix-run/react/dist/components'
 import { type PageLink } from '~/cms/payload-types'
 
 export interface SiteLinkProps extends PageLink {
 	className?: string
 	children?: React.ReactNode
 	onClick?: () => void
+	prefetch?: RemixLinkProps['prefetch']
 }
 
 export const SiteLink = ({
@@ -15,10 +17,11 @@ export const SiteLink = ({
 	children,
 	newTab,
 	onClick,
+	prefetch,
 }: SiteLinkProps): JSX.Element => {
 	const isRelativeURL = url?.indexOf('/') === 0
 
-	const props: Record<string, string | undefined> = { className }
+	const props: Record<string, string | undefined> = { className, prefetch }
 	if (newTab) {
 		props.rel = 'noopener noreferrer'
 		props.target = '_blank'
