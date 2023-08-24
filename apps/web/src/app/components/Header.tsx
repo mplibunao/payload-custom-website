@@ -33,7 +33,7 @@ export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 						pressed={modalIsOpen}
 						onPressedChange={onToggle}
 						className={twMerge(
-							'h-16 w-16 bg-gray flex items-center justify-center rounded-full focus:outline-none focus:bg-lightGray active:outline-none active:bg-highlightGray transition-all duration-200 ease-linear pointer-events-all border-4',
+							'h-14 w-14 bg-gray flex items-center justify-center rounded-full focus:outline-none focus:bg-lightGray active:outline-none active:bg-highlightGray transition-all duration-300 ease-linear pointer-events-all',
 							modalIsOpen ? 'border-antique' : 'border-gray',
 						)}
 					>
@@ -91,7 +91,7 @@ const MegaMenuDialog = (props: MegaMenuDialogProps) => {
 		<DialogPrimitive.Portal>
 			<DialogPrimitive.Content
 				className={twMerge(
-					'duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed left-0 top-0 bg-gray w-full h-full pt-[10.5rem] pb-0 px-9 md:px-0 overflow-y-auto border-0 overflow-x-hidden z-50',
+					'duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed left-0 top-0 bg-gray w-full h-full pt-[10.5rem] pb-0 px-9 md:px-0 overflow-y-auto border-0 overflow-x-hidden z-50',
 				)}
 			>
 				{props.children}
@@ -119,7 +119,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 				x2='30'
 				vectorEffect='non-scaling-stroke'
 				className={twMerge(
-					'transition-all duration-500 origin-center stroke-[color:var(--antique)] stroke-[2px]',
+					'transition-all duration-300 origin-center stroke-[color:var(--antique)] stroke-[2px]',
 					modalIsOpen ? 'opacity-0 translate-x-0 translate-y-[-0.75rem]' : '',
 				)}
 			/>
@@ -129,7 +129,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 				y2='12'
 				vectorEffect='non-scaling-stroke'
 				className={twMerge(
-					'transition-all duration-500 origin-center stroke-[color:var(--antique)] stroke-[2px]',
+					'transition-all duration-300 origin-center stroke-[color:var(--antique)] stroke-[2px]',
 					modalIsOpen ? 'opacity-100 rotate-45' : '',
 				)}
 			/>
@@ -139,7 +139,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 				y2='12'
 				vectorEffect='non-scaling-stroke'
 				className={twMerge(
-					'transition-all duration-500 origin-center stroke-[color:var(--antique)] stroke-[2px]',
+					'transition-all duration-300 origin-center stroke-[color:var(--antique)] stroke-[2px]',
 					modalIsOpen ? 'opacity-100 -rotate-45' : 'opacity-0',
 				)}
 			/>
@@ -149,7 +149,7 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 				y2='24'
 				vectorEffect='non-scaling-stroke'
 				className={twMerge(
-					'transition-all duration-500 origin-center stroke-[color:var(--antique)] stroke-[2px]',
+					'transition-all duration-300 origin-center stroke-[color:var(--antique)] stroke-[2px]',
 					modalIsOpen ? 'opacity-0 translate-x-0 translate-y-3' : '',
 				)}
 			/>
