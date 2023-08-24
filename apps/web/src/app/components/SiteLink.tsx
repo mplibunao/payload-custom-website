@@ -4,6 +4,7 @@ import { type PageLink } from '~/cms/payload-types'
 export interface SiteLinkProps extends PageLink {
 	className?: string
 	children?: React.ReactNode
+	onClick?: () => void
 }
 
 export const SiteLink = ({
@@ -13,6 +14,7 @@ export const SiteLink = ({
 	className,
 	children,
 	newTab,
+	onClick,
 }: SiteLinkProps): JSX.Element => {
 	const isRelativeURL = url?.indexOf('/') === 0
 
@@ -28,7 +30,7 @@ export const SiteLink = ({
 				? reference.value.slug
 				: url
 		return (
-			<Link to={linkUrl} {...props}>
+			<Link to={linkUrl} onClick={onClick} {...props}>
 				{children}
 			</Link>
 		)

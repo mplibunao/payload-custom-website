@@ -7,7 +7,7 @@ import { type MegaMenu, type SocialMedia } from '~/cms/payload-types'
 import { useDisclosure } from '../utils/useDisclosure'
 import { Logo } from './Icon/Logo'
 import { Container, Grid } from './Layout'
-import { SiteLink } from './Link'
+import { SiteLink } from './SiteLink'
 
 export interface HeaderProps {
 	megaMenu?: MegaMenu
@@ -15,7 +15,7 @@ export interface HeaderProps {
 }
 
 export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
-	const { isOpen: modalIsOpen, onToggle, onChange } = useDisclosure()
+	const { isOpen: modalIsOpen, onToggle, onChange, onClose } = useDisclosure()
 	return (
 		<header className='p-10 md:p-12 flex justify-between fixed top-0 left-0 right-0 pointer-events-none z-[60]'>
 			<Link to='/home' prefetch='intent' className='pointer-events-all'>
@@ -50,6 +50,7 @@ export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 										<SiteLink
 											{...link}
 											className='text-antique hover:transition-all hover:duration-300 hover:ease-linear hover:text-blue pointer-events-all'
+											onClick={onClose}
 										>
 											{link.label}
 										</SiteLink>
@@ -90,7 +91,7 @@ const MegaMenuDialog = (props: MegaMenuDialogProps) => {
 		<DialogPrimitive.Portal>
 			<DialogPrimitive.Content
 				className={twMerge(
-					'duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed left-0 top-0 bg-gray w-full h-full pt-[10.5rem] pb-0 pr-9 pl-0 md:pr-0 overflow-y-auto border-0 overflow-x-hidden z-50',
+					'duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 fixed left-0 top-0 bg-gray w-full h-full pt-[10.5rem] pb-0 px-9 md:px-0 overflow-y-auto border-0 overflow-x-hidden z-50',
 				)}
 			>
 				{props.children}
