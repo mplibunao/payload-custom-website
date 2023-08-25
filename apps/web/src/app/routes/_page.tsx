@@ -4,8 +4,6 @@ export default function PageRoute(): JSX.Element {
 	return (
 		<>
 			<Outlet />
-
-			<footer>Footer</footer>
 		</>
 	)
 }

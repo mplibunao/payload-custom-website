@@ -1,22 +1,30 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import * as Toggle from '@radix-ui/react-toggle'
-import { Link } from '@remix-run/react'
+import { Link, useLocation } from '@remix-run/react'
+import { useEffect } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { type MegaMenu, type SocialMedia } from '~/cms/payload-types'
 
 import { useDisclosure } from '../utils/useDisclosure'
-import { Icon } from './Icon/Icon'
 import { Logo } from './Icon/Logo'
 import { Container, Grid } from './Layout'
+import { LetsTalk } from './LetsTalk'
 import { SiteLink } from './SiteLink'
 
 export interface HeaderProps {
-	megaMenu?: MegaMenu
+	megaMenu?: Pick<MegaMenu, 'id' | 'nav'>
 	socialMedia: NonNullable<SocialMedia['links']>
 }
 
 export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 	const { isOpen: modalIsOpen, onToggle, onChange, onClose } = useDisclosure()
+	const location = useLocation()
+
+	useEffect(() => {
+		onClose()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [location.key])
+
 	return (
 		<header className='p-6 md:p-10 flex justify-between fixed top-0 left-0 right-0 pointer-events-none z-[60]'>
 			<Link to='/home' prefetch='viewport' className='pointer-events-all'>
@@ -46,12 +54,11 @@ export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 					<Container>
 						<Grid className='z-0 md:z-auto pointer-events-none md:pointer-events-auto mb-72 md:mb-0 '>
 							<nav className='col-span-8'>
-								{megaMenu?.nav?.map(({ link }, i) => (
-									<h3 key={i} className={i === 0 ? 'm-0' : undefined}>
+								{megaMenu?.nav?.map(({ link, id }, i) => (
+									<h3 key={id} className={i === 0 ? 'm-0' : undefined}>
 										<SiteLink
 											{...link}
 											className='text-antique hover:transition-all hover:duration-300 hover:ease-linear hover:text-blue pointer-events-all'
-											onClick={onClose}
 											prefetch='viewport'
 										>
 											{link.label}
@@ -79,12 +86,15 @@ export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 						</Grid>
 					</Container>
 
-					<LetsTalk />
+					<div className='fixed right-[-3rem] bottom-[-3rem] mb-[-4.5rem] sm:right-[-4.5rem] sm:bottom-[-9rem] sm:block md:right-[-7rem] md:bottom-[-12rem]'>
+						<LetsTalk location='header' />
+					</div>
 				</MegaMenuDialog>
 			</DialogPrimitive.Root>
 		</header>
 	)
 }
+//fixed right-[-2rem] bottom-[-2rem] mb-[-3rem] sm:right-[-3rem] sm:bottom-[-6.5rem] sm:block md:right-[-5.5rem] md:bottom-[-9rem]
 
 type MegaMenuDialogProps = {
 	children?: React.ReactNode
@@ -158,42 +168,5 @@ const MenuIcon = ({ modalIsOpen }: MenuIconProps) => {
 				)}
 			/>
 		</svg>
-	)
-}
-
-const LetsTalk = () => {
-	const { isOpen: isHovered, onOpen, onClose } = useDisclosure()
-	return (
-		<div className='fixed right-[-3rem] bottom-[-3rem] mb-[-4.5rem] sm:right-[-4.5rem] sm:bottom-[-9rem] sm:block md:right-[-7rem] md:bottom-[-12rem]'>
-			<div className='w-[34rem] h-[34rem] md:w-[46rem] md:h-[46rem] xl:w-[54rem] xl:h-[54rem] relative'>
-				<Icon
-					id='letstalk'
-					className={twMerge(
-						'rotating-text',
-						isHovered ? 'opacity-100' : 'opacity-20',
-					)}
-					hidden
-				/>
-				<Link
-					to='/contact'
-					prefetch='viewport'
-					className='w-full h-full flex flex-col justify-center items-center relative text-antique'
-					onMouseEnter={onOpen}
-					onMouseLeave={onClose}
-				>
-					<Icon
-						id='arrow'
-						hidden
-						className={twMerge(
-							'transition-all ease-linear duration-300',
-							isHovered
-								? 'opacity-100 arrow-animate'
-								: 'rotate-[-45deg] opacity-20',
-						)}
-					/>
-					<h3 className='mb-16'>Let's talk</h3>
-				</Link>
-			</div>
-		</div>
 	)
 }

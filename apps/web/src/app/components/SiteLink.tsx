@@ -5,7 +5,6 @@ import { type PageLink } from '~/cms/payload-types'
 export interface SiteLinkProps extends PageLink {
 	className?: string
 	children?: React.ReactNode
-	onClick?: () => void
 	prefetch?: RemixLinkProps['prefetch']
 }
 
@@ -16,7 +15,6 @@ export const SiteLink = ({
 	className,
 	children,
 	newTab,
-	onClick,
 	prefetch,
 }: SiteLinkProps): JSX.Element => {
 	const isRelativeURL = url?.indexOf('/') === 0
@@ -33,7 +31,7 @@ export const SiteLink = ({
 				? reference.value.slug
 				: url
 		return (
-			<Link to={linkUrl} onClick={onClick} {...props}>
+			<Link to={linkUrl} {...props}>
 				{children}
 			</Link>
 		)

@@ -21,12 +21,15 @@ import {
 	SOCIAL_MEDIA_KEY,
 } from '~/constants/globalsCacheKeys.ts'
 
+import { Footer } from './components/Footer.tsx'
 import { Header } from './components/Header.tsx'
 import svgSprite from './components/Icon/sprite.svg'
+import { ScrollToTop } from './components/ScrollToTop.tsx'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { type SiteInfo } from './modules/site/site.service.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
+import { LazyMotionFeatures } from './utils/framerMotion/LazyMotionFeatures.tsx'
 
 export const links: LinksFunction = () => {
 	const rootLinks = [
@@ -80,7 +83,7 @@ export const links: LinksFunction = () => {
 export const loader = async ({ context, request }: DataFunctionArgs) => {
 	const { payload, cacheService } = context
 
-	const [megaMenuData, footer, socialMediaData, siteInfoData] =
+	const [megaMenuData, footerData, socialMediaData, siteInfoData] =
 		await Promise.allSettled([
 			cacheService.exec(
 				() => payload.findGlobal({ slug: 'mega-menu' }),
@@ -103,7 +106,19 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 		(socialMediaData.status === 'fulfilled' && socialMediaData.value?.links) ||
 		[]
 	const megaMenu =
-		megaMenuData.status === 'fulfilled' ? megaMenuData.value : undefined
+		megaMenuData.status === 'rejected'
+			? undefined
+			: {
+					id: megaMenuData.value.id,
+					nav: megaMenuData.value.nav,
+			  }
+	const footer =
+		footerData.status === 'rejected'
+			? undefined
+			: {
+					id: footerData.value.id,
+					nav: footerData.value.nav,
+			  }
 
 	return json({
 		siteInfo,
@@ -210,10 +225,17 @@ export default function App() {
 			<div className='flex h-screen flex-col justify-between'>
 				<div className='flex-1'>
 					<Header socialMedia={data.socialMedia} megaMenu={data.megaMenu} />
+
 					<div className='pt-header'>
 						<Outlet />
 					</div>
+
+					<Footer footer={data.footer} socialMedia={data.socialMedia} />
 				</div>
+
+				<LazyMotionFeatures>
+					<ScrollToTop />
+				</LazyMotionFeatures>
 			</div>
 		</Document>
 	)
