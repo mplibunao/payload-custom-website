@@ -29,38 +29,131 @@ export interface Page {
   heroContent: {
     [k: string]: unknown;
   }[];
-  heroImage: string | Media;
+  heroMedia: string | Media;
   layout: (
     | {
-        backgroundColor: {
-          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
-          colorPicker: string;
-        };
-        columns?: {
-          width: 'oneThird' | 'half' | 'twoThirds' | 'full';
-          alignment: 'left' | 'center' | 'right';
+        ctaFields: {
+          backgroundColor: BackgroundColorType;
           content: {
             [k: string]: unknown;
           }[];
+          actions?: {
+            link: PageLink;
+            id?: string;
+          }[];
+        };
+        id?: string;
+        blockName?: string;
+        blockType: 'cta';
+      }
+    | ContentBlockType
+    | {
+        actions?: {
+          headline: string;
+          link: PageLink;
           id?: string;
         }[];
-        accentLine?: boolean;
-        accentLineAlignment?: 'left' | 'right';
-        paddingTop?: 'none' | 'small' | 'medium' | 'large';
-        paddingBottom?: 'none' | 'small' | 'medium' | 'large';
         id?: string;
         blockName?: string;
-        blockType: 'content';
+        blockType: 'cta-grid';
       }
+    | MediaBlockType
     | {
-        image: string | Media;
-        type: 'card' | 'feature';
-        caption?: {
-          [k: string]: unknown;
+        media?: {
+          media: string | Media;
+          id?: string;
         }[];
         id?: string;
         blockName?: string;
-        blockType: 'image';
+        blockType: 'media-collage';
+      }
+    | {
+        backgroundColor: BackgroundColorType;
+        content: {
+          [k: string]: unknown;
+        }[];
+        enableCTA?: boolean;
+        link?: PageLink;
+        media?: {
+          media: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media-content-collage';
+      }
+    | {
+        backgroundColor: BackgroundColorType;
+        content?: {
+          [k: string]: unknown;
+        }[];
+        media?: {
+          media: string | Media;
+          content?: string;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media-grid';
+      }
+    | {
+        stats?: {
+          stat?: string;
+          description?: string;
+          id?: string;
+        }[];
+        media?: {
+          media: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media-stat-collage';
+      }
+    | {
+        backgroundColor: BackgroundColorType;
+        images?: {
+          image: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'slider';
+      }
+    | {
+        size: 'small' | 'medium' | 'large';
+        id?: string;
+        blockName?: string;
+        blockType: 'spacer';
+      }
+    | {
+        topOverlap?: 'none' | 'small' | 'medium' | 'large';
+        bottomOverlap?: 'none' | 'small' | 'medium' | 'large';
+        stats?: {
+          stat?: string;
+          description?: string;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'statistics';
+      }
+    | {
+        sections?: {
+          label: string;
+          description: string;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'sticky-content';
+      }
+    | {
+        backgroundColor: BackgroundColorType;
+        studies: string[] | Study[];
+        id?: string;
+        blockName?: string;
+        blockType: 'study-slider';
       }
   )[];
   slug: string;
@@ -105,6 +198,198 @@ export interface Media {
       filename?: string;
     };
   };
+}
+export interface BackgroundColorType {
+  backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+  colorPicker: string;
+}
+export interface PageLink {
+  type?: 'reference' | 'custom';
+  newTab?: boolean;
+  reference: {
+    value: string | Page;
+    relationTo: 'pages';
+  };
+  url: string;
+  label: string;
+  appearance?: 'default' | 'primary' | 'secondary';
+}
+export interface ContentBlockType {
+  backgroundColor: BackgroundColorType;
+  columns: {
+    width: 'oneThird' | 'half' | 'twoThirds' | 'full';
+    alignment: 'left' | 'center' | 'right';
+    content: {
+      [k: string]: unknown;
+    }[];
+    id?: string;
+  }[];
+  accentLine?: boolean;
+  accentLineAlignment?: 'left' | 'right';
+  paddingTop: 'none' | 'small' | 'medium' | 'large';
+  paddingBottom: 'none' | 'small' | 'medium' | 'large';
+  id?: string;
+  blockName?: string;
+  blockType: 'content';
+}
+export interface MediaBlockType {
+  media: string | Media;
+  type: 'card' | 'feature';
+  caption?: {
+    [k: string]: unknown;
+  }[];
+  id?: string;
+  blockName?: string;
+  blockType: 'media';
+}
+export interface Study {
+  id: string;
+  title: string;
+  featuredImage: string | Media;
+  layout?: (
+    | {
+        ctaFields: {
+          backgroundColor: BackgroundColorType;
+          content: {
+            [k: string]: unknown;
+          }[];
+          actions?: {
+            link: PageLink;
+            id?: string;
+          }[];
+        };
+        id?: string;
+        blockName?: string;
+        blockType: 'cta';
+      }
+    | ContentBlockType
+    | {
+        actions?: {
+          headline: string;
+          link: PageLink;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'cta-grid';
+      }
+    | MediaBlockType
+    | {
+        media?: {
+          media: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media-collage';
+      }
+    | {
+        backgroundColor: BackgroundColorType;
+        content: {
+          [k: string]: unknown;
+        }[];
+        enableCTA?: boolean;
+        link?: PageLink;
+        media?: {
+          media: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media-content-collage';
+      }
+    | {
+        backgroundColor: BackgroundColorType;
+        content?: {
+          [k: string]: unknown;
+        }[];
+        media?: {
+          media: string | Media;
+          content?: string;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media-grid';
+      }
+    | {
+        stats?: {
+          stat?: string;
+          description?: string;
+          id?: string;
+        }[];
+        media?: {
+          media: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'media-stat-collage';
+      }
+    | {
+        backgroundColor: BackgroundColorType;
+        images?: {
+          image: string | Media;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'slider';
+      }
+    | {
+        size: 'small' | 'medium' | 'large';
+        id?: string;
+        blockName?: string;
+        blockType: 'spacer';
+      }
+    | {
+        topOverlap?: 'none' | 'small' | 'medium' | 'large';
+        bottomOverlap?: 'none' | 'small' | 'medium' | 'large';
+        stats?: {
+          stat?: string;
+          description?: string;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'statistics';
+      }
+    | {
+        sections?: {
+          label: string;
+          description: string;
+          id?: string;
+        }[];
+        id?: string;
+        blockName?: string;
+        blockType: 'sticky-content';
+      }
+    | {
+        backgroundColor: BackgroundColorType;
+        studies: string[] | Study[];
+        id?: string;
+        blockName?: string;
+        blockType: 'study-slider';
+      }
+  )[];
+  previewImages?: {
+    image: string | Media;
+    id?: string;
+  }[];
+  client?: string;
+  location?: string;
+  categories?: string[] | Category[];
+  slug: string;
+  meta: Meta;
+  updatedAt: string;
+  createdAt: string;
+}
+export interface Category {
+  id: string;
+  title: string;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 export interface Meta {
   title: string;
@@ -324,211 +609,6 @@ export interface MetaProfile {
   lastName?: string;
   username?: string;
   gender?: string;
-}
-export interface Study {
-  id: string;
-  title: string;
-  featuredImage: string | Media;
-  layout?: (
-    | {
-        ctaFields: {
-          backgroundColor: {
-            backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
-            colorPicker: string;
-          };
-          content: {
-            [k: string]: unknown;
-          }[];
-          feature: 'none' | 'cpa';
-          links?: {
-            link: PageLink;
-            id?: string;
-          }[];
-        };
-        id?: string;
-        blockName?: string;
-        blockType: 'cta';
-      }
-    | {
-        backgroundColor: {
-          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
-          colorPicker: string;
-        };
-        columns?: {
-          width: 'oneThird' | 'half' | 'twoThirds' | 'full';
-          alignment: 'left' | 'center' | 'right';
-          content: {
-            [k: string]: unknown;
-          }[];
-          id?: string;
-        }[];
-        accentLine?: boolean;
-        accentLineAlignment?: 'left' | 'right';
-        paddingTop?: 'none' | 'small' | 'medium' | 'large';
-        paddingBottom?: 'none' | 'small' | 'medium' | 'large';
-        id?: string;
-        blockName?: string;
-        blockType: 'content';
-      }
-    | {
-        actions?: {
-          headline: string;
-          link: PageLink;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'cta-grid';
-      }
-    | {
-        image: string | Media;
-        type: 'card' | 'feature';
-        caption?: {
-          [k: string]: unknown;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'image';
-      }
-    | {
-        images?: {
-          image: string | Media;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'image-collage';
-      }
-    | {
-        backgroundColor: {
-          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
-          colorPicker: string;
-        };
-        content: {
-          [k: string]: unknown;
-        }[];
-        enableCTA?: boolean;
-        link?: PageLink;
-        images?: {
-          image: string | Media;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'image-content-collage';
-      }
-    | {
-        backgroundColor: {
-          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
-          colorPicker: string;
-        };
-        content?: {
-          [k: string]: unknown;
-        }[];
-        images?: {
-          image: string | Media;
-          content?: string;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'image-grid';
-      }
-    | {
-        stats?: {
-          stat?: string;
-          description?: string;
-          id?: string;
-        }[];
-        images?: {
-          image: string | Media;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'image-stat-collage';
-      }
-    | {
-        backgroundColor: {
-          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
-          colorPicker: string;
-        };
-        images?: {
-          image: string | Media;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'slider';
-      }
-    | {
-        size: 'small' | 'medium' | 'large';
-        id?: string;
-        blockName?: string;
-        blockType: 'spacer';
-      }
-    | {
-        topOverlap?: 'none' | 'small' | 'medium' | 'large';
-        bottomOverlap?: 'none' | 'small' | 'medium' | 'large';
-        stats?: {
-          stat?: string;
-          description?: string;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'statistics';
-      }
-    | {
-        sections?: {
-          label: string;
-          description: string;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'sticky-content';
-      }
-    | {
-        backgroundColor: {
-          backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
-          colorPicker: string;
-        };
-        studies: string[] | Study[];
-        id?: string;
-        blockName?: string;
-        blockType: 'study-slider';
-      }
-  )[];
-  previewImages?: {
-    image: string | Media;
-    id?: string;
-  }[];
-  client?: string;
-  location?: string;
-  categories?: string[] | Category[];
-  slug: string;
-  meta: Meta;
-  updatedAt: string;
-  createdAt: string;
-}
-export interface PageLink {
-  type?: 'reference' | 'custom';
-  newTab?: boolean;
-  reference: {
-    value: string | Page;
-    relationTo: 'pages';
-  };
-  url: string;
-  label: string;
-  appearance?: 'default' | 'primary' | 'secondary';
-}
-export interface Category {
-  id: string;
-  title: string;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
 }
 export interface FormSubmission {
   id: string;

@@ -1,22 +1,22 @@
 import { type Block } from 'payload/types'
 
-export const ImageCollage: Block = {
-	slug: 'image-collage',
+export const MediaCollage: Block = {
+	slug: 'media-collage',
 	labels: {
-		singular: 'Image Collage',
-		plural: 'Image Collages',
+		singular: 'Media Collage',
+		plural: 'Media Collages',
 	},
 	fields: [
 		{
-			name: 'images',
-			label: 'Images',
+			name: 'media',
+			label: 'Media',
 			type: 'array',
 			minRows: 3,
 			maxRows: 6,
 			fields: [
 				{
 					type: 'upload',
-					name: 'image',
+					name: 'media',
 					relationTo: 'media',
 					required: true,
 				},

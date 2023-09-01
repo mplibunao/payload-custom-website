@@ -2,21 +2,17 @@ import { type Block } from 'payload/types'
 
 import { colorField } from '../fields/ColorPicker/colorPickerField'
 import { link } from '../fields/link'
+import { richText } from '../fields/richText'
 
-export const ImageContentCollage: Block = {
-	slug: 'image-content-collage',
+export const MediaContentCollage: Block = {
+	slug: 'media-content-collage',
 	labels: {
-		singular: 'Image Content Collage',
-		plural: 'Image Content Collages',
+		singular: 'Media Content Collage',
+		plural: 'Media Content Collages',
 	},
 	fields: [
 		colorField({ name: 'backgroundColor', label: 'Background Color' }),
-		{
-			name: 'content',
-			type: 'richText',
-			label: 'Content',
-			required: true,
-		},
+		richText({ name: 'content', label: 'Content' }),
 		{
 			name: 'enableCTA',
 			label: 'Enable Call to Action',
@@ -29,15 +25,15 @@ export const ImageContentCollage: Block = {
 			},
 		},
 		{
-			name: 'images',
-			label: 'Images',
+			name: 'media',
+			label: 'Media',
 			type: 'array',
 			minRows: 3,
 			maxRows: 6,
 			fields: [
 				{
 					type: 'upload',
-					name: 'image',
+					name: 'media',
 					relationTo: 'media',
 					required: true,
 				},

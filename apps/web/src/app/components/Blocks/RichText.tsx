@@ -1,6 +1,15 @@
 import escapeHTML from 'escape-html'
 import { Fragment } from 'react'
 import { Text } from 'slate'
+import { twMerge } from 'tailwind-merge'
+
+import { RedHeadline } from './RedHeadline'
+import { RedUnderline } from './RedUnderline'
+
+/*
+ * To-do:
+ *  - Add richtext styles
+ */
 
 type RichTextProps = {
 	className?: string
@@ -12,8 +21,10 @@ export const RichText = ({ className, content }: RichTextProps) => {
 		return null
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-	return <div className={className}>{serialize(content)}</div>
+	return (
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+		<div className={twMerge(className, 'rich-text')}>{serialize(content)}</div>
+	)
 }
 
 type Children = Leaf[]
@@ -30,7 +41,7 @@ type Leaf = {
 }
 
 const serialize = (children?: Children) =>
-	// eslint-disable-next-line max-statements
+	// eslint-disable-next-line max-statements, complexity
 	children?.map((node, i) => {
 		if (Text.isText(node)) {
 			let text = (
@@ -39,6 +50,14 @@ const serialize = (children?: Children) =>
 
 			if (node.bold) {
 				text = <strong key={i}>{text}</strong>
+			}
+
+			if (node['red-headline']) {
+				text = <RedHeadline>{text}</RedHeadline>
+			}
+
+			if (node['red-underline']) {
+				text = <RedUnderline>{text}</RedUnderline>
 			}
 
 			if (node.code) {

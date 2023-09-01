@@ -40,9 +40,7 @@ export const LetsTalk = (props: LetsTalkProps) => {
 					hidden
 					className={twMerge(
 						'transition-all ease-linear duration-300',
-						isHovered
-							? 'opacity-100 arrow-animate'
-							: 'rotate-[-45deg] opacity-20',
+						isHovered ? 'opacity-100 arrow-animate' : '-rotate-45 opacity-20',
 					)}
 				/>
 				<h3 className='mb-16'>Let's talk</h3>

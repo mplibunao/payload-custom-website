@@ -5,13 +5,15 @@
 
 :root {
 	--font-sans: Lausanne, Lausanne Fallback;
-	--antique: #fff9f2;
-	--white: #ffffff;
-	--gray: #181818;
-	--red: #ff322c;
-	--blue: #9ed1d8;
-	--yellow: #ffef5e;
-	--orange: #fcb449;
+	--antique: 32 100% 98%;
+	--white: 0 0% 100%;
+	--gray: 0 0% 9%;
+	--light-gray: 0 0% 16.86%;
+	--highlight-gray: 0 0% 20.78%;
+	--red: 2 100% 59%;
+	--blue: 187 43% 73%;
+	--yellow: 54 100% 68%;
+	--orange: 36, 97%, 64%;
 
 	--background: 0 0% 100%;
 	--foreground: 0 0% 3.9%;

@@ -100,7 +100,7 @@ export const Footer = ({ footer, socialMedia }: FooterProps): JSX.Element => {
 					</div>
 				</Grid>
 
-				<div className='relative left-[-6rem] bottom-[-2rem] mb-[-3rem] md:left-[-5rem] md:bottom-[-3rem] xl:left-[-7.5rem] xl:bottom-[-8.5rem] xl:absolute'>
+				<div className='relative -left-24 -bottom-8 -mb-12 md:-left-20 md:-bottom-12 xl:-left-28 xl:-bottom-32 xl:absolute'>
 					<LetsTalk location='footer' />
 				</div>
 			</Container>

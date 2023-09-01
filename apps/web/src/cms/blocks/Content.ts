@@ -1,6 +1,7 @@
 import { type Block } from 'payload/types'
 
 import { colorField } from '../fields/ColorPicker/colorPickerField'
+import { richText } from '../fields/richText'
 
 export const Content: Block = {
 	slug: 'content',
@@ -8,6 +9,7 @@ export const Content: Block = {
 		singular: 'Content',
 		plural: 'Content Blocks',
 	},
+	interfaceName: 'ContentBlockType',
 	fields: [
 		colorField({ name: 'backgroundColor', label: 'Background Color' }),
 		{
@@ -18,6 +20,7 @@ export const Content: Block = {
 				singular: 'Column',
 				plural: 'Columns',
 			},
+			required: true,
 			fields: [
 				{
 					type: 'row',
@@ -76,11 +79,7 @@ export const Content: Block = {
 						},
 					],
 				},
-				{
-					name: 'content',
-					type: 'richText',
-					required: true,
-				},
+				richText({ name: 'content', label: 'Content' }),
 			],
 		},
 		{
@@ -116,6 +115,7 @@ export const Content: Block = {
 					name: 'paddingTop',
 					label: 'Padding Top',
 					type: 'select',
+					required: true,
 					defaultValue: 'medium',
 					options: [
 						{
@@ -143,6 +143,7 @@ export const Content: Block = {
 					name: 'paddingBottom',
 					label: 'Padding Bottom',
 					type: 'select',
+					required: true,
 					defaultValue: 'medium',
 					options: [
 						{

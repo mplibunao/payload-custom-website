@@ -105,6 +105,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-intersection-observer:
+        specifier: 9.5.2
+        version: 9.5.2(react@18.2.0)
       remix-custom-routes:
         specifier: 1.0.1
         version: 1.0.1
@@ -114,6 +117,9 @@ importers:
       slate:
         specifier: 0.94.1
         version: 0.94.1
+      slate-react:
+        specifier: 0.98.3
+        version: 0.98.3(react-dom@18.2.0)(react@18.2.0)(slate@0.94.1)
       slugify:
         specifier: 1.6.6
         version: 1.6.6
@@ -12076,6 +12082,14 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
+  /react-intersection-observer@9.5.2(react@18.2.0):
+    resolution: {integrity: sha512-EmoV66/yvksJcGa1rdW0nDNc4I1RifDWkT50gXSFnPLYQ4xUptuDD4V7k+Rj1OgVAlww628KLGcxPXFlOkkU/Q==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -13024,6 +13038,27 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       scroll-into-view-if-needed: 2.2.31
       slate: 0.91.4
+      tiny-invariant: 1.0.6
+    dev: false
+
+  /slate-react@0.98.3(react-dom@18.2.0)(react@18.2.0)(slate@0.94.1):
+    resolution: {integrity: sha512-p1BnF9eRyRM0i5hkgOb11KgmpWLQm9Zyp6jVkOAj5fPdIGheKhg48Z7aWKrayeJ4nmRyi/NjRZz/io5hQcphmw==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+      slate: '>=0.65.3'
+    dependencies:
+      '@juggle/resize-observer': 3.4.0
+      '@types/is-hotkey': 0.1.7
+      '@types/lodash': 4.14.195
+      direction: 1.0.4
+      is-hotkey: 0.1.8
+      is-plain-object: 5.0.0
+      lodash: 4.17.21
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      scroll-into-view-if-needed: 2.2.31
+      slate: 0.94.1
       tiny-invariant: 1.0.6
     dev: false
 

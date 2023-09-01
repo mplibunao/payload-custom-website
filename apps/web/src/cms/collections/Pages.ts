@@ -1,20 +1,21 @@
 import type { CollectionConfig } from 'payload/types'
 
-//import { CTAGrid } from '../blocks/CTAGrid'
-//import { CallToAction } from '../blocks/CallToAction'
+import { CTAGrid } from '../blocks/CTAGrid'
+import { CallToAction } from '../blocks/CallToAction'
 import { Content } from '../blocks/Content'
-import { ImageBlock } from '../blocks/Image'
-//import { ImageCollage } from '../blocks/ImageCollage'
-//import { ImageContentCollage } from '../blocks/ImageContentCollage'
-//import { ImageGrid } from '../blocks/ImageGrid'
-//import { ImageStatCollage } from '../blocks/ImageStatCollage'
-//import { Slider } from '../blocks/Slider'
-//import { Spacer } from '../blocks/Spacer'
-//import { Statistics } from '../blocks/Statistics'
-//import { StickyContent } from '../blocks/StickyContent'
-//import { StudySlider } from '../blocks/StudySlider'
+import { MediaBlock } from '../blocks/Media'
+import { MediaCollage } from '../blocks/MediaCollage'
+import { MediaContentCollage } from '../blocks/MediaContentCollage'
+import { MediaGrid } from '../blocks/MediaGrid'
+import { MediaStatCollage } from '../blocks/MediaStatCollage'
+import { Slider } from '../blocks/Slider'
+import { Spacer } from '../blocks/Spacer'
+import { Statistics } from '../blocks/Statistics'
+import { StickyContent } from '../blocks/StickyContent'
+import { StudySlider } from '../blocks/StudySlider'
 import { metaField } from '../fields/meta'
 import { ogImage } from '../fields/meta/ogImage'
+import { richText } from '../fields/richText'
 import { slugField } from '../fields/slug'
 
 export const Pages: CollectionConfig = {
@@ -53,15 +54,13 @@ export const Pages: CollectionConfig = {
 				},
 			],
 		},
+		richText(
+			{ name: 'heroContent', label: 'Hero Content' },
+			{ preElements: ['h1'] },
+		),
 		{
-			name: 'heroContent',
-			label: 'Hero Content',
-			type: 'richText',
-			required: true,
-		},
-		{
-			name: 'heroImage',
-			label: 'Hero Image',
+			name: 'heroMedia',
+			label: 'Hero Media',
 			type: 'upload',
 			relationTo: 'media',
 			required: true,
@@ -78,19 +77,19 @@ export const Pages: CollectionConfig = {
 			minRows: 1,
 			required: true,
 			blocks: [
-				//CallToAction,
+				CallToAction,
 				Content,
-				//CTAGrid,
-				ImageBlock,
-				//ImageCollage,
-				//ImageContentCollage,
-				//ImageGrid,
-				//ImageStatCollage,
-				//Slider,
-				//Spacer,
-				//Statistics,
-				//StickyContent,
-				//StudySlider,
+				CTAGrid,
+				MediaBlock,
+				MediaCollage,
+				MediaContentCollage,
+				MediaGrid,
+				MediaStatCollage,
+				Slider,
+				Spacer,
+				Statistics,
+				StickyContent,
+				StudySlider,
 			],
 		},
 		slugField(),

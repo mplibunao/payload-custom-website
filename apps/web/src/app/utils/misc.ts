@@ -147,3 +147,5 @@ export function useMatchesData<T>(id: RouteId): T | undefined {
 	)
 	return route?.data as T
 }
+
+export const isServer = typeof window === 'undefined'

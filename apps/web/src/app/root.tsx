@@ -29,12 +29,11 @@ import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { type SiteInfo } from './modules/site/site.service.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
-import { LazyMotionFeatures } from './utils/framerMotion/LazyMotionFeatures.tsx'
 
 export const links: LinksFunction = () => {
 	const rootLinks = [
 		// Preload svg sprite as a resource to avoid render blocking
-		{ rel: 'preload', href: svgSprite, as: 'image' },
+		{ rel: 'preload', href: svgSprite, as: 'image', fetchpriority: 'low' },
 		// Preload CSS as a resource to avoid render blocking
 		{ rel: 'preload', href: fontStylestylesheetUrl, as: 'style' },
 		{ rel: 'preload', href: tailwindStylesheetUrl, as: 'style' },
@@ -133,37 +132,46 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 }
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
-	const rootMeta: V2_ServerRuntimeMetaDescriptor[] = [
-		{ name: 'og:type', content: 'website' },
-	]
+	const rootMeta: V2_ServerRuntimeMetaDescriptor[] =
+		Array<V2_ServerRuntimeMetaDescriptor>(10)
+
+	rootMeta.push({ name: 'og:type', content: 'website' })
 	if (!data) return rootMeta
 
 	rootMeta.push({ name: 'og:url', content: data.url })
 
 	if (data.siteInfo) {
-		rootMeta.push({ title: data.siteInfo.meta.title })
-		rootMeta.push({
-			name: 'description',
-			content: data.siteInfo.meta.description,
-		})
-		rootMeta.push({ name: 'twitter:title', content: data.siteInfo.meta.title })
-		rootMeta.push({
-			name: 'twitter:description',
-			content: data.siteInfo.meta.description,
-		})
-		rootMeta.push({ name: 'og:title', content: data.siteInfo.meta.title })
-		rootMeta.push({
-			name: 'og:description',
-			content: data.siteInfo.meta.description,
-		})
+		rootMeta.push(
+			...[
+				{ title: data.siteInfo.meta.title },
+				{
+					name: 'description',
+					content: data.siteInfo.meta.description,
+				},
+				{ name: 'twitter:title', content: data.siteInfo.meta.title },
+				{
+					name: 'twitter:description',
+					content: data.siteInfo.meta.description,
+				},
+				{ name: 'og:title', content: data.siteInfo.meta.title },
+				{
+					name: 'og:description',
+					content: data.siteInfo.meta.description,
+				},
+			],
+		)
 	}
 
 	if (data?.siteInfo?.meta.ogImage) {
-		rootMeta.push({ name: 'og:image', content: data.siteInfo.meta.ogImage })
-		rootMeta.push({
-			name: 'twitter:image',
-			content: data.siteInfo.meta.ogImage,
-		})
+		rootMeta.push(
+			...[
+				{ name: 'og:image', content: data.siteInfo.meta.ogImage },
+				{
+					name: 'twitter:image',
+					content: data.siteInfo.meta.ogImage,
+				},
+			],
+		)
 	}
 
 	return rootMeta
@@ -230,12 +238,9 @@ export default function App() {
 						<Outlet />
 					</div>
 
+					<ScrollToTop />
 					<Footer footer={data.footer} socialMedia={data.socialMedia} />
 				</div>
-
-				<LazyMotionFeatures>
-					<ScrollToTop />
-				</LazyMotionFeatures>
 			</div>
 		</Document>
 	)

@@ -1,8 +1,8 @@
 import { LazyMotion } from 'framer-motion'
 
-const loadFeatures = () => import('./features').then((res) => res.default)
+const loadFeatures = () => import('./domAnimation').then((res) => res.default)
 
-export const LazyMotionFeatures = ({
+export const LazyMotionDomAnimation = ({
 	children,
 }: {
 	children: React.ReactNode

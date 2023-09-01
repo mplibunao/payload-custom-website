@@ -10,9 +10,6 @@ export const Media: CollectionConfig = {
 		staticDir: path.resolve(__dirname, '../../../media/assets'),
 		staticURL: '/media/assets',
 		disableLocalStorage: process.env.NODE_ENV === 'production',
-		formatOptions: {
-			format: 'webp',
-		},
 		adminThumbnail: 'card',
 		imageSizes: [
 			{

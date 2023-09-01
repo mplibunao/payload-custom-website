@@ -3,11 +3,11 @@ import { type CollectionConfig } from 'payload/dist/collections/config/types'
 import { CTAGrid } from '../blocks/CTAGrid'
 import { CallToAction } from '../blocks/CallToAction'
 import { Content } from '../blocks/Content'
-import { ImageBlock } from '../blocks/Image'
-import { ImageCollage } from '../blocks/ImageCollage'
-import { ImageContentCollage } from '../blocks/ImageContentCollage'
-import { ImageGrid } from '../blocks/ImageGrid'
-import { ImageStatCollage } from '../blocks/ImageStatCollage'
+import { MediaBlock } from '../blocks/Media'
+import { MediaCollage } from '../blocks/MediaCollage'
+import { MediaContentCollage } from '../blocks/MediaContentCollage'
+import { MediaGrid } from '../blocks/MediaGrid'
+import { MediaStatCollage } from '../blocks/MediaStatCollage'
 import { Slider } from '../blocks/Slider'
 import { Spacer } from '../blocks/Spacer'
 import { Statistics } from '../blocks/Statistics'
@@ -41,11 +41,11 @@ export const Studies: CollectionConfig = {
 				CallToAction,
 				Content,
 				CTAGrid,
-				ImageBlock,
-				ImageCollage,
-				ImageContentCollage,
-				ImageGrid,
-				ImageStatCollage,
+				MediaBlock,
+				MediaCollage,
+				MediaContentCollage,
+				MediaGrid,
+				MediaStatCollage,
 				Slider,
 				Spacer,
 				Statistics,

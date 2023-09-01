@@ -13,6 +13,8 @@ import {
 	TooltipContent,
 } from '~/app/components/ui/tooltip'
 
+import { type ColorsRecord, type Colors } from './colorPickerField'
+
 const colorStyles = cva(['h-8 w-8 mr-3 rounded-full cursor-pointer'], {
 	variants: {
 		color: {
@@ -23,14 +25,12 @@ const colorStyles = cva(['h-8 w-8 mr-3 rounded-full cursor-pointer'], {
 			gray: 'bg-gray',
 			red: 'bg-red',
 			yellow: 'bg-yellow',
-		},
+		} satisfies ColorsRecord,
 	},
 	defaultVariants: {
 		color: 'none',
 	},
 })
-
-type Colors = NonNullable<VariantProps<typeof colorStyles>['color']>
 
 export const colors: Array<Colors> = [
 	'none',

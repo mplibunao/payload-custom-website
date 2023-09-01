@@ -1,11 +1,14 @@
 import { type Page } from 'payload/generated-types'
+import { Suspense } from 'react'
 
-import { Content as content } from './sections/Content'
-import { Image as image } from './sections/Image'
+import { Skeleton } from '../ui/skeleton'
+import { ContentBlock, MediaBlock } from './sections/LazyComponents'
 
-const components = {
-	content,
-	image,
+type BlockTypes = Page['layout'][number]['blockType']
+
+const components: Record<BlockTypes, React.LazyExoticComponent<any>> = {
+	content: ContentBlock,
+	media: MediaBlock,
 }
 
 type Props = {
@@ -15,14 +18,16 @@ type Props = {
 
 export const RenderBlocks = ({ layout, className }: Props) => (
 	<div className={className}>
-		{layout?.map((block, i) => {
+		{layout?.map((block) => {
 			const Block: React.FC<any> = components[block.blockType]
 
 			if (Block) {
 				return (
-					<section key={i}>
-						<Block {...block} />
-					</section>
+					<Suspense key={block.id} fallback={<Skeleton />}>
+						<section key={block.id}>
+							<Block {...block} />
+						</section>
+					</Suspense>
 				)
 			}
 

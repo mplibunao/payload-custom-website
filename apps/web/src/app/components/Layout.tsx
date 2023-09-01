@@ -7,7 +7,7 @@ export type ContainerProps = {
 
 export const Container = (props: ContainerProps): JSX.Element => {
 	return (
-		<div className={twMerge('max-w-4xl mx-auto', props.className)}>
+		<div className={twMerge('max-w-5xl mx-auto px-12', props.className)}>
 			{props.children}
 		</div>
 	)

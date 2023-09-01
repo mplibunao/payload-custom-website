@@ -5,7 +5,8 @@ import { Logo } from './app/components/Icon/Logo'
 import { collections } from './cms/collections'
 import { globals } from './cms/globals'
 
-import './app/styles/payloadTailwind.css'
+//import './app/styles/payloadTailwind.css'
+import './app/styles/tailwindAdmin.css'
 
 import { BackButton } from './cms/components/BackButton'
 
@@ -63,7 +64,7 @@ export default buildConfig({
 				rules: [
 					...(config.module?.rules ?? []),
 					{
-						test: /\tailwind.css$/i,
+						test: /\tailwindAdmin.css$/i,
 						use: ['css-loader', 'postcss-loader'],
 					},
 				],

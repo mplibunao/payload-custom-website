@@ -1,4 +1,5 @@
 import { type Field } from 'payload/types'
+import { type BackgroundColorType } from '~/cms/payload-types'
 
 import { blockFields } from '../blockFields'
 import { ColorPickerInput, validateColor } from './ColorPickerInput'
@@ -8,12 +9,15 @@ type Args = {
 	label?: string
 }
 
+export type Colors = BackgroundColorType['backgroundColor']
+export type ColorsRecord = Record<Colors, string>
+
 export const colorField = ({
 	name = 'color',
 	label = 'Color',
 }: Args = {}): Field => {
 	return blockFields({
-		overrides: { label },
+		overrides: { label, interfaceName: `${label}Type` },
 		name,
 		fields: [
 			{

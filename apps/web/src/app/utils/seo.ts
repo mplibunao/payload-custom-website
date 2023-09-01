@@ -12,7 +12,6 @@ const getProfileMeta: MetaMapper = (meta, metaResult) => {
 	if (!meta.profile) {
 		return metaResult
 	}
-
 	if (meta.profile.firstName) {
 		metaResult.push({
 			name: 'profile:first_name',

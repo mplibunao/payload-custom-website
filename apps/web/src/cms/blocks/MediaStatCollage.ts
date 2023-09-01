@@ -2,11 +2,11 @@ import { type Block } from 'payload/types'
 
 import { stat } from '../fields/stat'
 
-export const ImageStatCollage: Block = {
-	slug: 'image-stat-collage',
+export const MediaStatCollage: Block = {
+	slug: 'media-stat-collage',
 	labels: {
-		singular: 'Image Stat Collage',
-		plural: 'Image Stat Collages',
+		singular: 'Media Stat Collage',
+		plural: 'Media Stat Collages',
 	},
 	fields: [
 		{
@@ -18,15 +18,15 @@ export const ImageStatCollage: Block = {
 			fields: [stat],
 		},
 		{
-			name: 'images',
-			label: 'Images',
+			name: 'media',
+			label: 'Media',
 			type: 'array',
 			minRows: 3,
 			maxRows: 6,
 			fields: [
 				{
 					type: 'upload',
-					name: 'image',
+					name: 'media',
 					relationTo: 'media',
 					required: true,
 				},

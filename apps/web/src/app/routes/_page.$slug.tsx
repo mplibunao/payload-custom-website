@@ -7,12 +7,11 @@ import { useLoaderData } from '@remix-run/react'
 import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 
 import { RenderBlocks } from '../components/Blocks/RenderBlocks'
-import { Grid, Container } from '../components/Layout'
+import { PageHero } from '../components/PageHero'
 import { NotFound } from '../utils/http.server'
 import { mergeTitle, formatOgTypeMeta } from '../utils/seo'
 import { ErrorBoundary as NotFoundErrorBoundary } from './$'
 
-// eslint-disable-next-line max-statements
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 	if (!data) return formatOgTypeMeta(undefined, [])
 	const title = mergeTitle(data.siteInfo?.meta.title, data.page?.meta?.title)
@@ -20,46 +19,58 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 		data.page?.meta?.description ?? data.siteInfo?.meta.description
 	const ogImage = data.page?.meta?.ogImage ?? data.siteInfo?.meta.ogImage
 
-	const pageMeta: V2_ServerRuntimeMetaDescriptor[] = [
-		{ name: 'og:url', content: data.url },
-	]
+	const pageMeta: V2_ServerRuntimeMetaDescriptor[] =
+		Array<V2_ServerRuntimeMetaDescriptor>(10)
+	pageMeta.push({ name: 'og:url', content: data.url })
 
 	if (title) {
-		pageMeta.push({ title })
-		pageMeta.push({
-			name: 'twitter:title',
-			content: title,
-		})
-		pageMeta.push({
-			name: 'og:title',
-			content: title,
-		})
+		pageMeta.push(
+			...[
+				{ title },
+				{
+					name: 'twitter:title',
+					content: title,
+				},
+				{
+					name: 'og:title',
+					content: title,
+				},
+			],
+		)
 	}
 
 	if (description) {
-		pageMeta.push({
-			name: 'description',
-			content: description,
-		})
-		pageMeta.push({
-			name: 'twitter:description',
-			content: description,
-		})
-		pageMeta.push({
-			name: 'og:description',
-			content: description,
-		})
+		pageMeta.push(
+			...[
+				{
+					name: 'description',
+					content: description,
+				},
+				{
+					name: 'twitter:description',
+					content: description,
+				},
+				{
+					name: 'og:description',
+					content: description,
+				},
+			],
+		)
 	}
 
 	if (ogImage) {
-		pageMeta.push({
-			name: 'twitter:image',
-			content: ogImage,
-		})
-		pageMeta.push({
-			name: 'og:image',
-			content: ogImage,
-		})
+		pageMeta.push(
+			...[
+				{
+					name: 'twitter:image',
+					content: ogImage,
+				},
+				{
+					name: 'og:image',
+					content: ogImage,
+				},
+			],
+		)
 	}
 
 	return formatOgTypeMeta(data?.page?.meta, pageMeta)
@@ -102,16 +113,13 @@ export default function DynamicPageRoute(): JSX.Element {
 
 	return (
 		<main>
-			<header>
-				<h1>{page?.title}</h1>
-			</header>
+			<PageHero
+				title={page.title}
+				heroContent={page.heroContent}
+				heroMedia={page.heroMedia}
+				heroType={page.heroType}
+			/>
 			<RenderBlocks layout={page.layout} />
-			<Container>
-				<Grid>
-					<div className='col-span-6'>Here is some first-column content</div>
-					<div className='col-span-6'>Here is some first-column content</div>
-				</Grid>
-			</Container>
 		</main>
 	)
 }
