@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { ElementButton } from 'payload/components/rich-text'
 import { type RichTextCustomElement } from 'payload/types'
+// @ts-ignore
 import React, { useCallback } from 'react'
 import { Transforms } from 'slate'
 import { useSlate, ReactEditor } from 'slate-react'

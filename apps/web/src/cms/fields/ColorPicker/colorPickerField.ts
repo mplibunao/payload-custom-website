@@ -9,7 +9,7 @@ type Args = {
 	label?: string
 }
 
-export type Colors = BackgroundColorType['backgroundColor']
+export type Colors = BackgroundColorType['color']
 export type ColorsRecord = Record<Colors, string>
 
 export const colorField = ({
@@ -21,7 +21,7 @@ export const colorField = ({
 		name,
 		fields: [
 			{
-				name,
+				name: 'color',
 				type: 'select',
 				required: true,
 				defaultValue: 'none',

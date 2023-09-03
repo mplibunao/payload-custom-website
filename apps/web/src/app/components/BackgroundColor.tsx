@@ -7,7 +7,7 @@ import {
 
 export interface BackgroundColorProps {
 	color: Colors
-	children: React.ReactNode
+	children?: React.ReactNode
 	className?: string
 }
 

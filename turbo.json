@@ -3,7 +3,7 @@
 	"pipeline": {
 		"ladle:build": {
 			"dependsOn": ["^ladle:build"],
-			"inputs": ["src/**/*", ".ladle/**/*"],
+			"inputs": ["src/app/**/*", ".ladle/**/*"],
 			"outputs": ["build/**/*"]
 		},
 		"clean": {

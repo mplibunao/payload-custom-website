@@ -1,4 +1,4 @@
-import { type VariantProps, cva } from 'cva'
+import { cva } from 'cva'
 import { type Props } from 'payload/components/fields/Text'
 import { useFieldType, Label } from 'payload/components/forms'
 import React from 'react'

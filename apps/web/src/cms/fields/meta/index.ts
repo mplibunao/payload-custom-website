@@ -45,7 +45,7 @@ export const metaField: MetaField = (
 					'These fields help improve Search Engine Optimization or SEO',
 			},
 			fields: [
-				...baseMetaField({ required }),
+				...baseMetaField({ required: false }),
 				{
 					name: 'type',
 					label: 'Type',

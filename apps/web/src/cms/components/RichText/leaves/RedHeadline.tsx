@@ -1,5 +1,6 @@
 import { LeafButton } from 'payload/components/rich-text'
 import { type RichTextCustomLeaf } from 'payload/types'
+// @ts-ignore
 import React from 'react'
 
 const Button = () => <LeafButton format='red-headline'>Red Headline</LeafButton>

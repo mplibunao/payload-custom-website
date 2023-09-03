@@ -1,9 +1,14 @@
 /* eslint-disable max-lines */
+
 import { type V2_MetaFunction } from '@remix-run/node'
+import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 import { type Meta } from '~/cms/payload-types'
 
-export const mergeTitle = (siteTitle?: string, pageTitle?: string) =>
-	pageTitle ? `${pageTitle} | ${siteTitle as string}` : siteTitle
+import { type SiteInfo } from '../modules/site/site.service.server'
+
+export const mergeTitle = (pageTitle: string, siteTitle?: string) => {
+	return siteTitle ? `${pageTitle} | ${siteTitle}` : pageTitle
+}
 
 type MetaResult = ReturnType<V2_MetaFunction>
 type MetaMapper = (meta: Meta, metaResult: MetaResult) => MetaResult
@@ -796,4 +801,52 @@ export const formatOgTypeMeta = (
 			metaResult.push({ name: 'og:type', content: 'website' })
 			return metaResult
 	}
+}
+
+export const getRootMeta = (url: string, siteInfo?: SiteInfo) => {
+	const rootMeta: V2_ServerRuntimeMetaDescriptor[] =
+		Array<V2_ServerRuntimeMetaDescriptor>(10)
+
+	rootMeta.push(
+		...[
+			{ name: 'og:type', content: 'website' },
+			{ name: 'og:url', content: url },
+		],
+	)
+
+	if (siteInfo) {
+		rootMeta.push(
+			...[
+				{ title: siteInfo.meta.title },
+				{
+					name: 'description',
+					content: siteInfo.meta.description,
+				},
+				{ name: 'twitter:title', content: siteInfo.meta.title },
+				{
+					name: 'twitter:description',
+					content: siteInfo.meta.description,
+				},
+				{ name: 'og:title', content: siteInfo.meta.title },
+				{
+					name: 'og:description',
+					content: siteInfo.meta.description,
+				},
+			],
+		)
+	}
+
+	if (siteInfo?.meta.ogImage) {
+		rootMeta.push(
+			...[
+				{ name: 'og:image', content: siteInfo.meta.ogImage },
+				{
+					name: 'twitter:image',
+					content: siteInfo.meta.ogImage,
+				},
+			],
+		)
+	}
+
+	return rootMeta
 }

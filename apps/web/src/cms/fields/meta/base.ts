@@ -8,7 +8,7 @@ export const baseMetaField = ({ required }: Props = {}): Field[] => [
 		name: 'title',
 		label: 'Title',
 		type: 'text',
-		required,
+		required: true,
 		admin: {
 			description: 'Page title',
 		},

@@ -31,21 +31,7 @@ export interface Page {
   }[];
   heroMedia: string | Media;
   layout: (
-    | {
-        ctaFields: {
-          backgroundColor: BackgroundColorType;
-          content: {
-            [k: string]: unknown;
-          }[];
-          actions?: {
-            link: PageLink;
-            id?: string;
-          }[];
-        };
-        id?: string;
-        blockName?: string;
-        blockType: 'cta';
-      }
+    | CTA
     | ContentBlockType
     | {
         actions?: {
@@ -199,8 +185,21 @@ export interface Media {
     };
   };
 }
+export interface CTA {
+  backgroundColor: BackgroundColorType;
+  content: {
+    [k: string]: unknown;
+  }[];
+  actions?: {
+    link: PageLink;
+    id?: string;
+  }[];
+  id?: string;
+  blockName?: string;
+  blockType: 'cta';
+}
 export interface BackgroundColorType {
-  backgroundColor: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
+  color: 'none' | 'red' | 'blue' | 'orange' | 'yellow' | 'gray' | 'black';
   colorPicker: string;
 }
 export interface PageLink {
@@ -247,21 +246,7 @@ export interface Study {
   title: string;
   featuredImage: string | Media;
   layout?: (
-    | {
-        ctaFields: {
-          backgroundColor: BackgroundColorType;
-          content: {
-            [k: string]: unknown;
-          }[];
-          actions?: {
-            link: PageLink;
-            id?: string;
-          }[];
-        };
-        id?: string;
-        blockName?: string;
-        blockType: 'cta';
-      }
+    | CTA
     | ContentBlockType
     | {
         actions?: {
@@ -393,7 +378,7 @@ export interface Category {
 }
 export interface Meta {
   title: string;
-  description: string;
+  description?: string;
   type: 'website' | 'article' | 'profile' | 'book' | 'video.movie' | 'video.tv_show' | 'video.episode' | 'video.other';
   article?: MetaArticle;
   book?: MetaBook;

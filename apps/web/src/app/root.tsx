@@ -14,7 +14,6 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from '@remix-run/react'
-import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 import {
 	FOOTER_KEY,
 	MEGA_MENU_KEY,
@@ -29,6 +28,7 @@ import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { type SiteInfo } from './modules/site/site.service.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
+import { getRootMeta } from './utils/seo.ts'
 
 export const links: LinksFunction = () => {
 	const rootLinks = [
@@ -72,8 +72,12 @@ export const links: LinksFunction = () => {
 	]
 
 	if (cssBundleHref) {
-		rootLinks.push({ rel: 'preload', href: cssBundleHref, as: 'style' })
-		rootLinks.push({ rel: 'stylesheet', href: cssBundleHref })
+		rootLinks.push(
+			...[
+				{ rel: 'preload', href: cssBundleHref, as: 'style' },
+				{ rel: 'stylesheet', href: cssBundleHref },
+			],
+		)
 	}
 
 	return rootLinks
@@ -82,99 +86,66 @@ export const links: LinksFunction = () => {
 export const loader = async ({ context, request }: DataFunctionArgs) => {
 	const { payload, cacheService } = context
 
-	const [megaMenuData, footerData, socialMediaData, siteInfoData] =
-		await Promise.allSettled([
-			cacheService.exec(
-				() => payload.findGlobal({ slug: 'mega-menu' }),
-				[MEGA_MENU_KEY],
-			),
-			cacheService.exec(
-				() => payload.findGlobal({ slug: 'footer' }),
-				[FOOTER_KEY],
-			),
-			cacheService.exec(
-				() => payload.findGlobal({ slug: 'social-media' }),
-				[SOCIAL_MEDIA_KEY],
-			),
-			context.siteService.getSiteInfo(),
-		])
+	return context.serverTiming.time('routse/root#loader', async () => {
+		const [megaMenuData, footerData, socialMediaData, siteInfoData] =
+			await Promise.allSettled([
+				cacheService.exec(
+					() => payload.findGlobal({ slug: 'mega-menu' }),
+					[MEGA_MENU_KEY],
+				),
+				cacheService.exec(
+					() => payload.findGlobal({ slug: 'footer' }),
+					[FOOTER_KEY],
+				),
+				cacheService.exec(
+					() => payload.findGlobal({ slug: 'social-media' }),
+					[SOCIAL_MEDIA_KEY],
+				),
+				context.siteService.getSiteInfo(),
+			])
 
-	const siteInfo =
-		siteInfoData.status === 'fulfilled' ? siteInfoData.value : undefined
-	const socialMedia =
-		(socialMediaData.status === 'fulfilled' && socialMediaData.value?.links) ||
-		[]
-	const megaMenu =
-		megaMenuData.status === 'rejected'
-			? undefined
-			: {
-					id: megaMenuData.value.id,
-					nav: megaMenuData.value.nav,
-			  }
-	const footer =
-		footerData.status === 'rejected'
-			? undefined
-			: {
-					id: footerData.value.id,
-					nav: footerData.value.nav,
-			  }
+		const siteInfo =
+			siteInfoData.status === 'fulfilled' ? siteInfoData.value : undefined
+		const socialMedia =
+			(socialMediaData.status === 'fulfilled' &&
+				socialMediaData.value?.links) ||
+			[]
+		const megaMenu =
+			megaMenuData.status === 'rejected'
+				? undefined
+				: {
+						id: megaMenuData.value.id,
+						nav: megaMenuData.value.nav,
+				  }
+		const footer =
+			footerData.status === 'rejected'
+				? undefined
+				: {
+						id: footerData.value.id,
+						nav: footerData.value.nav,
+				  }
 
-	return json({
-		siteInfo,
-		requestInfo: {
-			path: new URL(request.url).pathname,
-		},
-		url: request.url,
-		megaMenu,
-		footer,
-		socialMedia,
+		return json(
+			{
+				siteInfo,
+				megaMenu,
+				footer,
+				socialMedia,
+				meta: getRootMeta(request.url, siteInfo),
+			},
+			{
+				headers: {
+					'Cache-Control':
+						'public, max-age=60, s-max-age=60, stale-while-revalidate',
+				},
+			},
+		)
 	})
 }
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
-	const rootMeta: V2_ServerRuntimeMetaDescriptor[] =
-		Array<V2_ServerRuntimeMetaDescriptor>(10)
-
-	rootMeta.push({ name: 'og:type', content: 'website' })
-	if (!data) return rootMeta
-
-	rootMeta.push({ name: 'og:url', content: data.url })
-
-	if (data.siteInfo) {
-		rootMeta.push(
-			...[
-				{ title: data.siteInfo.meta.title },
-				{
-					name: 'description',
-					content: data.siteInfo.meta.description,
-				},
-				{ name: 'twitter:title', content: data.siteInfo.meta.title },
-				{
-					name: 'twitter:description',
-					content: data.siteInfo.meta.description,
-				},
-				{ name: 'og:title', content: data.siteInfo.meta.title },
-				{
-					name: 'og:description',
-					content: data.siteInfo.meta.description,
-				},
-			],
-		)
-	}
-
-	if (data?.siteInfo?.meta.ogImage) {
-		rootMeta.push(
-			...[
-				{ name: 'og:image', content: data.siteInfo.meta.ogImage },
-				{
-					name: 'twitter:image',
-					content: data.siteInfo.meta.ogImage,
-				},
-			],
-		)
-	}
-
-	return rootMeta
+	if (!data) return []
+	return data.meta
 }
 
 function Document({

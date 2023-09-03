@@ -29,8 +29,8 @@ export const Media = ({
 	alt,
 	caption,
 	loading,
-	fetchPriority,
-}: MediaProps): JSX.Element => {
+}: //fetchPriority,
+MediaProps): JSX.Element => {
 	if (mimeType?.includes('video')) {
 		return (
 			<div className={className.wrapper}>

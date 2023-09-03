@@ -29,6 +29,8 @@ export const REDIS_CACHE_CONFIG: Partial<RedisCacheConfiguration> = {
 	ttlLeftBeforeRefreshInMsecs: REDIS_CACHE_TTL_BEFORE_REFRESH,
 }
 
+export type CacheUpdateKey = [string, ...string[]]
+
 export class CacheService {
 	constructor(private readonly cache: ManualCache<object>) {}
 
@@ -59,7 +61,7 @@ export class CacheService {
 		return this.cache.invalidateCacheFor(key)
 	}
 
-	async update<T extends object>(value: T, keys: [string, ...string[]]) {
+	async update<T extends object>(value: T, keys: CacheUpdateKey) {
 		if (keys.length === 0) throw new Error('Invalid cache key')
 		const key = keys.join(',')
 		return this.cache.set(key, value)

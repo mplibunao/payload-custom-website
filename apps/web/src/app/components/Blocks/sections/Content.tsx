@@ -61,7 +61,7 @@ export const Content = (props: ContentTypeProps) => {
 	return (
 		<div className='overflow-hidden'>
 			<Gutter left right>
-				<BackgroundColor color={props.backgroundColor.backgroundColor}>
+				<BackgroundColor color={props.backgroundColor.color}>
 					<Padding top={props.paddingTop} bottom={props.paddingBottom}>
 						<Container className='relative'>
 							{props.accentLine ? (

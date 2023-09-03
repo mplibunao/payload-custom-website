@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload/types'
+import { getPageCacheKey } from '~/constants/globalsCacheKeys'
 
 import { CTAGrid } from '../blocks/CTAGrid'
 import { CallToAction } from '../blocks/CallToAction'
@@ -25,6 +26,27 @@ export const Pages: CollectionConfig = {
 	},
 	access: {
 		read: () => true,
+	},
+	hooks: {
+		afterChange: [
+			async ({ doc, req }) => {
+				await req.app.locals.cacheService.update(
+					doc,
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+					getPageCacheKey(doc.slug as string),
+				)
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+				return doc
+			},
+		],
+		afterDelete: [
+			async ({ req, doc }) => {
+				await req.app.locals.cacheService.invalidate(
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+					getPageCacheKey(doc.slug as string),
+				)
+			},
+		],
 	},
 	fields: [
 		{
