@@ -10,6 +10,9 @@ export const Site: GlobalConfig = {
 	hooks: {
 		afterChange: [
 			async ({ req, doc }) => {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+				if (req.payload.local) return doc
+
 				await req.app.locals.siteService.invalidate()
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 				return doc
