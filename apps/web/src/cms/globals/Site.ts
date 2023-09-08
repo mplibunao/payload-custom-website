@@ -7,6 +7,9 @@ import { ogImage } from '../fields/meta/ogImage'
 export const Site: GlobalConfig = {
 	slug: 'site',
 	label: 'Site Config',
+	access: {
+		read: () => true,
+	},
 	hooks: {
 		afterChange: [
 			async ({ req, doc }) => {
