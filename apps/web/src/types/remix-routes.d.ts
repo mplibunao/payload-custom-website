@@ -10,13 +10,6 @@ declare module "remix-routes" {
 
   export interface Routes {
   
-    "": {
-      params: {
-      
-      },
-      query: ExportedQuery<import('../app/routes/_page').SearchParams>,
-    };
-  
     "/": {
       params: {
       
@@ -30,7 +23,7 @@ declare module "remix-routes" {
         slug: string | number;
       
       },
-      query: ExportedQuery<import('../app/routes/_page.$slug').SearchParams>,
+      query: ExportedQuery<import('../app/modules/page/_page.$slug.route').SearchParams>,
     };
   
     "/*": {
