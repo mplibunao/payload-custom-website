@@ -49,3 +49,5 @@ db_data
 
 # test artifacts
 **/*coverage
+
+**/seed

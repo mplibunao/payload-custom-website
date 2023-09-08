@@ -25,8 +25,8 @@ export const initApp = async (
 		dependencyOverrides = {},
 	}: {
 		config: Config
-		build: ServerBuild
-		buildPath: string
+		build?: ServerBuild
+		buildPath?: string
 		dependencyOverrides?: DependencyOverrides
 	},
 ) => {
@@ -81,13 +81,20 @@ export const initApp = async (
 
 	app.get('/health', healthCheck(app.locals.logger, config))
 
-	app.all(
-		'*',
-		// eslint-disable-next-line @typescript-eslint/no-misused-promises
-		config.env.NODE_ENV === 'development'
-			? await createDevRequestHandler({ build, config, buildPath, app })
-			: createRemixRequestHandler({ build, config, app }),
-	)
+	if (!config.payload.local) {
+		if (!build || !buildPath) {
+			throw new Error(
+				'Remix build and build path are required when running on production or non-local api mode',
+			)
+		}
+		app.all(
+			'*',
+			// eslint-disable-next-line @typescript-eslint/no-misused-promises
+			config.env.NODE_ENV === 'development'
+				? await createDevRequestHandler({ build, config, buildPath, app })
+				: createRemixRequestHandler({ build, config, app }),
+		)
+	}
 
 	return app
 }

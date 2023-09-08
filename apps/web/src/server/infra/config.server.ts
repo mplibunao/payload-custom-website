@@ -15,16 +15,18 @@ import { type RedisOpts } from './redis.ts'
 
 export const getDotEnv = () => {
 	if (Boolean(process.env.CI) || process.env.APP_ENV === 'production') {
-		return process.env
+		return { ...process.env }
 	}
 
 	if (process.env.APP_ENV === 'test') {
-		return dotenv.config({
+		dotenv.config({
 			path: '.env.test',
-		}).parsed
+		})
+	} else {
+		dotenv.config()
 	}
 
-	return dotenv.config().parsed
+	return { ...process.env }
 }
 
 export type Env = Static<typeof typeboxEnvSchema>
@@ -73,7 +75,7 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 		payload: {
 			secret: env.PAYLOAD_SECRET,
 			mongoURL: env.MONGODB_URI,
-			local: false,
+			local: env.PAYLOAD_LOCAL_API,
 			mongoOptions: {
 				//dbName: 'test',
 				appName: env.APP_NAME,

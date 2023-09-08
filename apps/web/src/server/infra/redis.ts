@@ -54,3 +54,15 @@ export class RedisClient extends Redis {
 		}
 	}
 }
+
+export async function closeRedisConnection(redis: Redis, logger: Logger) {
+	return new Promise((resolve, reject) => {
+		void redis.quit((err, result) => {
+			if (err) {
+				logger.error({ err }, 'Error closing redis connection')
+				return reject(err)
+			}
+			return resolve(result)
+		})
+	})
+}

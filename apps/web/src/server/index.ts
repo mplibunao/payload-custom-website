@@ -2,13 +2,13 @@ import { type ServerBuild, broadcastDevReady } from '@remix-run/node'
 import closeWithGrace, { type Signals } from 'close-with-grace'
 import express from 'express'
 import { type Server } from 'http'
-import type Redis from 'ioredis'
-import { type Mongoose } from 'mongoose'
 import path from 'path'
 import { type Logger } from 'pino'
 
 import { initApp } from './app'
 import { config } from './infra/config.server'
+import { closeDBConnection } from './infra/mongo'
+import { closeRedisConnection } from './infra/redis'
 
 void start()
 
@@ -60,32 +60,7 @@ async function start() {
 	)
 }
 
-async function closeRedisConnection(redis: Redis, logger: Logger) {
-	return new Promise((resolve, reject) => {
-		void redis.quit((err, result) => {
-			if (err) {
-				logger.error({ err }, 'Error closing redis connection')
-				return reject(err)
-			}
-			return resolve(result)
-		})
-	})
-}
-
-async function closeDBConnection(mongoose: Mongoose, logger: Logger) {
-	return new Promise((resolve, reject) => {
-		mongoose.disconnect((err) => {
-			if (err) {
-				logger.error({ err }, 'Error closing mongoose connection')
-				reject(err)
-			} else {
-				resolve('ok')
-			}
-		})
-	})
-}
-
-async function closeServer(server: Server, logger: Logger) {
+export async function closeServer(server: Server, logger: Logger) {
 	await new Promise((resolve, reject) => {
 		server.close((error) => {
 			if (error) {

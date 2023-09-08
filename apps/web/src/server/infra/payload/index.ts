@@ -32,6 +32,7 @@ export const payloadEnvSchema = {
 			'Idle timeout for the connection to be dropped. Defaults to 0 (never)',
 	}),
 	PAYLOAD_PUBLIC_ENABLE_AUTOLOGIN: Type.Boolean({ default: false }),
+	PAYLOAD_LOCAL_API: Type.Optional(Type.Boolean()),
 }
 
 export const initPayloadCms = async (

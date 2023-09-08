@@ -68,6 +68,10 @@ function db:reset { ## Reset database. Destroy then start it back up
   dc:up
 }
 
+function db:seed { ## Seed database
+  pnpm -F web seed
+}
+
 function db:backup { ## Create db backup
   mongodump -h localhost:27017 -d test --username root --password password --out=./data/ --authenticationDatabase=admin
 }

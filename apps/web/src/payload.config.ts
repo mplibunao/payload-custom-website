@@ -9,6 +9,7 @@ import { globals } from './cms/globals'
 import './app/styles/tailwindAdmin.css'
 
 import { BackButton } from './cms/components/BackButton'
+import { PAYLOAD_ADMIN_EMAIL, PAYLOAD_ADMIN_PASSWORD } from './constants'
 
 const mockModulePath = path.resolve(__dirname, 'tests/mocks/emptyModuleMock.js')
 
@@ -43,8 +44,8 @@ export default buildConfig({
 		autoLogin:
 			process.env.PAYLOAD_PUBLIC_ENABLE_AUTOLOGIN === 'true'
 				? {
-						email: 'admin@example.com',
-						password: 'admin',
+						email: PAYLOAD_ADMIN_EMAIL,
+						password: PAYLOAD_ADMIN_PASSWORD,
 				  }
 				: false,
 		webpack: (config) => ({
