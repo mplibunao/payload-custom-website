@@ -1,7 +1,7 @@
 import { type GlobalConfig } from 'payload/types'
 import { MEGA_MENU_KEY } from '~/constants/globalsCacheKeys'
 
-import { link } from '../fields/link'
+import { navField } from '../fields/nav'
 
 export const MegaMenu: GlobalConfig = {
 	slug: 'mega-menu',
@@ -15,16 +15,5 @@ export const MegaMenu: GlobalConfig = {
 			},
 		],
 	},
-	fields: [
-		{
-			name: 'nav',
-			label: 'Navigation',
-			type: 'array',
-			labels: {
-				singular: 'Link',
-				plural: 'Links',
-			},
-			fields: [link()],
-		},
-	],
+	fields: [navField],
 }

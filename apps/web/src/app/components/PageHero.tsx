@@ -121,14 +121,14 @@ export type PageHeroProps = Pick<
 
 export const PageHero = (props: PageHeroProps): JSX.Element => {
 	switch (props.heroType) {
-		case 'contentAboveImage':
+		case 'contentAboveMedia':
 			return (
 				<ContentAboveMediaPageHero
 					heroContent={props.heroContent}
 					heroMedia={props.heroMedia}
 				/>
 			)
-		case 'contentLeftOfImage':
+		case 'contentLeftOfMedia':
 			return (
 				<ContentLeftOfMediaPageHero
 					heroContent={props.heroContent}

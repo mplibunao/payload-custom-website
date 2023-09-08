@@ -1,5 +1,6 @@
 import { twMerge } from 'tailwind-merge'
 import { type Media as MediaType } from '~/cms/payload-types'
+import { MEDIA_LOCAL_DIR } from '~/constants'
 
 import { RichText } from '../RichText'
 
@@ -16,7 +17,7 @@ export type MediaProps = MediaType & {
 	fetchPriority?: 'high' | 'low' | 'auto'
 }
 
-const imagePrefix = '/media/assets/'
+const imagePrefix = `${MEDIA_LOCAL_DIR}/`
 
 export const Media = ({
 	filename,
@@ -47,13 +48,23 @@ MediaProps): JSX.Element => {
 		)
 	}
 
+	/*
+	 * use preferred size if caller passes it as props
+	 * fallback to original webp image
+	 * last fallback is original non-webp image
+	 */
 	let filenameToRender = filename
-	if (sizes && preferredSize && sizes[preferredSize]) {
-		filenameToRender = sizes[preferredSize]?.filename
-		height = sizes[preferredSize]?.height
-		width = sizes[preferredSize]?.width
+	if (sizes) {
+		if (preferredSize && sizes[preferredSize]) {
+			filenameToRender = sizes[preferredSize]?.filename
+			height = sizes[preferredSize]?.height
+			width = sizes[preferredSize]?.width
+		} else if (sizes['original-webp']) {
+			filenameToRender = sizes['original-webp'].filename
+			height = sizes['original-webp'].height
+			width = sizes['original-webp'].width
+		}
 	}
-
 	return (
 		<div className={className.wrapper}>
 			<img

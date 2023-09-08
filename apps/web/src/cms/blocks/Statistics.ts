@@ -1,5 +1,7 @@
 import { type Block } from 'payload/types'
 
+import { colorField } from '../fields/ColorPicker/colorPickerField'
+import { overlap } from '../fields/overlap'
 import { stat } from '../fields/stat'
 
 export const Statistics: Block = {
@@ -9,65 +11,8 @@ export const Statistics: Block = {
 		plural: 'Statistic Blocks',
 	},
 	fields: [
-		{
-			type: 'row',
-			fields: [
-				{
-					name: 'topOverlap',
-					label: 'Top Overlap',
-					type: 'select',
-					defaultValue: 'none',
-					options: [
-						{
-							label: 'None',
-							value: 'none',
-						},
-						{
-							label: 'Small',
-							value: 'small',
-						},
-						{
-							label: 'Medium',
-							value: 'medium',
-						},
-						{
-							label: 'Large',
-							value: 'large',
-						},
-					],
-					admin: {
-						width: '50%',
-					},
-				},
-				{
-					name: 'bottomOverlap',
-					label: 'Bottom Overlap',
-					type: 'select',
-					defaultValue: 'none',
-					options: [
-						{
-							label: 'None',
-							value: 'none',
-						},
-						{
-							label: 'Small',
-							value: 'small',
-						},
-						{
-							label: 'Medium',
-							value: 'medium',
-						},
-						{
-							label: 'Large',
-							value: 'large',
-						},
-					],
-					admin: {
-						width: '50%',
-					},
-				},
-			],
-		},
+		colorField({ name: 'backgroundColor', label: 'Background Color' }),
+		overlap,
 		{
 			name: 'stats',
 			label: 'Statistics',

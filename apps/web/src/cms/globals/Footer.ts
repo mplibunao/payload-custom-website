@@ -1,7 +1,7 @@
 import { type GlobalConfig } from 'payload/types'
 import { FOOTER_KEY } from '~/constants/globalsCacheKeys'
 
-import { link } from '../fields/link'
+import { navField } from '../fields/nav'
 
 export const Footer: GlobalConfig = {
 	slug: 'footer',
@@ -15,16 +15,5 @@ export const Footer: GlobalConfig = {
 			},
 		],
 	},
-	fields: [
-		{
-			name: 'nav',
-			label: 'Navigation',
-			type: 'array',
-			labels: {
-				singular: 'Link',
-				plural: 'Links',
-			},
-			fields: [link()],
-		},
-	],
+	fields: [navField],
 }

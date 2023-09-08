@@ -23,12 +23,16 @@ export const MediaBlock: Block = {
 			required: true,
 			options: [
 				{
-					label: 'Card',
-					value: 'card',
+					label: 'Normal',
+					value: 'normal',
 				},
 				{
-					label: 'Feature',
-					value: 'feature',
+					label: 'Fullscreen',
+					value: 'fullscreen',
+				},
+				{
+					label: 'Wide',
+					value: 'wide',
 				},
 			],
 			admin: {

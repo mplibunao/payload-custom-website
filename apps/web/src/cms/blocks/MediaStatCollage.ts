@@ -1,5 +1,6 @@
 import { type Block } from 'payload/types'
 
+import { overlap } from '../fields/overlap'
 import { stat } from '../fields/stat'
 
 export const MediaStatCollage: Block = {
@@ -9,6 +10,7 @@ export const MediaStatCollage: Block = {
 		plural: 'Media Stat Collages',
 	},
 	fields: [
+		overlap,
 		{
 			name: 'stats',
 			label: 'Statistics',
@@ -22,7 +24,7 @@ export const MediaStatCollage: Block = {
 			label: 'Media',
 			type: 'array',
 			minRows: 3,
-			maxRows: 6,
+			maxRows: 4,
 			fields: [
 				{
 					type: 'upload',

@@ -22,6 +22,22 @@ export const CTAGrid: Block = {
 					type: 'text',
 					required: true,
 				},
+				{
+					name: 'icon',
+					label: 'Icon',
+					type: 'radio',
+					defaultValue: 'arrow',
+					options: [
+						{
+							label: 'None',
+							value: 'none',
+						},
+						{
+							label: 'Arrow',
+							value: 'arrow',
+						},
+					],
+				},
 				link(),
 			],
 		},

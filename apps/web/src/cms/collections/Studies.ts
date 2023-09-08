@@ -27,8 +27,8 @@ export const Studies: CollectionConfig = {
 			required: true,
 		},
 		{
-			name: 'featuredImage',
-			label: 'Featured Image',
+			name: 'featuredMedia',
+			label: 'Featured Media',
 			type: 'upload',
 			relationTo: 'media',
 			required: true,
@@ -54,15 +54,15 @@ export const Studies: CollectionConfig = {
 			],
 		},
 		{
-			name: 'previewImages',
-			label: 'Preview Images',
+			name: 'previewMedia',
+			label: 'Preview Media',
 			type: 'array',
 			minRows: 1,
 			maxRows: 3,
 			fields: [
 				{
-					name: 'image',
-					label: 'Image',
+					name: 'media',
+					label: 'Media',
 					type: 'upload',
 					relationTo: 'media',
 					required: true,

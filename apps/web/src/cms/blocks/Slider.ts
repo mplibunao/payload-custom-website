@@ -11,15 +11,18 @@ export const Slider: Block = {
 	fields: [
 		colorField({ name: 'backgroundColor', label: 'Background Color' }),
 		{
-			name: 'images',
-			label: 'Images',
+			name: 'slides',
+			labels: {
+				singular: 'Slide',
+				plural: 'Slides',
+			},
 			type: 'array',
 			minRows: 3,
 			maxRows: 9,
 			fields: [
 				{
 					type: 'upload',
-					name: 'image',
+					name: 'media',
 					relationTo: 'media',
 					required: true,
 				},

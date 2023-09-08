@@ -6,6 +6,11 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+export type Nav = {
+  link: PageLink;
+  id?: string;
+}[];
+
 export interface Config {
   collections: {
     pages: Page;
@@ -25,7 +30,7 @@ export interface Config {
 export interface Page {
   id: string;
   title: string;
-  heroType: 'minimal' | 'contentAboveImage' | 'contentLeftOfImage';
+  heroType: 'minimal' | 'contentAboveMedia' | 'contentLeftOfMedia';
   heroContent: {
     [k: string]: unknown;
   }[];
@@ -36,6 +41,7 @@ export interface Page {
     | {
         actions?: {
           headline: string;
+          icon?: 'none' | 'arrow';
           link: PageLink;
           id?: string;
         }[];
@@ -83,6 +89,8 @@ export interface Page {
         blockType: 'media-grid';
       }
     | {
+        topOverlap?: 'none' | 'small' | 'medium' | 'large';
+        bottomOverlap?: 'none' | 'small' | 'medium' | 'large';
         stats?: {
           stat?: string;
           description?: string;
@@ -98,8 +106,8 @@ export interface Page {
       }
     | {
         backgroundColor: BackgroundColorType;
-        images?: {
-          image: string | Media;
+        slides?: {
+          media: string | Media;
           id?: string;
         }[];
         id?: string;
@@ -113,6 +121,7 @@ export interface Page {
         blockType: 'spacer';
       }
     | {
+        backgroundColor: BackgroundColorType;
         topOverlap?: 'none' | 'small' | 'medium' | 'large';
         bottomOverlap?: 'none' | 'small' | 'medium' | 'large';
         stats?: {
@@ -159,7 +168,31 @@ export interface Media {
   width?: number;
   height?: number;
   sizes?: {
+    'original-webp'?: {
+      url?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filesize?: number;
+      filename?: string;
+    };
     card?: {
+      url?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filesize?: number;
+      filename?: string;
+    };
+    portrait?: {
+      url?: string;
+      width?: number;
+      height?: number;
+      mimeType?: string;
+      filesize?: number;
+      filename?: string;
+    };
+    square?: {
       url?: string;
       width?: number;
       height?: number;
@@ -233,7 +266,7 @@ export interface ContentBlockType {
 }
 export interface MediaBlockType {
   media: string | Media;
-  type: 'card' | 'feature';
+  type: 'normal' | 'fullscreen' | 'wide';
   caption?: {
     [k: string]: unknown;
   }[];
@@ -244,13 +277,14 @@ export interface MediaBlockType {
 export interface Study {
   id: string;
   title: string;
-  featuredImage: string | Media;
+  featuredMedia: string | Media;
   layout?: (
     | CTA
     | ContentBlockType
     | {
         actions?: {
           headline: string;
+          icon?: 'none' | 'arrow';
           link: PageLink;
           id?: string;
         }[];
@@ -298,6 +332,8 @@ export interface Study {
         blockType: 'media-grid';
       }
     | {
+        topOverlap?: 'none' | 'small' | 'medium' | 'large';
+        bottomOverlap?: 'none' | 'small' | 'medium' | 'large';
         stats?: {
           stat?: string;
           description?: string;
@@ -313,8 +349,8 @@ export interface Study {
       }
     | {
         backgroundColor: BackgroundColorType;
-        images?: {
-          image: string | Media;
+        slides?: {
+          media: string | Media;
           id?: string;
         }[];
         id?: string;
@@ -328,6 +364,7 @@ export interface Study {
         blockType: 'spacer';
       }
     | {
+        backgroundColor: BackgroundColorType;
         topOverlap?: 'none' | 'small' | 'medium' | 'large';
         bottomOverlap?: 'none' | 'small' | 'medium' | 'large';
         stats?: {
@@ -357,8 +394,8 @@ export interface Study {
         blockType: 'study-slider';
       }
   )[];
-  previewImages?: {
-    image: string | Media;
+  previewMedia?: {
+    media: string | Media;
     id?: string;
   }[];
   client?: string;
@@ -618,10 +655,7 @@ export interface User {
 }
 export interface MegaMenu {
   id: string;
-  nav?: {
-    link: PageLink;
-    id?: string;
-  }[];
+  nav?: Nav;
   updatedAt?: string;
   createdAt?: string;
 }
@@ -637,10 +671,7 @@ export interface SocialMedia {
 }
 export interface Footer {
   id: string;
-  nav?: {
-    link: PageLink;
-    id?: string;
-  }[];
+  nav?: Nav;
   updatedAt?: string;
   createdAt?: string;
 }

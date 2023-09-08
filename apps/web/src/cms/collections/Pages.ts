@@ -30,6 +30,9 @@ export const Pages: CollectionConfig = {
 	hooks: {
 		afterChange: [
 			async ({ doc, req }) => {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+				if (req.payload.local) return doc
+
 				await req.app.locals.cacheService.update(
 					doc,
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -41,6 +44,9 @@ export const Pages: CollectionConfig = {
 		],
 		afterDelete: [
 			async ({ req, doc }) => {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
+				if (req.payload.local) return doc
+
 				await req.app.locals.cacheService.invalidate(
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 					getPageCacheKey(doc.slug as string),
@@ -67,12 +73,12 @@ export const Pages: CollectionConfig = {
 					value: 'minimal',
 				},
 				{
-					label: 'Content Above Image',
-					value: 'contentAboveImage',
+					label: 'Content Above Media',
+					value: 'contentAboveMedia',
 				},
 				{
-					label: 'Content Left of Image',
-					value: 'contentLeftOfImage',
+					label: 'Content Left of Media',
+					value: 'contentLeftOfMedia',
 				},
 			],
 		},
@@ -88,8 +94,8 @@ export const Pages: CollectionConfig = {
 			required: true,
 			admin: {
 				condition: (_, siblingData) =>
-					siblingData?.heroType === 'contentAboveImage' ||
-					siblingData?.heroType === 'contentLeftOfImage',
+					siblingData?.heroType === 'contentAboveMedia' ||
+					siblingData?.heroType === 'contentLeftOfMedia',
 			},
 		},
 		{
