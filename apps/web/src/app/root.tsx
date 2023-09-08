@@ -90,15 +90,17 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 		const [megaMenuData, footerData, socialMediaData, siteInfoData] =
 			await Promise.allSettled([
 				cacheService.exec(
-					() => payload.findGlobal({ slug: 'mega-menu' }),
+					() =>
+						payload.findGlobal({ slug: 'mega-menu', overrideAccess: false }),
 					[MEGA_MENU_KEY],
 				),
 				cacheService.exec(
-					() => payload.findGlobal({ slug: 'footer' }),
+					() => payload.findGlobal({ slug: 'footer', overrideAccess: false }),
 					[FOOTER_KEY],
 				),
 				cacheService.exec(
-					() => payload.findGlobal({ slug: 'social-media' }),
+					() =>
+						payload.findGlobal({ slug: 'social-media', overrideAccess: false }),
 					[SOCIAL_MEDIA_KEY],
 				),
 				context.siteService.getSiteInfo(),
