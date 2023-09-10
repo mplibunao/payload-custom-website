@@ -1,6 +1,6 @@
 ARG WORKSPACE=@payload-custom-website
 ARG PACKAGE=web
-ARG BASE_IMAGE=node:18.15.0-bullseye-slim
+ARG BASE_IMAGE=node:20.6.0-bullseye-slim
 #ARG DISTROLESS=gcr.io/distroless/nodejs:18
 # docker run --entrypoint sh -it [IMAGE_NAME:TAG] to debug
 ARG DISTROLESS=gcr.io/distroless/nodejs:debug
