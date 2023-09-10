@@ -804,8 +804,7 @@ export const formatOgTypeMeta = (
 }
 
 export const getRootMeta = (url: string, siteInfo?: SiteInfo) => {
-	const rootMeta: V2_ServerRuntimeMetaDescriptor[] =
-		Array<V2_ServerRuntimeMetaDescriptor>(10)
+	const rootMeta: V2_ServerRuntimeMetaDescriptor[] = []
 
 	rootMeta.push(
 		...[

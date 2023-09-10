@@ -6,6 +6,9 @@ import { navField } from '../fields/nav'
 export const MegaMenu: GlobalConfig = {
 	slug: 'mega-menu',
 	label: 'Mega Menu',
+	access: {
+		read: () => true,
+	},
 	hooks: {
 		afterChange: [
 			async ({ req, doc }) => {

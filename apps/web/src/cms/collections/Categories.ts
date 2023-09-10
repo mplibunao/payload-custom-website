@@ -4,6 +4,9 @@ import { slugField } from '../fields/slug'
 
 export const Categories: CollectionConfig = {
 	slug: 'categories',
+	access: {
+		read: () => true,
+	},
 	fields: [
 		{
 			name: 'title',

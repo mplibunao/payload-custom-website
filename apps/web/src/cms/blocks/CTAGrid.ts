@@ -8,13 +8,14 @@ export const CTAGrid: Block = {
 		singular: 'CTA Grid',
 		plural: 'CTA Grids',
 	},
+	interfaceName: 'CTAGridBlockType',
 	fields: [
 		{
 			name: 'actions',
 			label: 'Actions',
 			type: 'array',
+			required: true,
 			minRows: 1,
-			maxRows: 2,
 			fields: [
 				{
 					name: 'headline',

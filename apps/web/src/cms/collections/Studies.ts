@@ -19,6 +19,9 @@ import { slugField } from '../fields/slug'
 
 export const Studies: CollectionConfig = {
 	slug: 'studies',
+	access: {
+		read: () => true,
+	},
 	fields: [
 		{
 			name: 'title',

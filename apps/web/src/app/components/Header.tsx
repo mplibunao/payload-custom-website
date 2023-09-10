@@ -59,7 +59,7 @@ export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 							<Grid className='z-0 md:z-auto pointer-events-none md:pointer-events-auto mb-72 md:mb-0 '>
 								<nav className='col-span-8'>
 									{megaMenu?.nav?.map(({ link, id }, i) => (
-										<h3 key={id} className={i === 0 ? 'm-0' : undefined}>
+										<h3 key={id ?? i} className={i === 0 ? 'm-0' : undefined}>
 											<SiteLink
 												{...link}
 												className='text-antique hover:transition-all hover:duration-300 hover:ease-linear hover:text-blue pointer-events-all'
@@ -73,8 +73,8 @@ export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 
 								{socialMedia.length > 0 && (
 									<div className='col-span-3'>
-										{socialMedia.map(({ url, label, id }) => (
-											<div className='large' key={id}>
+										{socialMedia.map(({ url, label, id }, i) => (
+											<div className='large' key={id ?? i}>
 												<a
 													href={url}
 													target='_blank'

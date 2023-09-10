@@ -73,9 +73,9 @@ export const Content = (props: ContentTypeProps) => {
 							) : null}
 
 							<Grid>
-								{props.columns.map((col) => (
+								{props.columns.map((col, i) => (
 									<div
-										key={col.id}
+										key={col.id ?? i}
 										className={richTextCellStyles({
 											alignment: col.alignment,
 											width: col.width,

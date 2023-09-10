@@ -2,6 +2,9 @@ import { type CollectionConfig } from 'payload/dist/collections/config/types'
 
 export const FormSubmissions: CollectionConfig = {
 	slug: 'form-submissions',
+	access: {
+		read: () => true,
+	},
 	fields: [
 		{
 			type: 'text',

@@ -38,17 +38,7 @@ export interface Page {
   layout: (
     | CTA
     | ContentBlockType
-    | {
-        actions?: {
-          headline: string;
-          icon?: 'none' | 'arrow';
-          link: PageLink;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'cta-grid';
-      }
+    | CTAGridBlockType
     | MediaBlockType
     | {
         media?: {
@@ -264,6 +254,17 @@ export interface ContentBlockType {
   blockName?: string;
   blockType: 'content';
 }
+export interface CTAGridBlockType {
+  actions: {
+    headline: string;
+    icon?: 'none' | 'arrow';
+    link: PageLink;
+    id?: string;
+  }[];
+  id?: string;
+  blockName?: string;
+  blockType: 'cta-grid';
+}
 export interface MediaBlockType {
   media: string | Media;
   type: 'normal' | 'fullscreen' | 'wide';
@@ -281,17 +282,7 @@ export interface Study {
   layout?: (
     | CTA
     | ContentBlockType
-    | {
-        actions?: {
-          headline: string;
-          icon?: 'none' | 'arrow';
-          link: PageLink;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'cta-grid';
-      }
+    | CTAGridBlockType
     | MediaBlockType
     | {
         media?: {

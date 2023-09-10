@@ -4,6 +4,9 @@ import { SOCIAL_MEDIA_KEY } from '~/constants/globalsCacheKeys'
 export const SocialMedia: GlobalConfig = {
 	slug: 'social-media',
 	label: 'Social Media',
+	access: {
+		read: () => true,
+	},
 	hooks: {
 		afterChange: [
 			async ({ req, doc }) => {

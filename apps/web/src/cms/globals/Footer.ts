@@ -6,6 +6,9 @@ import { navField } from '../fields/nav'
 export const Footer: GlobalConfig = {
 	slug: 'footer',
 	label: 'Footer',
+	access: {
+		read: () => true,
+	},
 	hooks: {
 		afterChange: [
 			async ({ req, doc }) => {

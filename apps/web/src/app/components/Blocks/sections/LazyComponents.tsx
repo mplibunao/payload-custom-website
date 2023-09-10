@@ -9,3 +9,6 @@ export const MediaBlock = React.lazy(() =>
 export const CTABlock = React.lazy(() =>
 	import('./CallToAction').then((module) => ({ default: module.CallToAction })),
 )
+export const CTAGridBlock = React.lazy(() =>
+	import('./CTAGrid').then((module) => ({ default: module.CTAGrid })),
+)

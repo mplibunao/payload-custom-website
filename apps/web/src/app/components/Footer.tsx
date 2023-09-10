@@ -49,8 +49,8 @@ export const Footer = ({ footer, socialMedia }: FooterProps): JSX.Element => {
 				<Grid>
 					{footer && Array.isArray(footer.nav) && footer.nav.length > 0 ? (
 						<ul className='col-span-8 md:col-span-6'>
-							{footer.nav.map(({ link, id }) => (
-								<li key={id}>
+							{footer.nav.map(({ link, id }, i) => (
+								<li key={id ?? i}>
 									<SiteLink
 										{...link}
 										prefetch='viewport'
@@ -80,8 +80,8 @@ export const Footer = ({ footer, socialMedia }: FooterProps): JSX.Element => {
 						))}
 
 						<ul className='p-0 my-16 mx-0'>
-							{socialMedia.map(({ id, label, url }) => (
-								<li key={id}>
+							{socialMedia.map(({ id, label, url }, i) => (
+								<li key={id ?? i}>
 									<a
 										href={url}
 										target='_blank'

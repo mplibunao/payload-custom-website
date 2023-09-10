@@ -17,6 +17,9 @@ module.exports = {
 			},
 		},
 		extend: {
+			screens: {
+				'3xl': '1920px',
+			},
 			fontFamily: {
 				sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
 			},
@@ -125,6 +128,7 @@ module.exports = {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
+				'4xl': '2rem',
 			},
 			keyframes: {
 				'accordion-down': {

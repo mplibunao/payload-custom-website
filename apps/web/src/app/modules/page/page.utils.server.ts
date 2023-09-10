@@ -17,8 +17,7 @@ export const getPageMeta = ({
 	const description = page.meta.description ?? siteInfo?.meta.description
 	const ogImage = page.meta.ogImage ?? siteInfo?.meta.ogImage
 
-	const pageMeta: V2_ServerRuntimeMetaDescriptor[] =
-		Array<V2_ServerRuntimeMetaDescriptor>(10)
+	const pageMeta: V2_ServerRuntimeMetaDescriptor[] = []
 
 	pageMeta.push(
 		...[

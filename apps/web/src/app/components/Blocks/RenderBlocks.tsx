@@ -2,7 +2,12 @@ import { type Page } from 'payload/generated-types'
 import { Suspense } from 'react'
 
 import { Skeleton } from '../ui/skeleton'
-import { ContentBlock, MediaBlock, CTABlock } from './sections/LazyComponents'
+import {
+	ContentBlock,
+	MediaBlock,
+	CTABlock,
+	CTAGridBlock,
+} from './sections/LazyComponents'
 
 type BlockTypes = Page['layout'][number]['blockType']
 
@@ -10,6 +15,7 @@ const components: Record<BlockTypes, React.LazyExoticComponent<any>> = {
 	content: ContentBlock,
 	media: MediaBlock,
 	cta: CTABlock,
+	'cta-grid': CTAGridBlock,
 }
 
 type Props = {
@@ -19,13 +25,13 @@ type Props = {
 
 export const RenderBlocks = ({ layout, className }: Props) => (
 	<div className={className}>
-		{layout?.map((block) => {
+		{layout?.map((block, i) => {
 			const Block: React.FC<any> = components[block.blockType]
 
 			if (Block) {
 				return (
 					<Suspense
-						key={block.id}
+						key={block.id ?? i}
 						fallback={
 							<div className='w-full flex items-center space-x-4 justify-center md:py-5 py-2'>
 								<Skeleton className='h-12 w-12 rounded-full md:h-20 md:w-20' />
@@ -36,7 +42,7 @@ export const RenderBlocks = ({ layout, className }: Props) => (
 							</div>
 						}
 					>
-						<section key={block.id}>
+						<section key={block.id ?? i}>
 							<Block {...block} />
 						</section>
 					</Suspense>

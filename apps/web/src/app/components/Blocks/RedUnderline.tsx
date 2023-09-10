@@ -10,6 +10,7 @@ export const RedUnderline = (props: RedUnderlineProps): JSX.Element => {
 		rootMargin: '0% 0% -25% 0%',
 		fallbackInView: false,
 		threshold: [0, 0.5, 1.0],
+		triggerOnce: true,
 	})
 
 	return (

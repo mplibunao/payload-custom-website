@@ -43,8 +43,8 @@ export const Gutter = (props: GutterProps): JSX.Element => {
 		<div
 			className={twMerge(
 				props.className,
-				props.left ? 'pl-0 xl:pl-40' : '',
-				props.right ? 'pr-0 xl:pr-40' : '',
+				props.left ? 'pl-0 xl:pl-40 3xl:pl-72' : '',
+				props.right ? 'pr-0 xl:pr-40 3xl:pr-72' : '',
 			)}
 		>
 			{props.children}

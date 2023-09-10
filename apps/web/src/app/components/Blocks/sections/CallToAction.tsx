@@ -24,13 +24,21 @@ export const CallToAction = (props: CallToActionProps): JSX.Element => {
 				</BackgroundColor>
 
 				<ul className='flex flex-wrap list-none m-0 p-0'>
-					{props.actions?.map(({ link, id }) => (
-						<li key={id} className='flex flex-wrap list-none m-0 p-0'>
-							<SiteLink {...link} className='no-underline' prefetch='viewport'>
-								<Button color={props.backgroundColor.color}>
+					{props.actions?.map(({ link, id }, i) => (
+						<li key={id ?? i} className='flex flex-wrap list-none m-0 p-0'>
+							<Button
+								color={props.backgroundColor.color}
+								asChild
+								className='my-6 mx-0'
+							>
+								<SiteLink
+									{...link}
+									className='no-underline'
+									prefetch='viewport'
+								>
 									{link.label}
-								</Button>
-							</SiteLink>
+								</SiteLink>
+							</Button>
 						</li>
 					))}
 				</ul>
