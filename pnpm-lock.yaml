@@ -100,8 +100,8 @@ importers:
         specifier: 1.11.3
         version: 1.11.3(patch_hash=fsrchy4okrl2rd5pksrgxvosfe)(@swc/helpers@0.5.1)(@types/react@18.2.14)(esbuild@0.17.19)(typescript@5.1.6)
       pino:
-        specifier: 8.14.1
-        version: 8.14.1
+        specifier: 8.14.2
+        version: 8.14.2
       pino-http:
         specifier: 8.3.3
         version: 8.3.3
@@ -7346,11 +7346,6 @@ packages:
   /fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
-  /fast-redact@3.2.0:
-    resolution: {integrity: sha512-zaTadChr+NekyzallAMXATXLOR8MNx3zqpZ0MUF2aGf4EathnG0f32VLODNlY8IuGY3HoRO2L6/6fSzNsLaHIw==}
-    engines: {node: '>=6'}
-    dev: false
-
   /fast-redact@3.3.0:
     resolution: {integrity: sha512-6T5V1QK1u4oF+ATxs1lWUmlEk6P2T9HqJG3e2DnHOdVgZy2rFJBoEnrIedcTXlkAHU/zKC+7KETJ+KGGKwxgMQ==}
     engines: {node: '>=6'}
@@ -10947,7 +10942,7 @@ packages:
     resolution: {integrity: sha512-p4umsNIXXVu95HD2C8wie/vXH7db5iGRpc+yj1/ZQ3sRtTQLXNjoS6Be5+eI+rQbqCRxen/7k/KSN+qiZubGDw==}
     dependencies:
       get-caller-file: 2.0.5
-      pino: 8.14.1
+      pino: 8.14.2
       pino-std-serializers: 6.2.2
       process-warning: 2.2.0
     dev: false
@@ -11013,12 +11008,12 @@ packages:
       sonic-boom: 1.4.1
     dev: false
 
-  /pino@8.14.1:
-    resolution: {integrity: sha512-8LYNv7BKWXSfS+k6oEc6occy5La+q2sPwU3q2ljTX5AZk7v+5kND2o5W794FyRaqha6DJajmkNRsWtPpFyMUdw==}
+  /pino@8.14.2:
+    resolution: {integrity: sha512-zKu9aWeSWTy1JgvxIpZveJKKsAr4+6uNMZ0Vf0KRwzl/UNZA3XjHiIl/0WwqLMkDwuHuDkT5xAgPA2jpKq4whA==}
     hasBin: true
     dependencies:
       atomic-sleep: 1.0.0
-      fast-redact: 3.2.0
+      fast-redact: 3.3.0
       on-exit-leak-free: 2.1.0
       pino-abstract-transport: 1.0.0
       pino-std-serializers: 6.2.2
