@@ -230,6 +230,115 @@ export const whoWeArePageData = ({
 					},
 				],
 			},
+			{
+				backgroundColor: {
+					color: 'none',
+					colorPicker: 'none',
+				},
+				accentLine: false,
+				accentLineAlignment: 'left',
+				paddingTop: 'medium',
+				paddingBottom: 'small',
+				blockType: 'content',
+				blockName: 'Join our team Headline',
+				columns: [
+					{
+						width: 'full',
+						alignment: 'left',
+						content: [
+							{
+								children: [
+									{
+										text: 'Join our team',
+									},
+								],
+								type: 'h3',
+							},
+						],
+					},
+				],
+			},
+			{
+				backgroundColor: {
+					color: 'none',
+					colorPicker: 'none',
+				},
+				accentLine: false,
+				accentLineAlignment: 'left',
+				paddingTop: 'none',
+				paddingBottom: 'medium',
+				blockType: 'content',
+				blockName: 'Additional Content Body Copy',
+				columns: [
+					{
+						width: 'half',
+						alignment: 'left',
+						content: [
+							{
+								children: [
+									{
+										text: "When you become a part of our family, you're not just an employee; you're an integral member of a team committed to excellence. We offer an array of opportunities for professional development, from hands-on experience in the field to leadership training and educational support.",
+									},
+								],
+							},
+						],
+					},
+					{
+						width: 'half',
+						alignment: 'left',
+						content: [
+							{
+								children: [
+									{
+										text: "At Metric Structures, we believe that our employees are our most valuable assets, and we're dedicated to helping you reach your full potential. If you're ready to shape cities, communities, and your own career, consider joining us today and build your future with a company that values your skills and ambitions.",
+									},
+								],
+							},
+						],
+					},
+				],
+			},
+			{
+				blockType: 'cta-grid',
+				blockName: 'Open positions',
+				actions: [
+					{
+						headline: 'Engineer',
+						icon: 'arrow',
+						link: {
+							label: 'Learn more',
+							type: 'custom',
+							reference: { relationTo: 'pages', value: '' },
+							url: '#',
+						},
+					},
+					{
+						headline: 'Project Manager',
+						icon: 'arrow',
+						link: {
+							label: 'Learn more',
+							type: 'custom',
+							reference: { relationTo: 'pages', value: '' },
+							url: '#',
+						},
+					},
+					{
+						headline: 'Architect',
+						icon: 'arrow',
+						link: {
+							label: 'Learn more',
+							type: 'custom',
+							reference: { relationTo: 'pages', value: '' },
+							url: '#',
+						},
+					},
+				],
+			},
+			{
+				size: 'medium',
+				blockType: 'spacer',
+				blockName: '',
+			},
 		],
 	},
 })
