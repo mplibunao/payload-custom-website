@@ -85,7 +85,7 @@
 		"@types/express-serve-static-core": "^4.17.35",
 		"@types/minimist": "^1.2.2",
 		"@types/node": "^20.4.1",
-		"@types/overload-protection": "1.2.1",
+		"@types/overload-protection": "1.2.2",
 		"@types/react": "^18.2.14",
 		"@types/react-dom": "^18.2.6",
 		"@types/testing-library__jest-dom": "^5.14.7",
