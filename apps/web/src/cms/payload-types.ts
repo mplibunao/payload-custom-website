@@ -228,7 +228,7 @@ export interface BackgroundColorType {
 export interface PageLink {
   type?: 'reference' | 'custom';
   newTab?: boolean;
-  reference: {
+  reference?: {
     value: string | Page;
     relationTo: 'pages';
   };
