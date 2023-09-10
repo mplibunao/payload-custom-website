@@ -7,7 +7,7 @@
 		"clean": "rm -rf .turbo node_modules"
 	},
 	"devDependencies": {
-		"prettier": "2.8.7"
+		"prettier": "3.0.3"
 	},
 	"dependencies": {
 		"@ianvs/prettier-plugin-sort-imports": "3.7.2",
