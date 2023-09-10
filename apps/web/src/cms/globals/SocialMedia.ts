@@ -1,5 +1,5 @@
 import { type GlobalConfig } from 'payload/types'
-import { SOCIAL_MEDIA_KEY } from '~/constants/globalsCacheKeys'
+import { SOCIAL_MEDIA_KEY } from '~/app/modules/globals/globals.service.server'
 
 export const SocialMedia: GlobalConfig = {
 	slug: 'social-media',

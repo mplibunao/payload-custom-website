@@ -1,5 +1,5 @@
 import { type GlobalConfig } from 'payload/types'
-import { FOOTER_KEY } from '~/constants/globalsCacheKeys'
+import { FOOTER_KEY } from '~/app/modules/globals/globals.service.server'
 
 import { navField } from '../fields/nav'
 

@@ -1,5 +1,9 @@
 import type { CollectionConfig } from 'payload/types'
-import { getPageCacheKey } from '~/constants/globalsCacheKeys'
+import {
+	getPage,
+	getPageCacheKey,
+	invalidatePage,
+} from '~/app/modules/page/page.service.server'
 
 import { CTAGrid } from '../blocks/CTAGrid'
 import { CallToAction } from '../blocks/CallToAction'
@@ -33,11 +37,11 @@ export const Pages: CollectionConfig = {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 				if (req.payload.local) return doc
 
-				await req.app.locals.cacheService.update(
-					doc,
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-					getPageCacheKey(doc.slug as string),
-				)
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+				const slug = doc.slug as string
+				await invalidatePage(req.app.locals, slug)
+				await getPage(req.app.locals, slug)
+
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 				return doc
 			},
@@ -47,10 +51,8 @@ export const Pages: CollectionConfig = {
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 				if (req.payload.local) return doc
 
-				await req.app.locals.cacheService.invalidate(
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-					getPageCacheKey(doc.slug as string),
-				)
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+				await invalidatePage(req.app.locals, doc.slug as string)
 			},
 		],
 	},

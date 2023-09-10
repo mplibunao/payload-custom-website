@@ -17,6 +17,7 @@ export const Site: GlobalConfig = {
 				if (req.payload.local) return doc
 
 				await req.app.locals.siteService.invalidate()
+				await req.app.locals.siteService.getSiteInfo()
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 				return doc
 			},

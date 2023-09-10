@@ -1,5 +1,5 @@
 import { Type } from '@sinclair/typebox'
-import { SiteEnvSchema } from '~/app/modules/site/siteEnv.server'
+import { SiteEnvSchema } from '~/app/modules/globals/siteEnv.server'
 import { NODE_ENV, APP_ENV, PORT, SERVER_URL } from '~/shared/schemas'
 
 import { overloadProtectionEnvSchema } from '../middleware/overloadProtection'

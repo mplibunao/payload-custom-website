@@ -4,7 +4,7 @@ import { type V2_MetaFunction } from '@remix-run/node'
 import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 import { type Meta } from '~/cms/payload-types'
 
-import { type SiteInfo } from '../modules/site/site.service.server'
+import { type SiteInfo } from '../modules/globals/site.service.server'
 
 export const mergeTitle = (pageTitle: string, siteTitle?: string) => {
 	return siteTitle ? `${pageTitle} | ${siteTitle}` : pageTitle

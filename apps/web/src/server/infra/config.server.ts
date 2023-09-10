@@ -1,6 +1,6 @@
 import { type Static } from '@sinclair/typebox'
 import dotenv from 'dotenv'
-import { type SiteEnv } from '~/app/modules/site/siteEnv.server.ts'
+import { type SiteEnv } from '~/app/modules/globals/siteEnv.server.ts'
 import { type App_env } from '~/shared/schemas/index.ts'
 import { envSchema } from '~/shared/validation/compiledAjv.js'
 

@@ -14,18 +14,18 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from '@remix-run/react'
-import {
-	FOOTER_KEY,
-	MEGA_MENU_KEY,
-	SOCIAL_MEDIA_KEY,
-} from '~/constants/globalsCacheKeys.ts'
 
 import { Footer } from './components/Footer.tsx'
 import { Header } from './components/Header.tsx'
 import svgSprite from './components/Icon/sprite.svg'
 import { ScrollToTop } from './components/ScrollToTop.tsx'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
-import { type SiteInfo } from './modules/site/site.service.server.ts'
+import {
+	getFooter,
+	getMegaMenu,
+	getSocialMedia,
+} from './modules/globals/globals.service.server.ts'
+import { type SiteInfo } from './modules/globals/site.service.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
 import { getRootMeta } from './utils/seo.ts'
@@ -84,25 +84,12 @@ export const links: LinksFunction = () => {
 }
 
 export const loader = async ({ context, request }: DataFunctionArgs) => {
-	const { payload, cacheService } = context
-
-	return context.serverTiming.time('routse/root#loader', async () => {
+	return context.serverTiming.time('route/root#loader', async () => {
 		const [megaMenuData, footerData, socialMediaData, siteInfoData] =
 			await Promise.allSettled([
-				cacheService.exec(
-					() =>
-						payload.findGlobal({ slug: 'mega-menu', overrideAccess: false }),
-					[MEGA_MENU_KEY],
-				),
-				cacheService.exec(
-					() => payload.findGlobal({ slug: 'footer', overrideAccess: false }),
-					[FOOTER_KEY],
-				),
-				cacheService.exec(
-					() =>
-						payload.findGlobal({ slug: 'social-media', overrideAccess: false }),
-					[SOCIAL_MEDIA_KEY],
-				),
+				getMegaMenu(context),
+				getFooter(context),
+				getSocialMedia(context),
 				context.siteService.getSiteInfo(),
 			])
 

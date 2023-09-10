@@ -8,9 +8,8 @@ import { RenderBlocks } from '~/app/components/Blocks/RenderBlocks'
 import { PageHero } from '~/app/components/PageHero'
 import { ErrorBoundary as NotFoundErrorBoundary } from '~/app/routes/$'
 import { NotFound } from '~/app/utils/http.server'
-import { getPageCacheKey } from '~/constants/globalsCacheKeys'
 
-import { getPageMeta } from './page.utils.server'
+import { getPage, getPageMeta } from './page.service.server'
 
 export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 	if (!data) return []
@@ -26,16 +25,7 @@ export const loader = async ({
 		if (!params.slug) throw NotFound('Page Not Found')
 
 		const [pageData, siteInfoData] = await Promise.allSettled([
-			context.cacheService.exec(
-				() =>
-					context.payload.find({
-						collection: 'pages',
-						overrideAccess: false,
-						where: { slug: { equals: params.slug } },
-					}),
-				getPageCacheKey(params.slug),
-			),
-
+			getPage(context, params.slug),
 			context.siteService.getSiteInfo(),
 		])
 

@@ -8,8 +8,8 @@ import {
 	RedisCache,
 } from 'layered-loader'
 import { type Logger } from 'pino'
-import { SiteInfoLoader } from '~/app/modules/site/site.repository.server'
-import { SiteService } from '~/app/modules/site/site.service.server'
+import { SiteInfoLoader } from '~/app/modules/globals/site.repository.server'
+import { SiteService } from '~/app/modules/globals/site.service.server'
 import { type Site } from '~/cms/payload-types'
 import {
 	CacheService,

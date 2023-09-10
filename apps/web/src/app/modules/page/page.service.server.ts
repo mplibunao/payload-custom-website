@@ -1,8 +1,9 @@
 import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 import { formatOgTypeMeta, mergeTitle } from '~/app/utils/seo'
 import { type Page } from '~/cms/payload-types'
+import { type CacheUpdateKey } from '~/server/infra/cache.server'
 
-import { type SiteInfo } from '../site/site.service.server'
+import { type SiteInfo } from '../globals/site.service.server'
 
 export const getPageMeta = ({
 	page,
@@ -69,4 +70,22 @@ export const getPageMeta = ({
 	}
 
 	return formatOgTypeMeta(page.meta, pageMeta)
+}
+
+export const getPageCacheKey = (slug: string): CacheUpdateKey => ['page', slug]
+
+export const getPage = (ctx: Express.Locals, slug: string) => {
+	return ctx.cacheService.exec(
+		() =>
+			ctx.payload.find({
+				collection: 'pages',
+				overrideAccess: false,
+				where: { slug: { equals: slug } },
+			}),
+		getPageCacheKey(slug),
+	)
+}
+
+export const invalidatePage = async (ctx: Express.Locals, slug: string) => {
+	await ctx.cacheService.invalidate(getPageCacheKey(slug))
 }
