@@ -219,10 +219,6 @@ export const whoWeArePageData = ({
 				actions: [
 					{
 						link: {
-							reference: {
-								relationTo: 'pages',
-								value: '',
-							},
 							type: 'custom',
 							label: 'Get in Touch',
 							url: '/contact',
@@ -308,7 +304,6 @@ export const whoWeArePageData = ({
 						link: {
 							label: 'Learn more',
 							type: 'custom',
-							reference: { relationTo: 'pages', value: '' },
 							url: '#',
 						},
 					},
@@ -318,7 +313,6 @@ export const whoWeArePageData = ({
 						link: {
 							label: 'Learn more',
 							type: 'custom',
-							reference: { relationTo: 'pages', value: '' },
 							url: '#',
 						},
 					},
@@ -328,7 +322,6 @@ export const whoWeArePageData = ({
 						link: {
 							label: 'Learn more',
 							type: 'custom',
-							reference: { relationTo: 'pages', value: '' },
 							url: '#',
 						},
 					},

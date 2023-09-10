@@ -281,10 +281,6 @@ async function seed() {
 				link: {
 					type: 'custom',
 					label: 'Case Studies',
-					reference: {
-						relationTo: 'pages',
-						value: '',
-					},
 					appearance: 'default',
 					url: '/studies',
 				},
@@ -293,10 +289,6 @@ async function seed() {
 				link: {
 					type: 'custom',
 					label: 'Contact',
-					reference: {
-						relationTo: 'pages',
-						value: '',
-					},
 					appearance: 'default',
 					url: '/contact',
 				},

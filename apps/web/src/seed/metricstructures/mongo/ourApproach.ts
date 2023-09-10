@@ -264,10 +264,6 @@ export const ourApproachPageData = ({
 							type: 'custom',
 							label: 'Get in Touch',
 							url: '/contact',
-							reference: {
-								relationTo: 'pages',
-								value: '',
-							},
 						},
 					},
 					{
@@ -275,10 +271,6 @@ export const ourApproachPageData = ({
 							type: 'custom',
 							label: 'See our Work',
 							url: '/studies',
-							reference: {
-								relationTo: 'pages',
-								value: '',
-							},
 						},
 					},
 				],

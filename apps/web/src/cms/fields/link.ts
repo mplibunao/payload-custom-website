@@ -84,7 +84,6 @@ export const link: LinkType = ({
 			type: 'relationship',
 			// add other types of reference links here. Eg. posts, case-studies, etc
 			relationTo: ['pages'],
-			required: true,
 			maxDepth: 1,
 			admin: {
 				condition: (_, siblingData) => siblingData?.type === 'reference',

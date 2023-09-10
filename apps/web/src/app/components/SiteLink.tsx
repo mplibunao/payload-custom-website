@@ -17,7 +17,7 @@ export const SiteLink = ({
 	newTab,
 	prefetch,
 }: SiteLinkProps): JSX.Element => {
-	const isRelativeURL = url?.indexOf('/') === 0
+	const isRelativeURL = url.indexOf('/') === 0
 
 	const props: Record<string, string | undefined> = { className, prefetch }
 	if (newTab) {
@@ -27,7 +27,7 @@ export const SiteLink = ({
 
 	if (type === 'reference' || isRelativeURL) {
 		const linkUrl =
-			type === 'reference' && typeof reference.value !== 'string'
+			type === 'reference' && reference && typeof reference.value !== 'string'
 				? reference.value.slug
 				: url
 		return (
