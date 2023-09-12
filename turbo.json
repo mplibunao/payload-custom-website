@@ -99,6 +99,10 @@
 		"tw:gen": {
 			"inputs": ["src/app/styles/tailwind.css"],
 			"outputs": ["tailwindcss-extend.cjs"]
+		},
+		"gen:typebox": {
+			"inputs": ["src/app/cms/payload-types.ts"],
+			"outputs": ["src/shared/schemas/cms.ts"]
 		}
 	}
 }

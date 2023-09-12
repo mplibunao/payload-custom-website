@@ -46,6 +46,11 @@ function codegen { ## Runs all codegen steps (tw:gen, routes, icons, compile)
   pnpm icons || return $?
   pnpm routes || return $?
   pnpm compile || return $?
+  pnpm gen:typebox || return $?
+}
+
+function gen:typebox { ## Generates typebox schemas from payload-types for validation purposes
+  pnpm gen:typebox
 }
 
 
