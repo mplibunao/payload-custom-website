@@ -21,7 +21,9 @@ export class SiteService {
 	constructor(private readonly deps: Deps) {}
 
 	async getSiteInfo() {
-		const site = await this.deps.siteInfoLoader.get(this.key)
+		const site =
+			this.deps.siteInfoLoader.getInMemoryOnly(this.key) ||
+			(await this.deps.siteInfoLoader.getAsyncOnly(this.key))
 		if (!site) {
 			return this.formatSiteInfo(await getSiteInfo(this.deps))
 		}

@@ -46,7 +46,8 @@ export class CacheService {
 	) {
 		if (keys.length === 0) throw new Error('Invalid cache key')
 		const key = keys.join(',')
-		const cached = await this.cache.get(key)
+		const cached =
+			this.cache.getInMemoryOnly(key) || (await this.cache.getAsyncOnly(key))
 		if (cached) {
 			return cached as T
 		}
