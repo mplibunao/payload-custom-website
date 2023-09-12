@@ -302,6 +302,10 @@
 			}
 		}
 	}
+
+	.fullscreen-media {
+		height: calc(100% + 220px);
+	}
 }
 
 /*

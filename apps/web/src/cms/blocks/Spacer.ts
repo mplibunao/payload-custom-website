@@ -1,9 +1,5 @@
 import { type Block } from 'payload/types'
 
-export type Type = {
-	size: 'small' | 'medium' | 'large'
-}
-
 export const Spacer: Block = {
 	slug: 'spacer',
 	labels: {

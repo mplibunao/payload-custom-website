@@ -98,10 +98,7 @@ const ContentLeftOfMediaPageHero = (props: ContentLeftOfMediaPageHeroProps) => {
 					>
 						<Media
 							{...props.heroMedia}
-							className={{
-								media:
-									'h-full absolute top-0 left-0 object-cover object-center',
-							}}
+							className='h-full absolute top-0 left-0 object-cover object-center'
 							loading='eager'
 							fetchPriority='high'
 						/>

@@ -6,11 +6,6 @@ import { twMerge } from 'tailwind-merge'
 import { RedHeadline } from './RedHeadline'
 import { RedUnderline } from './RedUnderline'
 
-/*
- * To-do:
- *  - Add richtext styles
- */
-
 type RichTextProps = {
 	className?: string
 	content: any

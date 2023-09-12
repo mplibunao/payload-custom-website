@@ -29,7 +29,8 @@ void seed()
 
 async function seed() {
 	const app = await initApp(express(), { config })
-	console.log('Server started in standalone mode')
+	const { payload, logger } = app.locals
+	logger.info('Server started in standalone mode')
 
 	// delay is the number of milliseconds for the graceful close to finish
 	const delay = config.app.APP_ENV === 'production' ? 5000 : 0
@@ -64,7 +65,6 @@ async function seed() {
 	/*
 	 *Start seeding data
 	 */
-	const { payload, logger } = app.locals
 	try {
 		logger.info('Seeding data...')
 		logger.info('Creating admin user...')
