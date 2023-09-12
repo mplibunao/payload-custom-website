@@ -78,5 +78,5 @@ playwright-report/
 playwright/.cache/
 
 # Because seed scripts uses lots of media which generates multiple versions. Reduce git bloat
-media/assets/
+apps/*/media/assets/
 scratch/
