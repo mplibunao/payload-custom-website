@@ -31,7 +31,10 @@ export const getDotEnv = () => {
 
 export type Env = Static<typeof typeboxEnvSchema>
 
-export type Config<T extends Env = Env> = {
+export interface Config<T extends Env = Env>
+	extends OverloadProtectionOpts,
+		PayloadConfig,
+		SiteEnv {
 	env: T
 	app: {
 		version: string
@@ -46,9 +49,7 @@ export type Config<T extends Env = Env> = {
 		buildPath: string
 	}
 	redis: RedisOpts
-} & OverloadProtectionOpts &
-	PayloadConfig &
-	SiteEnv
+}
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 	return {

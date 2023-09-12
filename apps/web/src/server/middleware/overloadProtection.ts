@@ -10,7 +10,7 @@ export const overloadProtectionEnvSchema = {
 	),
 }
 
-export type OverloadProtectionOpts = {
+export interface OverloadProtectionOpts {
 	overloadProtection: HttpProtectionInstance
 }
 

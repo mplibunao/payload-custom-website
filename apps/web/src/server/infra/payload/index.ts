@@ -14,7 +14,7 @@ declare global {
 	}
 }
 
-export type PayloadConfig = {
+export interface PayloadConfig {
 	payload: InitOptions
 }
 

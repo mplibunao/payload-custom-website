@@ -1,6 +1,6 @@
 import { Type } from '@sinclair/typebox'
 
-export type SiteEnv = {
+export interface SiteEnv {
 	site: { title: string; description: string }
 }
 

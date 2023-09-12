@@ -2,7 +2,7 @@ import { type MediaBlockType } from '~/cms/payload-types'
 
 import { Media } from './Media'
 
-type MediaBlockProps = MediaBlockType
+interface MediaBlockProps extends MediaBlockType {}
 
 export const MediaBlock = ({ media, caption }: MediaBlockProps) => {
 	if (typeof media === 'object') {
