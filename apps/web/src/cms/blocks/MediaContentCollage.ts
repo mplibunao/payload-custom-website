@@ -6,6 +6,7 @@ import { richText } from '../fields/richText'
 
 export const MediaContentCollage: Block = {
 	slug: 'media-content-collage',
+	interfaceName: 'MediaContentCollageBlockType',
 	labels: {
 		singular: 'Media Content Collage',
 		plural: 'Media Content Collages',
