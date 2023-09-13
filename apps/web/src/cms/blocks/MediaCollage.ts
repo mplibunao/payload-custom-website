@@ -2,6 +2,7 @@ import { type Block } from 'payload/types'
 
 export const MediaCollage: Block = {
 	slug: 'media-collage',
+	interfaceName: 'MediaCollageBlockType',
 	labels: {
 		singular: 'Media Collage',
 		plural: 'Media Collages',
@@ -11,6 +12,7 @@ export const MediaCollage: Block = {
 			name: 'media',
 			label: 'Media',
 			type: 'array',
+			required: true,
 			minRows: 3,
 			maxRows: 3,
 			fields: [

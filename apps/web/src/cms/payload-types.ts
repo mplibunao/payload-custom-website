@@ -40,15 +40,7 @@ export interface Page {
     | ContentBlockType
     | CTAGridBlockType
     | MediaBlockType
-    | {
-        media?: {
-          media: string | Media;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'media-collage';
-      }
+    | MediaCollageBlockType
     | {
         backgroundColor: BackgroundColorType;
         content: {
@@ -275,6 +267,15 @@ export interface MediaBlockType {
   blockName?: string;
   blockType: 'media';
 }
+export interface MediaCollageBlockType {
+  media: {
+    media: string | Media;
+    id?: string;
+  }[];
+  id?: string;
+  blockName?: string;
+  blockType: 'media-collage';
+}
 export interface Study {
   id: string;
   title: string;
@@ -284,15 +285,7 @@ export interface Study {
     | ContentBlockType
     | CTAGridBlockType
     | MediaBlockType
-    | {
-        media?: {
-          media: string | Media;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'media-collage';
-      }
+    | MediaCollageBlockType
     | {
         backgroundColor: BackgroundColorType;
         content: {
