@@ -62,10 +62,10 @@ async function start() {
 
 export async function closeServer(server: Server, logger: Logger) {
 	await new Promise((resolve, reject) => {
-		server.close((error) => {
-			if (error) {
-				logger.error({ error }, 'Error closing server')
-				reject(error)
+		server.close((err) => {
+			if (err) {
+				logger.error({ err }, 'Error closing server')
+				reject(err)
 			} else {
 				resolve('ok')
 			}

@@ -5,6 +5,7 @@ import {
 	useNavigation,
 	useRouteLoaderData,
 } from '@remix-run/react'
+import { Logger } from 'pino'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { type RouteId } from '~/types/route-id'
 
@@ -149,3 +150,11 @@ export function useMatchesData<T>(id: RouteId): T | undefined {
 }
 
 export const isServer = typeof window === 'undefined'
+
+export const isRejected = (
+	input: PromiseSettledResult<unknown>,
+): input is PromiseRejectedResult => input.status === 'rejected'
+
+export const isFulfilled = <T>(
+	input: PromiseSettledResult<T>,
+): input is PromiseFulfilledResult<T> => input.status === 'fulfilled'

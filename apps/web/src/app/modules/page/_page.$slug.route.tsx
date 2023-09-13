@@ -8,6 +8,8 @@ import { RenderBlocks } from '~/app/components/Blocks/RenderBlocks'
 import { PageHero } from '~/app/components/PageHero'
 import { ErrorBoundary as NotFoundErrorBoundary } from '~/app/routes/$'
 import { NotFound } from '~/app/utils/http.server'
+import { isRejected } from '~/app/utils/misc'
+import { CACHE_DEFAULT } from '~/constants'
 
 import { getPage, getPageMeta } from './page.service.server'
 
@@ -22,17 +24,29 @@ export const loader = async ({
 	request,
 }: DataFunctionArgs) => {
 	return context.serverTiming.time('routes/_page.$slug#loader', async () => {
+		const { logger } = context
 		if (!params.slug) throw NotFound('Page Not Found')
 
-		const [pageData, siteInfoData] = await Promise.allSettled([
+		const results = await Promise.allSettled([
 			getPage(context, params.slug),
 			context.siteService.getSiteInfo(),
 		])
 
-		if (pageData.status === 'rejected' || !pageData.value.docs[0]) {
-			throw NotFound('Page Not Found')
+		for (let result of results) {
+			if (isRejected(result)) {
+				logger.error({
+					err: result.reason as unknown,
+					slug: params.slug,
+					route: 'routes/_page.$slug#loader',
+				})
+			}
 		}
+
+		const [pageData, siteInfoData] = results
+
+		if (pageData.status === 'rejected') throw pageData.reason
 		const page = pageData.value.docs[0]
+		if (!page) throw NotFound('Page Not Found')
 
 		const siteInfo =
 			siteInfoData.status === 'fulfilled' ? siteInfoData.value : undefined
@@ -45,8 +59,7 @@ export const loader = async ({
 			},
 			{
 				headers: {
-					'Cache-Control':
-						'public, max-age=60, s-max-age=60, stale-while-revalidate',
+					'Cache-Control': CACHE_DEFAULT,
 				},
 			},
 		)

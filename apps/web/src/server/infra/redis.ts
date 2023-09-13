@@ -48,7 +48,7 @@ export class RedisClient extends Redis {
 		} catch (error) {
 			const err = `Creating redis client failed`
 			if (config.app.APP_ENV !== 'test') {
-				logger.error({ error }, err)
+				logger.error({ err }, err)
 			}
 			throw new Error(err, { cause: error })
 		}

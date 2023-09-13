@@ -75,13 +75,13 @@ function handleBotRequest(
 				onShellError(error: unknown) {
 					reject(error)
 				},
-				onError(error: unknown) {
+				onError(err: unknown) {
 					responseStatusCode = 500
 					// Log streaming rendering errors from inside the shell.  Don't log
 					// errors encountered during initial shell rendering since they'll
 					// reject and get logged in handleDocumentRequest.
 					if (shellRendered) {
-						loadContext.logger.error({ error, type: 'botRequest' })
+						loadContext.logger.error({ err, type: 'botRequest' })
 					}
 				},
 			},
@@ -126,13 +126,13 @@ function handleBrowserRequest(
 				onShellError(error: unknown) {
 					reject(error)
 				},
-				onError(error: unknown) {
+				onError(err: unknown) {
 					responseStatusCode = 500
 					// Log streaming rendering errors from inside the shell.  Don't log
 					// errors encountered during initial shell rendering since they'll
 					// reject and get logged in handleDocumentRequest.
 					if (shellRendered) {
-						loadContext.logger.error({ error, type: 'browserRequest' })
+						loadContext.logger.error({ err, type: 'browserRequest' })
 					}
 				},
 			},
@@ -142,6 +142,9 @@ function handleBrowserRequest(
 	})
 }
 
-export function handleError(error: unknown, { context }: DataFunctionArgs) {
-	context.logger.error({ error })
+export function handleError(
+	err: unknown,
+	{ context, params }: DataFunctionArgs,
+) {
+	context.logger.error({ err, params })
 }

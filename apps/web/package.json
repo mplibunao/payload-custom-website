@@ -58,7 +58,7 @@
 		"layered-loader": "11.0.1",
 		"overload-protection": "1.2.3",
 		"payload": "1.11.3",
-		"pino": "8.14.1",
+		"pino": "8.15.1",
 		"pino-http": "8.3.3",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

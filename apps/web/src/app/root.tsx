@@ -14,6 +14,7 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from '@remix-run/react'
+import { CACHE_DEFAULT } from '~/constants/index.ts'
 
 import { Footer } from './components/Footer.tsx'
 import { Header } from './components/Header.tsx'
@@ -29,6 +30,7 @@ import { type SiteInfo } from './modules/globals/site.service.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
 import { useIsBot } from './utils/isBotProvider.tsx'
+import { isRejected } from './utils/misc.ts'
 import { getRootMeta } from './utils/seo.ts'
 
 export const links: LinksFunction = () => {
@@ -86,13 +88,24 @@ export const links: LinksFunction = () => {
 
 export const loader = async ({ context, request }: DataFunctionArgs) => {
 	return context.serverTiming.time('route/root#loader', async () => {
-		const [megaMenuData, footerData, socialMediaData, siteInfoData] =
-			await Promise.allSettled([
-				getMegaMenu(context),
-				getFooter(context),
-				getSocialMedia(context),
-				context.siteService.getSiteInfo(),
-			])
+		const { logger } = context
+		const results = await Promise.allSettled([
+			getMegaMenu(context),
+			getFooter(context),
+			getSocialMedia(context),
+			context.siteService.getSiteInfo(),
+		])
+
+		for (let result of results) {
+			if (isRejected(result)) {
+				logger.error({
+					err: result.reason as unknown,
+					route: 'route/root#loader',
+				})
+			}
+		}
+
+		const [megaMenuData, footerData, socialMediaData, siteInfoData] = results
 
 		const siteInfo =
 			siteInfoData.status === 'fulfilled' ? siteInfoData.value : undefined
@@ -125,8 +138,7 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 			},
 			{
 				headers: {
-					'Cache-Control':
-						'public, max-age=60, s-max-age=60, stale-while-revalidate',
+					'Cache-Control': CACHE_DEFAULT,
 				},
 			},
 		)
