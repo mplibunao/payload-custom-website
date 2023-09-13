@@ -55,9 +55,7 @@ const richTextCellStyles = cva(['col-span-8'], {
 	],
 })
 
-type ContentTypeProps = ContentBlockType
-
-export const Content = (props: ContentTypeProps) => {
+export const ContentBlock = (props: ContentBlockType) => {
 	return (
 		<div className='overflow-hidden'>
 			<Gutter left right>

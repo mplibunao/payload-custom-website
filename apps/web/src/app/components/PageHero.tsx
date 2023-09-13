@@ -2,8 +2,8 @@ import { cva } from 'cva'
 import { twMerge } from 'tailwind-merge'
 import { type Page } from '~/cms/payload-types'
 
+import { Media } from './Blocks/Media'
 import { RichText } from './Blocks/RichText'
-import { Media } from './Blocks/sections/Media'
 import { Container, Grid, Gutter } from './Layout'
 
 const fadeInAnimation = cva([

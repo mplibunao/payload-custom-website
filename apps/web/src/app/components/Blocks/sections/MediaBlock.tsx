@@ -8,12 +8,11 @@ import {
 } from '~/cms/payload-types'
 
 import { Container, Gutter } from '../../Layout'
+import { Media } from '../Media'
 import { RichText } from '../RichText'
-import { Media } from './Media'
+import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxStyles'
 
-interface MediaBlockProps extends MediaBlockType {}
-
-export const MediaBlock = ({ media, caption, type }: MediaBlockProps) => {
+export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 	if (typeof media === 'string') {
 		return null
 	}
@@ -54,15 +53,16 @@ const FullScreenMedia = (props: {
 		target: ref,
 	})
 	const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.5])
-	const y = useTransform(scrollYProgress, [0, 1], ['25%', '-25%'])
-
+	const y = useTransform(
+		scrollYProgress,
+		[0, 1],
+		getParallaxTranslateYOutput(100),
+	)
 	return (
 		<div className='h-screen relative overflow-hidden' ref={ref}>
 			<LazyMotionDomAnimation>
 				<m.div
-					className={twMerge(
-						'transition-transform duration-700 ease-out delay-0 sm:duration-300 absolute top-0 bottom-0 inset-x-0',
-					)}
+					className={twMerge('absolute inset-0', parallaxStyles())}
 					style={shouldReduceMotion ? { opacity } : { y }}
 				>
 					<div className='fullscreen-media relative bottom-28'>

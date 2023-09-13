@@ -6,9 +6,7 @@ import { Container, Grid, Gutter } from '../../Layout'
 import { SiteLink } from '../../SiteLink'
 import { Separator } from '../../ui/separator'
 
-export interface CTAGridProps extends CTAGridBlockType {}
-
-export const CTAGrid = ({ actions }: CTAGridProps): JSX.Element => {
+export const CTAGridBlock = ({ actions }: CTAGridBlockType): JSX.Element => {
 	return (
 		<div className='p-0'>
 			<ul className='p-0 m-0'>

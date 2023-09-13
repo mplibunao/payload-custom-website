@@ -6,9 +6,11 @@ import { SiteLink } from '../../SiteLink'
 import { Button } from '../../ui/button'
 import { RichText } from '../RichText'
 
-export interface CallToActionProps extends CTA {}
+export interface CallToActionBlockProps extends CTA {}
 
-export const CallToAction = (props: CallToActionProps): JSX.Element => {
+export const CallToActionBlock = (
+	props: CallToActionBlockProps,
+): JSX.Element => {
 	return (
 		<div className='relative'>
 			<Gutter className='absolute z-10 top-0 right-0 bottom-0 left-0' right>
