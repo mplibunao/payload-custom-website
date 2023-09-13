@@ -12,7 +12,7 @@ export const MediaCollage: Block = {
 			label: 'Media',
 			type: 'array',
 			minRows: 3,
-			maxRows: 6,
+			maxRows: 3,
 			fields: [
 				{
 					type: 'upload',
