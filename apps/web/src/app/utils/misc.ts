@@ -5,7 +5,6 @@ import {
 	useNavigation,
 	useRouteLoaderData,
 } from '@remix-run/react'
-import { Logger } from 'pino'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { type RouteId } from '~/types/route-id'
 
