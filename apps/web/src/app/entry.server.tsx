@@ -9,6 +9,8 @@ import isbot from 'isbot'
 import { PassThrough } from 'node:stream'
 import { renderToPipeableStream } from 'react-dom/server'
 
+import { IsBotProvider } from './utils/isBotProvider'
+
 const ABORT_DELAY = 5000
 
 // eslint-disable-next-line max-params
@@ -47,11 +49,13 @@ function handleBotRequest(
 	return new Promise((resolve, reject) => {
 		let shellRendered = false
 		const { pipe, abort } = renderToPipeableStream(
-			<RemixServer
-				context={remixContext}
-				url={request.url}
-				abortDelay={ABORT_DELAY}
-			/>,
+			<IsBotProvider isBot>
+				<RemixServer
+					context={remixContext}
+					url={request.url}
+					abortDelay={ABORT_DELAY}
+				/>
+			</IsBotProvider>,
 			{
 				onAllReady() {
 					shellRendered = true

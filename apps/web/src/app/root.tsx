@@ -28,6 +28,7 @@ import {
 import { type SiteInfo } from './modules/globals/site.service.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
+import { useIsBot } from './utils/isBotProvider.tsx'
 import { getRootMeta } from './utils/seo.ts'
 
 export const links: LinksFunction = () => {
@@ -144,6 +145,7 @@ function Document({
 	children: React.ReactNode
 	siteInfo?: SiteInfo
 }) {
+	const isBot = useIsBot()
 	return (
 		<html lang='en' className={`h-full overflow-x-hidden`}>
 			<head>
@@ -179,7 +181,7 @@ function Document({
 			<body>
 				{children}
 				<ScrollRestoration />
-				<Scripts />
+				{isBot ? null : <Scripts />}
 				<LiveReload />
 			</body>
 		</html>
