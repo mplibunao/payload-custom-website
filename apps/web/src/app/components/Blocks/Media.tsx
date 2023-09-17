@@ -2,7 +2,8 @@ import { twMerge } from 'tailwind-merge'
 import { type Media as MediaType } from '~/cms/payload-types'
 import { MEDIA_LOCAL_DIR } from '~/constants'
 
-type Sizes = keyof NonNullable<MediaType['sizes']>
+// use media.filename if original
+type Sizes = keyof NonNullable<MediaType['sizes']> | 'original'
 type NonNullableSizes = NonNullable<MediaType['sizes']>
 
 /*
@@ -26,19 +27,21 @@ export interface MediaProps extends MediaType {
 
 export const imagePrefix = `${MEDIA_LOCAL_DIR}/`
 
-export const Media = ({
-	filename,
-	mimeType,
-	className,
-	width,
-	height,
-	sizes,
-	alt,
-	loading = 'lazy',
-	sources,
-	fetchPriority = 'auto',
-	decoding = 'async',
-}: MediaProps): JSX.Element => {
+export const Media = (props: MediaProps): JSX.Element => {
+	const {
+		filename,
+		mimeType,
+		className,
+		width,
+		height,
+		sizes,
+		alt,
+		loading = 'lazy',
+		sources,
+		fetchPriority = 'auto',
+		decoding = 'async',
+	} = props
+
 	if (mimeType?.includes('video')) {
 		return (
 			<video
@@ -72,7 +75,7 @@ export const Media = ({
 	return (
 		<picture>
 			{sources?.map((source) => {
-				const imageSrcSet = getResponsiveSrcSet(source.srcSet, sizes)
+				const imageSrcSet = getResponsiveSrcSet(source.srcSet, sizes, props)
 				const imageSizes = getResponsiveSizes(source.sizes)
 
 				return (
@@ -115,9 +118,16 @@ export const Media = ({
 export const getResponsiveSrcSet = (
 	srcSet: Sizes[],
 	sizes: NonNullableSizes,
+	{ width, filename }: Pick<MediaType, 'width' | 'filename'>,
 ) => {
 	return srcSet
 		.map((size) => {
+			// since original is not a key of size object, we check for it separately then return media.filename
+			if (size === 'original') {
+				const srcSetWidth = width ? `${width}w` : ''
+				return `${imagePrefix}${filename as string} ${srcSetWidth}`
+			}
+
 			const currentSize = sizes[size]
 			if (!currentSize) return undefined
 

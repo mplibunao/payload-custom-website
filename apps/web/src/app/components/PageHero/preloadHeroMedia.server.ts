@@ -37,7 +37,7 @@ export const preloadHeroMedia = (
 				tagName: 'link',
 				rel: 'preload',
 				as: 'image',
-				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes),
+				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes, hero.heroMedia),
 				sizes: getResponsiveSizes(sources.sizes),
 				href: `${imagePrefix}${sizes['original-avif']?.filename as string}`,
 			}
@@ -51,7 +51,7 @@ export const preloadHeroMedia = (
 				tagName: 'link',
 				rel: 'preload',
 				as: 'image',
-				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes),
+				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes, hero.heroMedia),
 				sizes: getResponsiveSizes(sources.sizes),
 				href: `${imagePrefix}${sizes['original-webp']?.filename as string}`,
 			}
@@ -63,7 +63,7 @@ export const preloadHeroMedia = (
 				tagName: 'link',
 				rel: 'preload',
 				as: 'image',
-				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes),
+				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes, hero.heroMedia),
 				sizes: getResponsiveSizes(sources.sizes),
 				href: `${imagePrefix}${hero.heroMedia.filename as string}`,
 			}
@@ -79,7 +79,7 @@ export const preloadHeroMedia = (
 				tagName: 'link',
 				rel: 'preload',
 				as: 'image',
-				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes),
+				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes, hero.heroMedia),
 				sizes: getResponsiveSizes(sources.sizes),
 				href: `${imagePrefix}${sizes['original-avif']?.filename as string}`,
 			}
@@ -93,7 +93,7 @@ export const preloadHeroMedia = (
 				tagName: 'link',
 				rel: 'preload',
 				as: 'image',
-				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes),
+				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes, hero.heroMedia),
 				sizes: getResponsiveSizes(sources.sizes),
 				href: `${imagePrefix}${sizes['original-webp']?.filename as string}`,
 			}
@@ -105,7 +105,7 @@ export const preloadHeroMedia = (
 				tagName: 'link',
 				rel: 'preload',
 				as: 'image',
-				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes),
+				imageSrcSet: getResponsiveSrcSet(sources.srcSet, sizes, hero.heroMedia),
 				sizes: getResponsiveSizes(sources.sizes),
 				href: `${imagePrefix}${hero.heroMedia.filename as string}`,
 			}
