@@ -25,9 +25,9 @@ export const CallToActionBlock = (
 					<RichText content={props.content} />
 				</BackgroundColor>
 
-				<ul className='flex flex-wrap list-none m-0 p-0'>
+				<ul className='flex flex-wrap'>
 					{props.actions?.map(({ link, id }, i) => (
-						<li key={id ?? i} className='flex flex-wrap list-none m-0 p-0'>
+						<li key={id ?? i} className='flex flex-wrap'>
 							<Button
 								color={props.backgroundColor.color}
 								asChild

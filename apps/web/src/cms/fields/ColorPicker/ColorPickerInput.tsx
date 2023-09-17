@@ -55,7 +55,7 @@ export const ColorPickerInput: React.FC<Props> = ({
 	return (
 		<div className='custom-color-picker pb-2'>
 			<Label htmlFor={path} label={label} required={required} />
-			<ul className='flex flex-wrap list-none p-0 m-0'>
+			<ul className='flex flex-wrap'>
 				{colors.map((color) => (
 					<li key={color}>
 						<TooltipProvider>

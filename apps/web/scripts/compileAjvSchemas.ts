@@ -1,6 +1,6 @@
 import Ajv from 'ajv'
 import standaloneCode from 'ajv/dist/standalone'
-import { writeFile } from 'node:fs/promises'
+import { writeFile } from 'fs/promises'
 import path from 'path'
 import { typeboxEnvSchema } from '~/server/infra/configSchema'
 
@@ -16,6 +16,7 @@ const separator = {
 	errors: false,
 	compile:
 		// @ts-expect-error
+
 
 			(schema) =>
 			// @ts-expect-error

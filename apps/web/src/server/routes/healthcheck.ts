@@ -1,7 +1,7 @@
 import type Redis from 'ioredis'
 import { ConnectionStates } from 'mongoose'
-import v8 from 'node:v8'
 import { type Logger } from 'pino'
+import v8 from 'v8'
 import { type ExpressMiddleware } from '~/types/middlewareType'
 
 import { type Config } from '../infra/config.server'

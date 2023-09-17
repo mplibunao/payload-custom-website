@@ -1,6 +1,6 @@
 import { Type } from '@sinclair/typebox'
-import v8 from 'node:v8'
 import overload, { type HttpProtectionInstance } from 'overload-protection'
+import v8 from 'v8'
 
 import { type Env } from '../infra/config.server'
 
