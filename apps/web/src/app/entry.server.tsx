@@ -6,8 +6,8 @@ import {
 } from '@remix-run/node'
 import { RemixServer } from '@remix-run/react'
 import isbot from 'isbot'
-import { PassThrough } from 'node:stream'
 import { renderToPipeableStream } from 'react-dom/server'
+import { PassThrough } from 'stream'
 
 import { IsBotProvider } from './utils/isBotProvider'
 
