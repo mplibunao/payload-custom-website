@@ -10,7 +10,7 @@ import {
 import { Container, Gutter } from '../../Layout'
 import { Media } from '../Media'
 import { RichText } from '../RichText'
-import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxStyles'
+import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxUtils'
 
 export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 	if (typeof media === 'string') {

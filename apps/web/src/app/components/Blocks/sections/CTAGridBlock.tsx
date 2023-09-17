@@ -15,6 +15,7 @@ export const CTAGridBlock = ({ actions }: CTAGridBlockType): JSX.Element => {
 						<SiteLink
 							{...link}
 							className='flex flex-row items-center text-antique relative'
+							prefetch='viewport'
 						>
 							<Container className='w-full z-10'>
 								<Grid>
