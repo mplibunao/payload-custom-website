@@ -9,8 +9,10 @@ const parallaxTranslateY = {
 	100: ['25%', '-25%'],
 	150: ['25%', '-75%'],
 }
-type Distance = keyof typeof parallaxTranslateY
+export type ParallaxDistance = keyof typeof parallaxTranslateY
 
-export const getParallaxTranslateYOutput = (distance: Distance = 50) => {
+export const getParallaxTranslateYOutput = (
+	distance: ParallaxDistance = 50,
+) => {
 	return parallaxTranslateY[distance]
 }

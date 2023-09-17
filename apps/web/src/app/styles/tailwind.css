@@ -306,6 +306,15 @@
 	.fullscreen-media {
 		height: calc(100% + 220px);
 	}
+
+	.content-collage-rich-text {
+		h2 {
+			@apply h1;
+		}
+		p {
+			@apply mx-auto my-0 max-w-[16rem];
+		}
+	}
 }
 
 /*

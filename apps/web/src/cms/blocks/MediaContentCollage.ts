@@ -18,6 +18,8 @@ export const MediaContentCollage: Block = {
 			name: 'enableCTA',
 			label: 'Enable Call to Action',
 			type: 'checkbox',
+			defaultValue: false,
+			required: true,
 		},
 		{
 			...link(),
@@ -31,6 +33,7 @@ export const MediaContentCollage: Block = {
 			type: 'array',
 			minRows: 3,
 			maxRows: 6,
+			required: true,
 			fields: [
 				{
 					type: 'upload',

@@ -267,9 +267,9 @@ export interface MediaContentCollageBlockType {
   content: {
     [k: string]: unknown;
   }[];
-  enableCTA?: boolean;
+  enableCTA: boolean;
   link?: PageLink;
-  media?: {
+  media: {
     media: string | Media;
     id?: string;
   }[];

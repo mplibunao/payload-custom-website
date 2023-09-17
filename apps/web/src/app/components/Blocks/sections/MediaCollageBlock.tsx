@@ -5,7 +5,7 @@ import { LazyMotionDomAnimation } from '~/app/utils/framerMotion/LazyMotionFeatu
 import { type MediaCollageBlockType } from '~/cms/payload-types'
 
 import { Media } from '../Media'
-import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxStyles'
+import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxUtils'
 
 export const MediaCollageBlock = (
 	props: MediaCollageBlockType,

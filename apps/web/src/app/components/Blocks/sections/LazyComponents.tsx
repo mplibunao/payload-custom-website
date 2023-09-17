@@ -19,3 +19,8 @@ export const MediaCollageBlock = React.lazy(() =>
 		default: module.MediaCollageBlock,
 	})),
 )
+export const MediaContentCollageBlock = React.lazy(() =>
+	import('./MediaContentCollageBlock').then((module) => ({
+		default: module.MediaContentCollageBlock,
+	})),
+)

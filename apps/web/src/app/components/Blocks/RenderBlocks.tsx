@@ -8,6 +8,7 @@ import {
 	CTABlock,
 	CTAGridBlock,
 	MediaCollageBlock,
+	MediaContentCollageBlock,
 } from './sections/LazyComponents'
 
 type BlockTypes = Page['layout'][number]['blockType']
@@ -18,6 +19,7 @@ const components: Record<BlockTypes, React.LazyExoticComponent<any>> = {
 	cta: CTABlock,
 	'cta-grid': CTAGridBlock,
 	'media-collage': MediaCollageBlock,
+	'media-content-collage': MediaContentCollageBlock,
 }
 
 type Props = {
