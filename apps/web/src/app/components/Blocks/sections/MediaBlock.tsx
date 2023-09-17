@@ -25,7 +25,7 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 		return (
 			<Gutter left right>
 				<div className='w-full max-w-full'>
-					<Media {...media} loading='lazy' />
+					<Media {...media} />
 					{caption ? <RichText content={caption} /> : null}
 				</div>
 			</Gutter>
@@ -35,7 +35,7 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 	return (
 		<Container>
 			<div className='w-full max-w-full'>
-				<Media {...media} loading='lazy' />
+				<Media {...media} />
 				{caption ? <RichText content={caption} /> : null}
 			</div>
 		</Container>
@@ -66,11 +66,7 @@ const FullScreenMedia = (props: {
 					style={shouldReduceMotion ? { opacity } : { y }}
 				>
 					<div className='fullscreen-media relative bottom-28'>
-						<Media
-							{...props.media}
-							className='h-full w-full object-cover'
-							loading='lazy'
-						/>
+						<Media {...props.media} className='h-full w-full object-cover' />
 						{props.caption ? <RichText content={props.caption} /> : null}
 					</div>
 				</m.div>

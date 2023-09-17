@@ -2,9 +2,13 @@ import { cva } from 'cva'
 import { twMerge } from 'tailwind-merge'
 import { type Page } from '~/cms/payload-types'
 
-import { Media } from './Blocks/Media'
-import { RichText } from './Blocks/RichText'
-import { Container, Grid, Gutter } from './Layout'
+import { Media } from '../Blocks/Media'
+import { RichText } from '../Blocks/RichText'
+import { Container, Grid, Gutter } from '../Layout'
+import {
+	contentAboveMediaSources,
+	contentLeftOfMediaSources,
+} from './responsiveHeroSources'
 
 const fadeInAnimation = cva([
 	'animate-in slide-in-from-bottom-20 fade-in duration-700 fill-mode-both ease-in',
@@ -55,12 +59,16 @@ const ContentAboveMediaPageHero = (
 							fadeInAnimation(),
 						)}
 					>
-						<Media {...props.heroMedia} loading='eager' fetchPriority='high' />
+						<Media
+							{...props.heroMedia}
+							loading='eager'
+							fetchPriority='high'
+							decoding='sync'
+							sources={contentAboveMediaSources}
+						/>
 					</div>
 				</Gutter>
-			) : (
-				<></>
-			)}
+			) : null}
 		</div>
 	)
 }
@@ -101,11 +109,11 @@ const ContentLeftOfMediaPageHero = (props: ContentLeftOfMediaPageHeroProps) => {
 							className='h-full absolute top-0 left-0 object-cover object-center'
 							loading='eager'
 							fetchPriority='high'
+							decoding='sync'
+							sources={contentLeftOfMediaSources}
 						/>
 					</div>
-				) : (
-					<></>
-				)}
+				) : null}
 			</Container>
 		</div>
 	)

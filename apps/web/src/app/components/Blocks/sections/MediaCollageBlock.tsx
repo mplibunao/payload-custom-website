@@ -17,8 +17,6 @@ export const MediaCollageBlock = (
 		target: ref,
 	})
 
-	const topOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.5])
-	const bottomOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.5])
 	const image1Y = useTransform(
 		scrollYProgress,
 		[0, 1],
@@ -34,6 +32,8 @@ export const MediaCollageBlock = (
 		[0, 1],
 		getParallaxTranslateYOutput(100),
 	)
+	const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.5])
+	const opacityStyle = { opacity }
 
 	const [media1, media2, media3] = props.media
 
@@ -47,13 +47,9 @@ export const MediaCollageBlock = (
 								'min-w-[50%] max-xs:pb-0 max-xs:pt-16 max-sm:max-w-[70%] max-sm:pb-28',
 								parallaxStyles(),
 							)}
-							style={
-								shouldReduceMotion ? { opacity: topOpacity } : { y: image1Y }
-							}
+							style={shouldReduceMotion ? opacityStyle : { y: image1Y }}
 						>
-							<div>
-								<Media {...media1.media} loading='lazy' />
-							</div>
+							<Media {...media1.media} />
 						</m.div>
 					) : null}
 
@@ -63,13 +59,9 @@ export const MediaCollageBlock = (
 								'max-xs:max-w-[80%] max-sm:max-w-[65%] max-sm:ml-auto max-md:pl-16 pl-28',
 								parallaxStyles(),
 							)}
-							style={
-								shouldReduceMotion ? { opacity: topOpacity } : { y: image2Y }
-							}
+							style={shouldReduceMotion ? opacityStyle : { y: image2Y }}
 						>
-							<div>
-								<Media {...media2.media} loading='lazy' />
-							</div>
+							<Media {...media2.media} />
 						</m.div>
 					) : null}
 				</div>
@@ -78,12 +70,10 @@ export const MediaCollageBlock = (
 					<div className='grid grid-cols-12'>
 						<m.div
 							className={parallaxStyles({ class: 'col-start-2 col-span-12' })}
-							style={
-								shouldReduceMotion ? { opacity: bottomOpacity } : { y: image3Y }
-							}
+							style={shouldReduceMotion ? opacityStyle : { y: image3Y }}
 						>
 							<div className='max-sm:-m-9 max-w-[70%] sm:max-w-[60%] 3xl:max-w-full'>
-								<Media {...media3.media} loading='lazy' />
+								<Media {...media3.media} />
 							</div>
 						</m.div>
 					</div>

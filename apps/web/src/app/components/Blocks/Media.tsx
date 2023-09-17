@@ -2,14 +2,29 @@ import { twMerge } from 'tailwind-merge'
 import { type Media as MediaType } from '~/cms/payload-types'
 import { MEDIA_LOCAL_DIR } from '~/constants'
 
-export interface MediaProps extends MediaType {
-	className?: string
-	preferredSize?: keyof NonNullable<MediaType['sizes']>
-	loading?: React.ImgHTMLAttributes<HTMLImageElement>['loading']
-	fetchPriority?: 'high' | 'low' | 'auto'
+type Sizes = keyof NonNullable<MediaType['sizes']>
+type NonNullableSizes = NonNullable<MediaType['sizes']>
+
+/*
+ * 1. For fallback purposes if browser doesn't support avif or webp
+ * 2. For responsive images (render different size depending on viewport)
+ */
+export type ImageSource = {
+	type?: 'image/avif' | 'image/webp'
+	srcSet: Sizes[]
+	sizes?: string[]
+	media?: string
 }
 
-const imagePrefix = `${MEDIA_LOCAL_DIR}/`
+export interface MediaProps extends MediaType {
+	className?: string
+	loading?: React.ImgHTMLAttributes<HTMLImageElement>['loading']
+	fetchPriority?: 'high' | 'low' | 'auto'
+	sources?: ImageSource[]
+	decoding?: 'auto' | 'async' | 'sync'
+}
+
+export const imagePrefix = `${MEDIA_LOCAL_DIR}/`
 
 export const Media = ({
 	filename,
@@ -18,11 +33,12 @@ export const Media = ({
 	width,
 	height,
 	sizes,
-	preferredSize,
 	alt,
-	loading = 'eager',
-}: //fetchPriority,
-MediaProps): JSX.Element => {
+	loading = 'lazy',
+	sources,
+	fetchPriority = 'auto',
+	decoding = 'async',
+}: MediaProps): JSX.Element => {
 	if (mimeType?.includes('video')) {
 		return (
 			<video
@@ -37,31 +53,80 @@ MediaProps): JSX.Element => {
 		)
 	}
 
-	/*
-	 * use preferred size if caller passes it as props
-	 * fallback to original webp image
-	 * last fallback is original non-webp image
-	 */
-	let filenameToRender = filename
-	if (sizes) {
-		if (preferredSize && sizes[preferredSize]) {
-			filenameToRender = sizes[preferredSize]?.filename
-			height = sizes[preferredSize]?.height
-			width = sizes[preferredSize]?.width
-		} else if (sizes['original-webp']) {
-			filenameToRender = sizes['original-webp'].filename
-			height = sizes['original-webp'].height
-			width = sizes['original-webp'].width
-		}
+	// render original file
+	if (!sizes) {
+		return (
+			<img
+				src={`${imagePrefix}${filename as string}`}
+				alt={alt}
+				width={width}
+				height={height}
+				className={twMerge('max-w-full w-full', className)}
+				loading={loading}
+				fetchpriority={fetchPriority}
+				decoding={decoding}
+			/>
+		)
 	}
+
 	return (
-		<img
-			src={`${imagePrefix}${filenameToRender as string}`}
-			alt={alt}
-			width={width}
-			height={height}
-			className={twMerge('max-w-full w-full', className)}
-			loading={loading}
-		/>
+		<picture>
+			{sources?.map((source) => {
+				const imageSrcSet = getResponsiveSrcSet(source.srcSet, sizes)
+				const imageSizes = getResponsiveSizes(source.sizes)
+
+				return (
+					<source
+						key={`${imageSrcSet}${imageSizes ?? ''}`}
+						srcSet={imageSrcSet}
+						sizes={imageSizes}
+						type={source.type}
+						media={source.media}
+					/>
+				)
+			})}
+
+			<source
+				srcSet={`${imagePrefix}${sizes['original-avif']?.filename as string}`}
+				type='image/avif'
+				width={width}
+				height={height}
+			/>
+			<source
+				srcSet={`${imagePrefix}${sizes['original-webp']?.filename as string}`}
+				type='image/webp'
+				width={width}
+				height={height}
+			/>
+			<img
+				src={`${imagePrefix}${filename as string}`}
+				alt={alt}
+				width={width}
+				height={height}
+				className={twMerge('max-w-full w-full', className)}
+				loading={loading}
+				fetchpriority={fetchPriority}
+				decoding={decoding}
+			/>
+		</picture>
 	)
 }
+
+export const getResponsiveSrcSet = (
+	srcSet: Sizes[],
+	sizes: NonNullableSizes,
+) => {
+	return srcSet
+		.map((size) => {
+			const currentSize = sizes[size]
+			if (!currentSize) return undefined
+
+			const srcSetWidth = currentSize.width ? `${currentSize.width}w` : ''
+
+			return `${imagePrefix}${sizes[size]?.filename as string} ${srcSetWidth}`
+		})
+		.filter(Boolean)
+		.join(', ')
+}
+
+export const getResponsiveSizes = (sizes?: string[]) => sizes?.join(', ')
