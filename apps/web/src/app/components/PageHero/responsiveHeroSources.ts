@@ -1,6 +1,6 @@
 import { type ImageSource } from '../Blocks/Media'
 
-export const contentAboveMediaSources: ImageSource[] = [
+export const fullGutterMediaSources: ImageSource[] = [
 	{
 		type: 'image/avif',
 		sizes: [

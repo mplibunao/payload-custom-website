@@ -9,7 +9,7 @@ import {
 	imagePrefix,
 } from '../Blocks/Media'
 import {
-	contentAboveMediaSources,
+	fullGutterMediaSources,
 	contentLeftOfMediaSources,
 } from './responsiveHeroSources'
 
@@ -28,7 +28,7 @@ export const preloadHeroMedia = (
 
 	if (hero.heroType === 'contentAboveMedia') {
 		if (supportsAvif) {
-			const sources = contentAboveMediaSources.find(
+			const sources = fullGutterMediaSources.find(
 				(source) => source.type === 'image/avif',
 			)
 			if (!sources) return null
@@ -42,7 +42,7 @@ export const preloadHeroMedia = (
 				href: `${imagePrefix}${sizes['original-avif']?.filename as string}`,
 			}
 		} else if (supportsWebP) {
-			const sources = contentAboveMediaSources.find(
+			const sources = fullGutterMediaSources.find(
 				(source) => source.type === 'image/webp',
 			)
 			if (!sources) return null
@@ -56,7 +56,7 @@ export const preloadHeroMedia = (
 				href: `${imagePrefix}${sizes['original-webp']?.filename as string}`,
 			}
 		} else {
-			const sources = contentAboveMediaSources.find((source) => !source.type)
+			const sources = fullGutterMediaSources.find((source) => !source.type)
 			if (!sources) return null
 
 			return {
