@@ -194,7 +194,7 @@ async function seed() {
 				meta: {
 					title: 'Metric Structures',
 					description:
-						'We bring together dreamers, thinkers and makers. Metric Structures is Michigan-based construction company dedicated to turning your visions into reality. From residential renovations to commercial construction, our expert team brings craftsmanship, precision, and decades of local experience to every project. Explore our portfolio and start building with confidence today.',
+						'We bring together dreamers, thinkers and makers. Metric Structures is Michigan-based construction company dedicated to turning your visions into reality. From design and architecture to residential renovations and commercial construction, our expert team brings craftsmanship, precision, and decades of local experience to every project. Explore our portfolio and start building with confidence today.',
 					twitter: '@mpradorbrandy',
 					ogImage: homeHeroMediaId,
 				},
