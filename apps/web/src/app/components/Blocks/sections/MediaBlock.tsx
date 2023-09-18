@@ -25,26 +25,7 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 			return (
 				<Gutter left right>
 					<div className='w-full max-w-full'>
-						<Media
-							//sources={fullGutterMediaSources}
-							{...media}
-							//sources={[
-							//{
-							//type: 'image/avif',
-							//sizes: [
-							//'100vw',
-							//'media(min-width: 1280px) 80vw',
-							//'media(min-width: 1920px) 70vw',
-							//],
-							//srcSet: [
-							//'square-512w-avif',
-							//'square-768w-avif',
-							//'square-1200w-avif',
-							//'original-avif',
-							//],
-							//},
-							//]}
-						/>
+						<Media sources={fullGutterMediaSources} {...media} />
 						{caption ? <RichText content={caption} /> : null}
 					</div>
 				</Gutter>
@@ -55,43 +36,43 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 					<div className='w-full max-w-full'>
 						<Media
 							{...media}
-							//sources={[
-							//{
-							//type: 'image/avif',
-							//sizes: [
-							//'80vw',
-							//'media(min-width: 764px) 90vw',
-							//'media(min-width: 1024px) 80vw',
-							//'media(min-width: 1280px) 63vw',
-							//'media(min-width: 1563px) 51vw',
-							//'media(min-width: 1920px) 42vw',
-							//],
-							//srcSet: ['card-avif', 'portrait-avif', 'square-avif'],
-							//},
-							//{
-							//type: 'image/webp',
-							//sizes: [
-							//'80vw',
-							//'media(min-width: 764px) 90vw',
-							//'media(min-width: 1024px) 80vw',
-							//'media(min-width: 1280px) 63vw',
-							//'media(min-width: 1563px) 51vw',
-							//'media(min-width: 1920px) 42vw',
-							//],
-							//srcSet: ['card-webp', 'portrait-webp', 'square-webp'],
-							//},
-							//{
-							//sizes: [
-							//'80vw',
-							//'media(min-width: 764px) 90vw',
-							//'media(min-width: 1024px) 80vw',
-							//'media(min-width: 1280px) 63vw',
-							//'media(min-width: 1563px) 51vw',
-							//'media(min-width: 1920px) 42vw',
-							//],
-							//srcSet: ['card', 'portrait', 'square'],
-							//},
-							//]}
+							sources={[
+								{
+									type: 'image/avif',
+									sizes: [
+										'80vw',
+										'media(min-width: 764px) 90vw',
+										'media(min-width: 1024px) 80vw',
+										'media(min-width: 1280px) 63vw',
+										'media(min-width: 1563px) 51vw',
+										'media(min-width: 1920px) 42vw',
+									],
+									srcSet: ['card-avif', 'portrait-avif', 'square-avif'],
+								},
+								{
+									type: 'image/webp',
+									sizes: [
+										'80vw',
+										'media(min-width: 764px) 90vw',
+										'media(min-width: 1024px) 80vw',
+										'media(min-width: 1280px) 63vw',
+										'media(min-width: 1563px) 51vw',
+										'media(min-width: 1920px) 42vw',
+									],
+									srcSet: ['card-webp', 'portrait-webp', 'square-webp'],
+								},
+								{
+									sizes: [
+										'80vw',
+										'media(min-width: 764px) 90vw',
+										'media(min-width: 1024px) 80vw',
+										'media(min-width: 1280px) 63vw',
+										'media(min-width: 1563px) 51vw',
+										'media(min-width: 1920px) 42vw',
+									],
+									srcSet: ['card', 'portrait', 'square'],
+								},
+							]}
 						/>
 						{caption ? <RichText content={caption} /> : null}
 					</div>
@@ -129,22 +110,22 @@ const FullScreenMedia = (props: {
 						<Media
 							{...props.media}
 							className='h-full w-full object-cover'
-							//sources={[
-							//{
-							//type: 'image/avif',
-							//srcSet: ['portrait-avif', 'square-avif', 'original-avif'],
-							//sizes: ['100vw'],
-							//},
-							//{
-							//type: 'image/webp',
-							//srcSet: ['portrait-webp', 'square-webp', 'original-webp'],
-							//sizes: ['100vw'],
-							//},
-							//{
-							//srcSet: ['portrait', 'square', 'original'],
-							//sizes: ['100vw'],
-							//},
-							//]}
+							sources={[
+								{
+									type: 'image/avif',
+									srcSet: ['portrait-avif', 'square-avif', 'original-avif'],
+									sizes: ['100vw'],
+								},
+								{
+									type: 'image/webp',
+									srcSet: ['portrait-webp', 'square-webp', 'original-webp'],
+									sizes: ['100vw'],
+								},
+								{
+									srcSet: ['portrait', 'square', 'original'],
+									sizes: ['100vw'],
+								},
+							]}
 						/>
 						{props.caption ? <RichText content={props.caption} /> : null}
 					</div>

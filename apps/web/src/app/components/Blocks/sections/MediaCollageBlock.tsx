@@ -51,32 +51,32 @@ export const MediaCollageBlock = (
 						>
 							<Media
 								{...media1.media}
-								//sources={[
-								//{
-								//type: 'image/avif',
-								//sizes: ['70vw', 'media(min-width: 640px) 50vw'],
-								//srcSet: [
-								//'card-avif',
-								//'feature-avif',
-								//'square-avif',
-								//'original-avif',
-								//],
-								//},
-								//{
-								//type: 'image/webp',
-								//sizes: ['70vw', 'media(min-width: 640px) 50vw'],
-								//srcSet: [
-								//'card-webp',
-								//'portrait-webp',
-								//'square-webp',
-								//'original-webp',
-								//],
-								//},
-								//{
-								//sizes: ['70vw', 'media(min-width: 640px) 50vw'],
-								//srcSet: ['card', 'portrait', 'square', 'original'],
-								//},
-								//]}
+								sources={[
+									{
+										type: 'image/avif',
+										sizes: ['70vw', 'media(min-width: 640px) 50vw'],
+										srcSet: [
+											'card-avif',
+											'feature-avif',
+											'square-avif',
+											'original-avif',
+										],
+									},
+									{
+										type: 'image/webp',
+										sizes: ['70vw', 'media(min-width: 640px) 50vw'],
+										srcSet: [
+											'card-webp',
+											'portrait-webp',
+											'square-webp',
+											'original-webp',
+										],
+									},
+									{
+										sizes: ['70vw', 'media(min-width: 640px) 50vw'],
+										srcSet: ['card', 'portrait', 'square', 'original'],
+									},
+								]}
 							/>
 						</m.div>
 					) : null}
@@ -91,32 +91,32 @@ export const MediaCollageBlock = (
 						>
 							<Media
 								{...media2.media}
-								//sources={[
-								//{
-								//type: 'image/avif',
-								//sizes: ['50vw', 'media(min-width: 640px) 40vw'],
-								//srcSet: [
-								//'card-avif',
-								//'portrait-avif',
-								//'square-avif',
-								//'original-avif',
-								//],
-								//},
-								//{
-								//type: 'image/webp',
-								//sizes: ['50vw', 'media(min-width: 640px) 40vw'],
-								//srcSet: [
-								//'card-webp',
-								//'portrait-webp',
-								//'square-webp',
-								//'original-webp',
-								//],
-								//},
-								//{
-								//sizes: ['50vw', 'media(min-width: 640px) 40vw'],
-								//srcSet: ['card', 'portrait', 'square', 'original'],
-								//},
-								//]}
+								sources={[
+									{
+										type: 'image/avif',
+										sizes: ['50vw', 'media(min-width: 640px) 40vw'],
+										srcSet: [
+											'card-avif',
+											'portrait-avif',
+											'square-avif',
+											'original-avif',
+										],
+									},
+									{
+										type: 'image/webp',
+										sizes: ['50vw', 'media(min-width: 640px) 40vw'],
+										srcSet: [
+											'card-webp',
+											'portrait-webp',
+											'square-webp',
+											'original-webp',
+										],
+									},
+									{
+										sizes: ['50vw', 'media(min-width: 640px) 40vw'],
+										srcSet: ['card', 'portrait', 'square', 'original'],
+									},
+								]}
 							/>
 						</m.div>
 					) : null}
@@ -134,22 +134,22 @@ export const MediaCollageBlock = (
 							<div className='max-sm:-m-9 max-w-[70%] sm:max-w-[60%] 3xl:max-w-full'>
 								<Media
 									{...media3.media}
-									//sources={[
-									//{
-									//type: 'image/avif',
-									//sizes: [
-									//'64vw',
-									//'media(min-width: 640px) 55vw',
-									//'media(min-width: 1920px) 84vw',
-									//],
-									//srcSet: [
-									//'card-avif',
-									//'feature-avif',
-									//'square-avif',
-									//'original-avif',
-									//],
-									//},
-									//]}
+									sources={[
+										{
+											type: 'image/avif',
+											sizes: [
+												'64vw',
+												'media(min-width: 640px) 55vw',
+												'media(min-width: 1920px) 84vw',
+											],
+											srcSet: [
+												'card-avif',
+												'feature-avif',
+												'square-avif',
+												'original-avif',
+											],
+										},
+									]}
 								/>
 							</div>
 						</m.div>
