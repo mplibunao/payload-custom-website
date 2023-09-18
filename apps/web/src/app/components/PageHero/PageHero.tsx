@@ -6,7 +6,7 @@ import { Media } from '../Blocks/Media'
 import { RichText } from '../Blocks/RichText'
 import { Container, Grid, Gutter } from '../Layout'
 import {
-	contentAboveMediaSources,
+	fullGutterMediaSources,
 	contentLeftOfMediaSources,
 } from './responsiveHeroSources'
 
@@ -64,7 +64,7 @@ const ContentAboveMediaPageHero = (
 							loading='eager'
 							fetchPriority='high'
 							decoding='sync'
-							sources={contentAboveMediaSources}
+							sources={fullGutterMediaSources}
 						/>
 					</div>
 				</Gutter>
