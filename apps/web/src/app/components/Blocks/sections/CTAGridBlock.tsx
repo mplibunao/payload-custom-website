@@ -8,7 +8,7 @@ import { Separator } from '../../ui/separator'
 
 export const CTAGridBlock = ({ actions }: CTAGridBlockType): JSX.Element => {
 	return (
-		<div className='p-0'>
+		<div>
 			<ul className='p-0 m-0'>
 				{actions.map(({ headline, link, icon, id }, i) => (
 					<li key={id ?? i} className='group'>
@@ -18,7 +18,7 @@ export const CTAGridBlock = ({ actions }: CTAGridBlockType): JSX.Element => {
 							prefetch='viewport'
 						>
 							<Container className='w-full z-10'>
-								<Grid>
+								<Grid className='gap-0'>
 									<div className='col-span-12'>
 										<div className='flex py-12 px-0 flex-col items-start sm:flex-row sm:items-center'>
 											<p className='h4 text-antique flex-grow mr-9'>
