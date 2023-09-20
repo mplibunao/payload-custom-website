@@ -2,7 +2,7 @@ import path from 'path'
 import { type Options } from 'payload/dist/collections/operations/local/create'
 
 type MediaOptions = Options<'media'>
-type HomeMedia = Record<'hero' | 'office', MediaOptions> &
+type HomeMedia = Record<'hero' | 'hancock', MediaOptions> &
 	Record<'contentCollage', MediaOptions[]>
 
 /*
@@ -17,12 +17,12 @@ export const homeMedia: HomeMedia = {
 			alt: 'Building with trees',
 		},
 	},
-	office: {
+	hancock: {
 		overwriteExistingFiles: true,
 		collection: 'media',
-		filePath: path.resolve(__dirname, 'office-1.jpg'),
+		filePath: path.resolve(__dirname, 'hancock-full-width.jpg'),
 		data: {
-			alt: 'Office',
+			alt: 'Hancock Plant Wall',
 		},
 	},
 	contentCollage: [
@@ -178,9 +178,9 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 		{
 			overwriteExistingFiles: true,
 			collection: 'media',
-			filePath: path.resolve(__dirname, 'golf.jpg'),
+			filePath: path.resolve(__dirname, 'cornhole-boards.jpg'),
 			data: {
-				alt: 'Men having drinks in an indoor golf facility',
+				alt: 'Men playing cornhole boards',
 			},
 		},
 		{

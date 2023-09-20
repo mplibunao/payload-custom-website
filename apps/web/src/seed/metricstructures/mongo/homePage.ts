@@ -4,7 +4,7 @@ type PageOptions = Options<'pages'>
 
 type Props = {
 	heroMedia: string
-	officeMedia: string
+	hancockFullWidthMediaId: string
 	whoWeArePageId: string
 	contentCollageMediaIds: string[]
 	studiesId: string[]
@@ -12,7 +12,7 @@ type Props = {
 
 export const homePageSeedData = ({
 	heroMedia,
-	officeMedia,
+	hancockFullWidthMediaId,
 	whoWeArePageId,
 	contentCollageMediaIds,
 	studiesId,
@@ -39,8 +39,22 @@ export const homePageSeedData = ({
 			{
 				children: [
 					{
-						text: 'DREAMERS THINKERS & MAKERS',
-						'red-headline': true,
+						text: 'Dreamers,',
+						'red-headline': 'true',
+					},
+					{
+						text: '\n',
+					},
+					{
+						text: 'Thinkers,',
+						'red-headline': 'true',
+					},
+					{
+						text: '\n',
+					},
+					{
+						text: '& Makers',
+						'red-headline': 'true',
 					},
 				],
 				type: 'h1',
@@ -298,7 +312,7 @@ export const homePageSeedData = ({
 			},
 			{
 				blockType: 'media',
-				media: officeMedia,
+				media: hancockFullWidthMediaId,
 				type: 'fullscreen',
 				blockName: 'Media Parallax',
 			},
