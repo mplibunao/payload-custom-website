@@ -35,6 +35,10 @@ export const Studies: CollectionConfig = {
 			type: 'upload',
 			relationTo: 'media',
 			required: true,
+			admin: {
+				description:
+					'Please provide the highest quality image possible so we can deliver high quality images to retina screens and 4k monitors',
+			},
 		},
 		{
 			name: 'layout',
