@@ -2,12 +2,10 @@ import {
 	json,
 	type DataFunctionArgs,
 	type V2_MetaFunction,
-	LinksFunction,
 } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { RenderBlocks } from '~/app/components/Blocks/RenderBlocks'
 import { PageHero } from '~/app/components/PageHero/PageHero'
-import { preloadHeroMedia } from '~/app/components/PageHero/preloadHeroMedia.server'
 import { ErrorBoundary as NotFoundErrorBoundary } from '~/app/routes/$'
 import { NotFound } from '~/app/utils/http.server'
 import { isRejected } from '~/app/utils/misc'
@@ -53,15 +51,11 @@ export const loader = async ({
 		const siteInfo =
 			siteInfoData.status === 'fulfilled' ? siteInfoData.value : undefined
 
-		const meta = getPageMeta({ page, siteInfo, url: request.url })
-		const heroMedia = preloadHeroMedia(request.headers.get('Accept'), page)
-		if (heroMedia) meta.push(heroMedia)
-
 		return json(
 			{
 				page,
 				siteInfo,
-				meta,
+				meta: getPageMeta({ page, siteInfo, url: request.url }),
 			},
 			{
 				headers: {
