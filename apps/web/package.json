@@ -31,7 +31,8 @@
 		"compile": "tsx ./scripts/compileAjvSchemas.ts",
 		"ui:add": "pnpm dlx shadcn-ui@latest add",
 		"tw:gen": "tailwindcss-extend -p src/app/styles/tailwind.css",
-		"seed": "cross-env PAYLOAD_CONFIG_PATH=./src/payload.config.ts PAYLOAD_LOCAL_API=true ts-node --swc -r tsconfig-paths/register ./src/seed/metricstructures/mongo/index.ts"
+		"seed": "cross-env PAYLOAD_CONFIG_PATH=./src/payload.config.ts PAYLOAD_LOCAL_API=true ts-node --swc -r tsconfig-paths/register ./src/seed/metricstructures/mongo/index.ts",
+		"media:regen": "cross-env PAYLOAD_CONFIG_PATH=./src/payload.config.ts PAYLOAD_LOCAL_API=true ts-node --swc -r tsconfig-paths/register ./scripts/regenerateMediaSizes.ts"
 	},
 	"dependencies": {
 		"@radix-ui/react-dialog": "1.0.4",
