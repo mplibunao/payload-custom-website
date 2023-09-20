@@ -8,7 +8,6 @@ import {
 } from '~/cms/payload-types'
 
 import { Container, Gutter } from '../../Layout'
-import { fullGutterMediaSources } from '../../PageHero/responsiveHeroSources'
 import { Media } from '../Media'
 import { RichText } from '../RichText'
 import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxUtils'
@@ -25,7 +24,67 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 			return (
 				<Gutter left right>
 					<div className='w-full max-w-full'>
-						<Media sources={fullGutterMediaSources} {...media} />
+						<Media
+							{...media}
+							sources={[
+								{
+									type: 'image/avif',
+									sizes: [
+										'100vw',
+										'media(min-width: 1280px) 80vw',
+										'media(min-width: 1920px) 70vw',
+									],
+									srcSet: [
+										'landscape-480w-avif',
+										'square-512w-avif',
+										'square-768w-avif',
+										'square-1024w-avif',
+										'square-1280w-avif',
+										'landscape-1536w-avif',
+										'landscape-1920w-avif',
+										'landscape-2560w-avif',
+										'original-avif',
+									],
+								},
+								{
+									type: 'image/webp',
+									sizes: [
+										'100vw',
+										'media(min-width: 1280px) 80vw',
+										'media(min-width: 1920px) 70vw',
+									],
+									srcSet: [
+										'landscape-480w-webp',
+										'square-512w-webp',
+										'square-768w-webp',
+										'square-1024w-webp',
+										'square-1280w-webp',
+										'landscape-1536w-webp',
+										'landscape-1920w-webp',
+										'landscape-2560w-webp',
+										'original-webp',
+									],
+								},
+								{
+									sizes: [
+										'100vw',
+										'media(min-width: 1280px) 80vw',
+										'media(min-width: 1920px) 70vw',
+									],
+									srcSet: [
+										'landscape-480w',
+										'square-512w',
+										'square-768w',
+										'square-1024w',
+										'square-1280w',
+										'landscape-1536w',
+										'landscape-1920w',
+										'landscape-2560w',
+										'original',
+									],
+								},
+							]}
+						/>
 						{caption ? <RichText content={caption} /> : null}
 					</div>
 				</Gutter>
@@ -47,7 +106,12 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 										'media(min-width: 1563px) 51vw',
 										'media(min-width: 1920px) 42vw',
 									],
-									srcSet: ['card-avif', 'portrait-avif', 'square-avif'],
+									srcSet: [
+										'landscape-480w-avif',
+										'landscape-640w-avif',
+										'landscape-768w-avif',
+										'landscape-1024w-avif',
+									],
 								},
 								{
 									type: 'image/webp',
@@ -59,7 +123,12 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 										'media(min-width: 1563px) 51vw',
 										'media(min-width: 1920px) 42vw',
 									],
-									srcSet: ['card-webp', 'portrait-webp', 'square-webp'],
+									srcSet: [
+										'landscape-480w-webp',
+										'landscape-640w-webp',
+										'landscape-768w-webp',
+										'landscape-1024w-webp',
+									],
 								},
 								{
 									sizes: [
@@ -70,7 +139,12 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 										'media(min-width: 1563px) 51vw',
 										'media(min-width: 1920px) 42vw',
 									],
-									srcSet: ['card', 'portrait', 'square'],
+									srcSet: [
+										'landscape-480w',
+										'landscape-640w',
+										'landscape-768w',
+										'landscape-1024w',
+									],
 								},
 							]}
 						/>
@@ -113,17 +187,56 @@ const FullScreenMedia = (props: {
 							sources={[
 								{
 									type: 'image/avif',
-									srcSet: ['portrait-avif', 'square-avif', 'original-avif'],
-									sizes: ['100vw'],
+									sizes: [
+										'100vw',
+										'media(min-width: 1280px) 80vw',
+										'media(min-width: 1920px) 70vw',
+									],
+									srcSet: [
+										'portrait-480w-avif',
+										'portrait-768w-avif',
+										'portrait-1024w-avif',
+										'landscape-1280w-avif',
+										'landscape-1536w-avif',
+										'landscape-1920w-avif',
+										'landscape-2560w-avif',
+										'original-avif',
+									],
 								},
 								{
 									type: 'image/webp',
-									srcSet: ['portrait-webp', 'square-webp', 'original-webp'],
-									sizes: ['100vw'],
+									sizes: [
+										'100vw',
+										'media(min-width: 1280px) 80vw',
+										'media(min-width: 1920px) 70vw',
+									],
+									srcSet: [
+										'portrait-480w-webp',
+										'portrait-768w-webp',
+										'portrait-1024w-webp',
+										'landscape-1280w-webp',
+										'landscape-1536w-webp',
+										'landscape-1920w-webp',
+										'landscape-2560w-webp',
+										'original-webp',
+									],
 								},
 								{
-									srcSet: ['portrait', 'square', 'original'],
-									sizes: ['100vw'],
+									sizes: [
+										'100vw',
+										'media(min-width: 1280px) 80vw',
+										'media(min-width: 1920px) 70vw',
+									],
+									srcSet: [
+										'portrait-480w',
+										'portrait-768w',
+										'portrait-1024w',
+										'landscape-1280w',
+										'landscape-1536w',
+										'landscape-1920w',
+										'landscape-2560w',
+										'original',
+									],
 								},
 							]}
 						/>

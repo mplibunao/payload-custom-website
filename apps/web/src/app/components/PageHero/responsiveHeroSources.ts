@@ -8,7 +8,17 @@ export const fullGutterMediaSources: ImageSource[] = [
 			'media(min-width: 1280px) 80vw',
 			'media(min-width: 1920px) 70vw',
 		],
-		srcSet: ['card-avif', 'portrait-avif', 'square-avif', 'original-avif'],
+		srcSet: [
+			'landscape-480w-avif',
+			'landscape-640w-avif',
+			'landscape-768w-avif',
+			'landscape-1024w-avif',
+			'landscape-1280w-avif',
+			'landscape-1536w-avif',
+			'landscape-1920w-avif',
+			'landscape-2560w-avif',
+			'original-avif',
+		],
 	},
 	{
 		type: 'image/webp',
@@ -17,7 +27,17 @@ export const fullGutterMediaSources: ImageSource[] = [
 			'media(min-width: 1280px) 80vw',
 			'media(min-width: 1920px) 70vw',
 		],
-		srcSet: ['card-webp', 'portrait-webp', 'square-webp', 'original-webp'],
+		srcSet: [
+			'landscape-480w-webp',
+			'landscape-640w-webp',
+			'landscape-768w-webp',
+			'landscape-1024w-webp',
+			'landscape-1280w-webp',
+			'landscape-1536w-webp',
+			'landscape-1920w-webp',
+			'landscape-2560w-webp',
+			'original-webp',
+		],
 	},
 	{
 		sizes: [
@@ -25,7 +45,17 @@ export const fullGutterMediaSources: ImageSource[] = [
 			'media(min-width: 1280px) 80vw',
 			'media(min-width: 1920px) 70vw',
 		],
-		srcSet: ['card', 'portrait', 'square', 'original'],
+		srcSet: [
+			'landscape-480w',
+			'landscape-640w',
+			'landscape-768w',
+			'landscape-1024w',
+			'landscape-1280w',
+			'landscape-1536w',
+			'landscape-1920w',
+			'landscape-2560w',
+			'original',
+		],
 	},
 ]
 
@@ -33,12 +63,36 @@ export const contentLeftOfMediaSources: ImageSource[] = [
 	{
 		type: 'image/avif',
 		sizes: ['50vw'],
-		srcSet: ['portrait-avif', 'square-avif', 'original-avif'],
+		srcSet: [
+			'portrait-768w-avif',
+			'landscape-1024w-avif',
+			'landscape-1280w-avif',
+			'landscape-1536w-avif',
+			'landscape-1920w-avif',
+			'original-avif',
+		],
 	},
 	{
 		type: 'image/webp',
 		sizes: ['50vw'],
-		srcSet: ['portrait-webp', 'square-webp', 'original-webp'],
+		srcSet: [
+			'portrait-768w-webp',
+			'landscape-1024w-webp',
+			'landscape-1280w-webp',
+			'landscape-1536w-webp',
+			'landscape-1920w-webp',
+			'original-webp',
+		],
 	},
-	{ sizes: ['50vw'], srcSet: ['portrait', 'square', 'original'] },
+	{
+		sizes: ['50vw'],
+		srcSet: [
+			'portrait-768w',
+			'landscape-1024w',
+			'landscape-1280w',
+			'landscape-1536w',
+			'landscape-1920w',
+			'original',
+		],
+	},
 ]
