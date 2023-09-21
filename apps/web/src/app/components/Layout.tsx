@@ -1,18 +1,5 @@
 import { twMerge } from 'tailwind-merge'
 
-export type ContainerProps = {
-	children?: React.ReactNode
-	className?: string
-}
-
-export const Container = (props: ContainerProps): JSX.Element => {
-	return (
-		<div className={twMerge('max-w-5xl mx-auto px-12', props.className)}>
-			{props.children}
-		</div>
-	)
-}
-
 export type GridProps = {
 	children?: React.ReactNode
 	className?: string

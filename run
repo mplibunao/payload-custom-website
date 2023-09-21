@@ -61,6 +61,12 @@ function routes { ## Generates route types and helpers
   pnpm routes
 }
 
+function media:regen { ## Regenerate media
+  # Don't cache this using turbo as it will bloat the repo
+  # Also saving cache is slow
+  pnpm -F web media:regen
+}
+
 function db:reset { ## Reset database. Destroy then start it back up
   echo "destroying database"
   dc:destroy -y

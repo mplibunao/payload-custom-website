@@ -11,9 +11,9 @@ module.exports = {
 	theme: {
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: '2.25rem', // used to 3rem
 			screens: {
-				'2xl': '1400px',
+				lg: '1024px',
 			},
 		},
 		extend: {

@@ -4,7 +4,7 @@ import { type Page } from '~/cms/payload-types'
 
 import { Media } from '../Blocks/Media'
 import { RichText } from '../Blocks/RichText'
-import { Container, Grid, Gutter } from '../Layout'
+import { Grid, Gutter } from '../Layout'
 import {
 	fullGutterMediaSources,
 	contentLeftOfMediaSources,
@@ -21,13 +21,13 @@ const MinimalPageHero = ({
 	heroContent,
 }: MinimalPageHeroProps): JSX.Element => {
 	return (
-		<Container>
+		<div className='container'>
 			<p className={twMerge('label', fadeInAnimation())}>{title}</p>
 			<RichText
 				content={heroContent}
 				className={twMerge(fadeInAnimation(), 'delay-200')}
 			/>
-		</Container>
+		</div>
 	)
 }
 
@@ -38,7 +38,7 @@ const ContentAboveMediaPageHero = (
 ): JSX.Element => {
 	return (
 		<div className='mb-40'>
-			<Container>
+			<div className='container'>
 				<Grid>
 					<div className='col-span-8 md:col-span-10 col-start-1 md:col-start-2'>
 						<RichText
@@ -50,7 +50,7 @@ const ContentAboveMediaPageHero = (
 						/>
 					</div>
 				</Grid>
-			</Container>
+			</div>
 			{typeof props.heroMedia === 'object' ? (
 				<Gutter left right>
 					<div
@@ -81,7 +81,7 @@ type ContentLeftOfMediaPageHeroProps = Pick<
 const ContentLeftOfMediaPageHero = (props: ContentLeftOfMediaPageHeroProps) => {
 	return (
 		<div className='relative mb-40'>
-			<Container>
+			<div className='container'>
 				<Grid>
 					<div className='col-span-8 md:col-span-10'>
 						<div className='pb-40 pt-12'>
@@ -114,7 +114,7 @@ const ContentLeftOfMediaPageHero = (props: ContentLeftOfMediaPageHeroProps) => {
 						/>
 					</div>
 				) : null}
-			</Container>
+			</div>
 		</div>
 	)
 }

@@ -9,17 +9,24 @@ const regenerateMediaSizes = async () => {
 			...config.payload,
 			local: true,
 		})
+		payload.logger.info('started payload. Searching for existing media')
 
 		const media = await payload.find({
 			collection: 'media',
 			depth: 0,
 			limit: 300,
 		})
+
+		payload.logger.info(
+			`Found ${media.totalDocs} media... will start regenerating media`,
+		)
+
 		await Promise.all(
 			media.docs.map(async (mediaDoc) => {
 				try {
 					const staticDir = path.resolve(__dirname, `..${MEDIA_LOCAL_DIR}`)
 					if (!mediaDoc.filename) return
+					//if (mediaDoc.filename !== 'hancock-7.jpg') return
 
 					await payload.update({
 						collection: 'media',
@@ -29,14 +36,14 @@ const regenerateMediaSizes = async () => {
 						overwriteExistingFiles: true,
 					})
 
-					console.log(
+					payload.logger.info(
 						`Media ${mediaDoc.alt || mediaDoc.id} regenerated successfully`,
 					)
 				} catch (err) {
-					console.error(
+					payload.logger.error(
 						`Media ${mediaDoc.alt || mediaDoc.id} failed to regenerate`,
 					)
-					console.error(err)
+					payload.logger.error(err)
 				}
 			}),
 		)

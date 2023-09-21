@@ -7,7 +7,7 @@ import { type MegaMenu, type SocialMedia } from '~/cms/payload-types'
 
 import { useDisclosure } from '../utils/useDisclosure'
 import { Logo } from './Icon/Logo'
-import { Container, Grid } from './Layout'
+import { Grid } from './Layout'
 import { LetsTalk } from './LetsTalk'
 import { PageScrollProgress } from './PageScrollProgress'
 import { SiteLink } from './SiteLink'
@@ -55,7 +55,7 @@ export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 					</DialogPrimitive.Trigger>
 
 					<MegaMenuDialog>
-						<Container>
+						<div className='container'>
 							<Grid className='z-0 md:z-auto pointer-events-none md:pointer-events-auto mb-72 md:mb-0 '>
 								<nav className='col-span-8'>
 									{megaMenu?.nav?.map(({ link, id }, i) => (
@@ -88,7 +88,7 @@ export const Header = ({ megaMenu, socialMedia }: HeaderProps): JSX.Element => {
 									</div>
 								)}
 							</Grid>
-						</Container>
+						</div>
 
 						<div className='fixed -right-12 -bottom-12 -mb-16 sm:-right-16 sm:-bottom-36 sm:block md:-right-28 md:-bottom-48'>
 							<LetsTalk location='header' />

@@ -11,7 +11,7 @@ import { LazyMotionDomAnimation } from '~/app/utils/framerMotion/LazyMotionFeatu
 import { type MediaContentCollageBlockType } from '~/cms/payload-types'
 
 import { BackgroundColor } from '../../BackgroundColor'
-import { Container, Grid, Gutter } from '../../Layout'
+import { Grid, Gutter } from '../../Layout'
 import { SiteLink } from '../../SiteLink'
 import { Button } from '../../ui/button'
 import { Media } from '../Media'
@@ -87,7 +87,7 @@ export const MediaContentCollageBlock = (
 						</ul>
 					) : null}
 
-					<Container>
+					<div className='container'>
 						<Grid>
 							<div className='col-start-1 md:col-start-2 col-span-10'>
 								<RichText
@@ -107,7 +107,7 @@ export const MediaContentCollageBlock = (
 								) : null}
 							</div>
 						</Grid>
-					</Container>
+					</div>
 				</BackgroundColor>
 			</Gutter>
 		</LazyMotionDomAnimation>

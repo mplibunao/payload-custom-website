@@ -86,17 +86,31 @@ async function seed() {
 		 *Home Media
 		 */
 		const { id: homeHeroMediaId } = await payload.create(homeMedia.hero)
-		const { id: homeOfficeId } = await payload.create(homeMedia.office)
+		logger.info(homeHeroMediaId, 'uploaded homeHeroMedia')
+		const { id: hancockFullWidthMediaId } = await payload.create(
+			homeMedia.hancock,
+		)
+		logger.info(hancockFullWidthMediaId, 'uploaded hancockFullWidthMediaId')
 		const homeContentCollageMediaIds = await Promise.all(
-			homeMedia.contentCollage.map((media) => payload.create(media)),
+			homeMedia.contentCollage.map(async (media) => {
+				const res = await payload.create(media)
+				logger.info(`uploaded homeMedia ${res.id}`)
+				return res
+			}),
 		).then((results) => results.map((result) => result.id))
+		logger.info(homeContentCollageMediaIds, 'uploaded homeContentCollageMedia')
 
 		/*
 		 *Who we are media
 		 */
 		const { id: whoWeAreHeroMediaId } = await payload.create(whoWeAreMedia.hero)
+		logger.info(whoWeAreHeroMediaId, 'uploaded whoWeAreHeroMediaId')
 		const { id: whoWeAreConstructionTripodMediaId } = await payload.create(
 			whoWeAreMedia.constructionTripod,
+		)
+		logger.info(
+			whoWeAreConstructionTripodMediaId,
+			'uploaded whoWeAreConstructionTripodMediaId',
 		)
 		const whoWeAreContentCollageMediaIds = homeContentCollageMediaIds
 			.filter((_, i) => [3, 4].includes(i))
@@ -104,16 +118,28 @@ async function seed() {
 		const { id: whoWeAreTeamLunchMediaId } = await payload.create(
 			whoWeAreMedia.teamLunch,
 		)
+		logger.info(whoWeAreTeamLunchMediaId, 'uploaded whoWeAreTeamLunchMediaId')
 		const whoWeAreMediaGridIds = await Promise.all(
-			whoWeAreMedia.mediaGrid.map((media) => payload.create(media)),
+			whoWeAreMedia.mediaGrid.map(async (media) => {
+				const res = await payload.create(media)
+				logger.info(`uploaded who we are media grid image ${res.id}`)
+				return res
+			}),
 		).then((results) => results.map((result) => result.id))
+		logger.info(whoWeAreMediaGridIds, 'uploaded whoWeAreMediaGridIds')
+
 		const whoWeAreMediaSlidesIds = await Promise.all(
-			whoWeAreMedia.slides.map((media) => payload.create(media)),
+			whoWeAreMedia.slides.map(async (media) => {
+				const res = await payload.create(media)
+				logger.info(`Uploaded who we are media slides media ${res.id}`)
+				return res
+			}),
 		).then((results) =>
 			results
 				.map((result) => result.id)
 				.concat([homeContentCollageMediaIds[1] as string]),
 		)
+		logger.info(whoWeAreMediaSlidesIds, 'uploaded whoWeAreMediaSlidesIds')
 
 		/*
 		 *Schuil Study Media
@@ -126,7 +152,11 @@ async function seed() {
 			schuilCollage2,
 			schuilCollage3,
 		] = await Promise.all(
-			schuilMediaData.map((data) => payload.create(data)),
+			schuilMediaData.map(async (data) => {
+				const res = await payload.create(data)
+				logger.info(`uploaded schuil ${res.id}`)
+				return res
+			}),
 		).then((res) => res.map(({ id }) => id))
 		if (
 			!schuilExteriorMedia ||
@@ -138,6 +168,7 @@ async function seed() {
 		) {
 			throw new Error('Error uploading case study media')
 		}
+		logger.info('uploaded schuil media')
 
 		/*
 		 * Hancock Study Media
@@ -150,7 +181,11 @@ async function seed() {
 			hancockTables2,
 			hancockTables3,
 		] = await Promise.all(
-			hancockMediaData.map((data) => payload.create(data)),
+			hancockMediaData.map(async (data) => {
+				const res = await payload.create(data)
+				logger.info(`uploaded hancock ${res.id}`)
+				return res
+			}),
 		).then((res) => res.map(({ id }) => id))
 		if (
 			!hancockPlantWallMedia1 ||
@@ -162,6 +197,7 @@ async function seed() {
 		) {
 			throw new Error('Error uploading case study media')
 		}
+		logger.info('uploaded hancock media...')
 
 		logger.info('Updating globals...')
 		await payload.updateGlobal({
@@ -237,7 +273,7 @@ async function seed() {
 		await payload.create(
 			homePageSeedData({
 				heroMedia: homeHeroMediaId,
-				officeMedia: homeOfficeId,
+				hancockFullWidthMediaId,
 				contentCollageMediaIds: homeContentCollageMediaIds,
 				whoWeArePageId,
 				studiesId: [hancockStudyId, schuilStudyId],
