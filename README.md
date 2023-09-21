@@ -21,15 +21,12 @@
 - Use homu as reference
 - Look into preconnect link
 
-## Image optimizations
+## Fix li, ul, ol styles
 
-- [ ] Add sources to media usage
-- Preload hero images using link
-	- Create function helper in hero component file that we can import in routes level
-	- Pass the data particularly the hero-related data
-	- Get the Accept header [developer mozilla en US docs Web HTTP Headers Accept](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept)
-	- Check if avif/webp is included. Preload based on that
-	- Since helper is local to hero image, it also knows the sizes of images and viewport width
+- Seems like the default styles adds some padding and margin (even shadcn does this)
+- So it's our job to overwrite this for our use-cases
+- Unfortunately removed it before
+
 
 	
 ### Image preload notes
