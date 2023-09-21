@@ -39,21 +39,7 @@ export const homePageSeedData = ({
 			{
 				children: [
 					{
-						text: 'Dreamers,',
-						'red-headline': 'true',
-					},
-					{
-						text: '\n',
-					},
-					{
-						text: 'Thinkers,',
-						'red-headline': 'true',
-					},
-					{
-						text: '\n',
-					},
-					{
-						text: '& Makers',
+						text: 'Dreamers, Thinkers, & Makers',
 						'red-headline': 'true',
 					},
 				],
