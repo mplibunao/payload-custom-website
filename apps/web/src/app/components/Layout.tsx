@@ -5,9 +5,10 @@ export type ContainerProps = {
 	className?: string
 }
 
+// used to be px-12
 export const Container = (props: ContainerProps): JSX.Element => {
 	return (
-		<div className={twMerge('max-w-5xl mx-auto px-12', props.className)}>
+		<div className={twMerge('max-w-5xl mx-auto px-9', props.className)}>
 			{props.children}
 		</div>
 	)
