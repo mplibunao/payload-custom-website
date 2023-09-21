@@ -45,12 +45,13 @@
 		@apply blockquote;
 	}
 
-	ul {
+	ul,
+	ol {
 		@apply mx-0 mb-5 mt-0 py-0 pl-5 pr-0;
 	}
 
 	li {
-		@apply md:text-lg;
+		@apply leading-8 tracking-wide md:text-lg;
 	}
 
 	code {
