@@ -3,17 +3,11 @@
 @tailwind utilities;
 
 @layer base {
-	/** {*/
-	/*@apply border-border;*/
-	/*}*/
-
 	body {
-		/*@apply bg-background text-foreground;*/
 		font-feature-settings: 'rlig' 1, 'calt' 1;
 	}
 
 	html {
-		/*text-lg md:text-sm */
 		@apply scroll-smooth bg-antique leading-5 text-gray mix-blend-normal selection:bg-red selection:text-white;
 		text-rendering: optimizeLegibility;
 		font-synthesis: none;
@@ -51,23 +45,16 @@
 		@apply blockquote;
 	}
 
-	/*ol {*/
-	/*padding: 0 0 0 1.1111111111111112rem;*/
-	/*margin: 0 0 1.1111111111111112rem 0;*/
-	/*}*/
-
 	ul {
-		/*padding: 0 0 0 1.1111111111111112rem;*/
-		/*margin: 0 0 1.1111111111111112rem 0;*/
-		@apply my-6 ml-6 list-disc [&>li]:mt-2;
+		@apply mx-0 mb-5 mt-0 py-0 pl-5 pr-0;
 	}
 
-	/*li {*/
-	/*@apply leading-[2.077777777777778rem] tracking-[0.5px] md:text-lg;*/
-	/*}*/
+	li {
+		@apply md:text-lg;
+	}
 
 	code {
-		@apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+		@apply relative rounded bg-muted px-1 py-1 font-mono text-sm font-semibold;
 	}
 
 	:root {
@@ -112,36 +99,6 @@
 
 		--radius: 0.5rem;
 	}
-
-	.dark {
-		--background: 0 0% 3.9%;
-		--foreground: 0 0% 98%;
-
-		--card: 0 0% 3.9%;
-		--card-foreground: 0 0% 98%;
-
-		--popover: 0 0% 3.9%;
-		--popover-foreground: 0 0% 98%;
-
-		--primary: 0 0% 98%;
-		--primary-foreground: 0 0% 9%;
-
-		--secondary: 0 0% 14.9%;
-		--secondary-foreground: 0 0% 98%;
-
-		--muted: 0 0% 14.9%;
-		--muted-foreground: 0 0% 63.9%;
-
-		--accent: 0 0% 14.9%;
-		--accent-foreground: 0 0% 98%;
-
-		--destructive: 0 62.8% 30.6%;
-		--destructive-foreground: 0 0% 98%;
-
-		--border: 0 0% 14.9%;
-		--input: 0 0% 14.9%;
-		--ring: 0 0% 83.1%;
-	}
 }
 
 @layer components {
@@ -149,51 +106,41 @@
 	 *Typography
 	 */
 	.h1 {
-		/*@apply mx-0 mb-[2.2222222222222223rem] mt-0 text-5xl/[4.155555555555556rem] font-normal md:text-[5.75rem]/[4.722222222222222rem] xl:text-[6.25rem]/[5.555555555555555rem];*/
-		/*@apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;*/
 		@apply scroll-m-20 text-4xl font-extrabold tracking-tight;
 		@apply mb-9 md:text-7xl xl:text-8xl;
 	}
 
 	.h2 {
-		/*@apply mx-0 my-[2.2222222222222223rem] text-[2.5rem]/[3.388888888888889rem] font-normal md:text-7xl/[4.166666666666667rem] xl:text-8xl/[5.555555555555555rem];*/
-		/*@apply scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0;*/
 		@apply scroll-m-20 text-3xl font-semibold tracking-tight transition-colors first:mt-0;
 		@apply my-9 md:text-6xl xl:text-7xl;
 	}
 
 	.h3 {
-		/*@apply mx-0 mb-[1.6666666666666667rem] mt-[2.2222222222222223rem] text-4xl/[2.9555555555555557rem] font-normal md:text-6xl/[3.7rem] xl:text-7xl/[4.444444444444445rem];*/
 		@apply scroll-m-20 text-2xl font-semibold tracking-tight;
 		@apply mb-7 mt-9 md:text-5xl xl:text-6xl;
 	}
 
 	.h4 {
-		/*@apply mx-0 mb-[1.1111111111111112rem] mt-[1.6666666666666667rem] text-3xl/[2.966666666666667rem] font-normal md:text-5xl/[2.9444444444444446rem];*/
 		@apply scroll-m-20 text-xl font-semibold tracking-tight;
 		@apply mb-4 mt-6 md:text-4xl;
 	}
 
 	.h5 {
-		/*@apply mx-0 mb-[0.5555555555555556rem] mt-[1.1111111111111112rem] text-2xl/[2.6666666666666665rem] font-normal md:text-[2rem]/[2.5rem];*/
 		@apply text-lg md:text-3xl;
 		@apply mb-2 mt-4;
 	}
 
 	.large {
-		/*@apply mx-0 my-[0.5555555555555556rem] text-2xl leading-[2.066666666666667rem] md:leading-[2.5rem];*/
 		@apply text-lg font-semibold md:text-3xl;
 		@apply my-2;
 	}
 
 	.p {
-		/*@apply leading-[2.077777777777778rem] tracking-[0.5px] md:text-lg;*/
 		@apply leading-7 [&:not(:first-child)]:mt-6;
 		@apply md:text-lg;
 	}
 
 	.label {
-		/*@apply text-base uppercase leading-[2.6666666666666665rem] tracking-[2.5px];*/
 		@apply text-base uppercase;
 	}
 
