@@ -5,7 +5,7 @@ import { cn } from '~/app/utils/misc.ts'
 import { type ColorsRecord } from '~/cms/fields/ColorPicker/colorPickerField'
 
 const buttonVariants = cva(
-	'cursor-pointer rounded-4xl bg-gray border-0 py-0 px-8 h-16 inline-flex items-center my-8 mx-auto shadow-none label',
+	'cursor-pointer rounded-4xl bg-gray border-0 py-0 px-4 xs:px-8 h-16 inline-flex items-center my-8 mx-auto shadow-none label',
 	{
 		variants: {
 			color: {
