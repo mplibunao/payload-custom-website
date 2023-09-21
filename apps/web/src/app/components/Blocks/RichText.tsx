@@ -1,5 +1,6 @@
 import escapeHTML from 'escape-html'
 import { Fragment } from 'react'
+import Balancer from 'react-wrap-balancer'
 import { Text } from 'slate'
 import { twMerge } from 'tailwind-merge'
 
@@ -88,9 +89,17 @@ const serialize = (children?: Children) =>
 
 		switch (node.type) {
 			case 'h1':
-				return <h1 key={i}>{serialize(node.children)}</h1>
+				return (
+					<Balancer as='h1' key={i}>
+						{serialize(node.children)}
+					</Balancer>
+				)
 			case 'h2':
-				return <h2 key={i}>{serialize(node.children)}</h2>
+				return (
+					<Balancer as='h2' key={i}>
+						{serialize(node.children)}
+					</Balancer>
+				)
 			case 'h3':
 				return <h3 key={i}>{serialize(node.children)}</h3>
 			case 'h4':
