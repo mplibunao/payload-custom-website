@@ -161,7 +161,7 @@ export const MediaCollageBlock = (
 							})}
 							style={shouldReduceMotion ? opacityStyle : { y: image3Y }}
 						>
-							<div className='max-sm:-my-9 max-w-[70%] sm:max-w-[60%] 3xl:max-w-full'>
+							<div className='max-sm:-m-9 max-w-[70%] sm:max-w-[60%] 3xl:max-w-full'>
 								<Media
 									{...media3.media}
 									sources={[
