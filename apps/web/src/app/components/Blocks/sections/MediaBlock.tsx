@@ -7,7 +7,7 @@ import {
 	type Media as MediaType,
 } from '~/cms/payload-types'
 
-import { Container, Gutter } from '../../Layout'
+import { Gutter } from '../../Layout'
 import { Media } from '../Media'
 import { RichText } from '../RichText'
 import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxUtils'
@@ -91,7 +91,7 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 			)
 		case 'normal':
 			return (
-				<Container>
+				<div className='container'>
 					<div className='w-full max-w-full'>
 						<Media
 							{...media}
@@ -150,7 +150,7 @@ export const MediaBlock = ({ media, caption, type }: MediaBlockType) => {
 						/>
 						{caption ? <RichText content={caption} /> : null}
 					</div>
-				</Container>
+				</div>
 			)
 		default:
 			return null

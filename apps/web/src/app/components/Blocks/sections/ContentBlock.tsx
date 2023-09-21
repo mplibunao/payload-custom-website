@@ -2,7 +2,7 @@ import { cva } from 'cva'
 import { type ContentBlockType } from '~/cms/payload-types'
 
 import { BackgroundColor } from '../../BackgroundColor'
-import { Container, Grid, Gutter } from '../../Layout'
+import { Grid, Gutter } from '../../Layout'
 import { Padding } from '../../Padding'
 import { RichText } from '../RichText'
 
@@ -61,7 +61,7 @@ export const ContentBlock = (props: ContentBlockType) => {
 			<Gutter left right>
 				<BackgroundColor color={props.backgroundColor.color}>
 					<Padding top={props.paddingTop} bottom={props.paddingBottom}>
-						<Container className='relative'>
+						<div className='relative container'>
 							{props.accentLine ? (
 								<div
 									className={accentLineStyles({
@@ -83,7 +83,7 @@ export const ContentBlock = (props: ContentBlockType) => {
 									</div>
 								))}
 							</Grid>
-						</Container>
+						</div>
 					</Padding>
 				</BackgroundColor>
 			</Gutter>

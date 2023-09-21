@@ -3,7 +3,7 @@ import {
 	type Footer as FooterType,
 } from '~/cms/payload-types'
 
-import { Container, Grid, Gutter } from './Layout'
+import { Grid, Gutter } from './Layout'
 import { LetsTalk } from './LetsTalk'
 import { SiteLink } from './SiteLink'
 
@@ -45,7 +45,7 @@ export const Footer = ({ footer, socialMedia }: FooterProps): JSX.Element => {
 				<div className='bg-gray h-full' />
 			</Gutter>
 
-			<Container className='pt-36 pb-0 md:pb-32 relative'>
+			<div className='container pt-36 pb-0 md:pb-32 relative'>
 				<Grid>
 					{footer && Array.isArray(footer.nav) && footer.nav.length > 0 ? (
 						<ul className='col-span-8 md:col-span-6'>
@@ -103,7 +103,7 @@ export const Footer = ({ footer, socialMedia }: FooterProps): JSX.Element => {
 				<div className='relative -left-24 -bottom-8 -mb-12 md:-left-20 md:-bottom-12 xl:-left-28 xl:-bottom-32 xl:absolute'>
 					<LetsTalk location='footer' />
 				</div>
-			</Container>
+			</div>
 		</footer>
 	)
 }

@@ -1,7 +1,7 @@
 import { type CTA } from '~/cms/payload-types'
 
 import { BackgroundColor } from '../../BackgroundColor'
-import { Container, Gutter } from '../../Layout'
+import { Gutter } from '../../Layout'
 import { SiteLink } from '../../SiteLink'
 import { Button } from '../../ui/button'
 import { RichText } from '../RichText'
@@ -20,7 +20,7 @@ export const CallToActionBlock = (
 				/>
 			</Gutter>
 
-			<Container className='py-60 relative z-20'>
+			<div className='container py-60 relative z-20'>
 				<BackgroundColor color={props.backgroundColor.color}>
 					<RichText content={props.content} />
 				</BackgroundColor>
@@ -44,7 +44,7 @@ export const CallToActionBlock = (
 						</li>
 					))}
 				</ul>
-			</Container>
+			</div>
 		</div>
 	)
 }
