@@ -2,6 +2,7 @@ import {
 	json,
 	type DataFunctionArgs,
 	type V2_MetaFunction,
+	type HeadersFunction,
 } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { RenderBlocks } from '~/app/components/Blocks/RenderBlocks'
@@ -9,7 +10,8 @@ import { PageHero } from '~/app/components/PageHero/PageHero'
 import { ErrorBoundary as NotFoundErrorBoundary } from '~/app/routes/$'
 import { NotFound } from '~/app/utils/http.server'
 import { isRejected } from '~/app/utils/misc'
-import { CACHE_DEFAULT } from '~/constants'
+import { CACHE_DYNAMIC, CACHE_STATIC } from '~/constants'
+import { getCacheHeaders } from '~/server/infra/cache.server'
 
 import { getPage, getPageMeta } from './page.service.server'
 
@@ -17,6 +19,10 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 	if (!data) return []
 	return data.meta
 }
+
+export const headers: HeadersFunction = ({ loaderHeaders }) => ({
+	'Cache-Control': loaderHeaders.get('Cache-Control') ?? '',
+})
 
 export const loader = async ({
 	context,
@@ -59,7 +65,7 @@ export const loader = async ({
 			},
 			{
 				headers: {
-					'Cache-Control': CACHE_DEFAULT,
+					'Cache-Control': getCacheHeaders(page),
 				},
 			},
 		)

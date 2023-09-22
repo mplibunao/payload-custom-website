@@ -20,6 +20,7 @@ export const homePageSeedData = ({
 	collection: 'pages',
 	data: {
 		title: 'Home',
+		contentType: 'static',
 		slug: 'home',
 		meta: {
 			title: 'Home',

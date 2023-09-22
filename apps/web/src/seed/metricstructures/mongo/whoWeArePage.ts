@@ -20,6 +20,7 @@ export const whoWeArePageData = ({
 	collection: 'pages',
 	data: {
 		title: 'Who We Are',
+		contentType: 'static',
 		slug: 'who-we-are',
 		meta: {
 			title: 'Who We Are',

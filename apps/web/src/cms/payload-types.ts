@@ -120,6 +120,7 @@ export interface Page {
       }
   )[];
   slug: string;
+  contentType: 'static' | 'dynamic';
   meta: Meta;
   updatedAt: string;
   createdAt: string;

@@ -14,7 +14,7 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from '@remix-run/react'
-import { CACHE_DEFAULT } from '~/constants/index.ts'
+import { CACHE_STATIC } from '~/constants/index.ts'
 
 import { Footer } from './components/Footer.tsx'
 import { Header } from './components/Header.tsx'
@@ -138,7 +138,7 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 			},
 			{
 				headers: {
-					'Cache-Control': CACHE_DEFAULT,
+					'Cache-Control': CACHE_STATIC,
 				},
 			},
 		)

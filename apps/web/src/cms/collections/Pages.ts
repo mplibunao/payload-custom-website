@@ -18,6 +18,7 @@ import { Spacer } from '../blocks/Spacer'
 import { Statistics } from '../blocks/Statistics'
 import { StickyContent } from '../blocks/StickyContent'
 import { StudySlider } from '../blocks/StudySlider'
+import { contentType } from '../fields/cacheType'
 import { metaField } from '../fields/meta'
 import { ogImage } from '../fields/meta/ogImage'
 import { richText } from '../fields/richText'
@@ -123,6 +124,7 @@ export const Pages: CollectionConfig = {
 			],
 		},
 		slugField(),
+		contentType,
 		metaField(undefined, undefined, { fields: [ogImage()] }),
 	],
 }

@@ -12,6 +12,7 @@ export const ourApproachPageData = ({
 	collection: 'pages',
 	data: {
 		title: 'Our Approach',
+		contentType: 'static',
 		slug: 'our-approach',
 		meta: {
 			title: 'Our Approach',
