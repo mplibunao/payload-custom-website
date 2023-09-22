@@ -10,7 +10,6 @@ import { PageHero } from '~/app/components/PageHero/PageHero'
 import { ErrorBoundary as NotFoundErrorBoundary } from '~/app/routes/$'
 import { NotFound } from '~/app/utils/http.server'
 import { isRejected } from '~/app/utils/misc'
-import { CACHE_DYNAMIC, CACHE_STATIC } from '~/constants'
 import { getCacheHeaders } from '~/server/infra/cache.server'
 
 import { getPage, getPageMeta } from './page.service.server'
