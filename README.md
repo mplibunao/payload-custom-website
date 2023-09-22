@@ -21,11 +21,7 @@
 - Use homu as reference
 - Look into preconnect link
 
-## Fix li, ul, ol styles
 
-- Seems like the default styles adds some padding and margin (even shadcn does this)
-- So it's our job to overwrite this for our use-cases
-- Unfortunately removed it before
 
 
 	

@@ -11,7 +11,7 @@ export const CTAGridBlock = ({ actions }: CTAGridBlockType): JSX.Element => {
 		<div>
 			<ul className='p-0 m-0'>
 				{actions.map(({ headline, link, icon, id }, i) => (
-					<li key={id ?? i} className='group'>
+					<li key={id ?? i} className='group list-none'>
 						<SiteLink
 							{...link}
 							className='flex flex-row items-center text-antique relative'

@@ -48,7 +48,7 @@ export const Footer = ({ footer, socialMedia }: FooterProps): JSX.Element => {
 			<div className='container pt-36 pb-0 md:pb-32 relative'>
 				<Grid>
 					{footer && Array.isArray(footer.nav) && footer.nav.length > 0 ? (
-						<ul className='col-span-8 md:col-span-6'>
+						<ul className='col-span-8 md:col-span-6 p-0 m-0 list-none'>
 							{footer.nav.map(({ link, id }, i) => (
 								<li key={id ?? i}>
 									<SiteLink
@@ -79,7 +79,7 @@ export const Footer = ({ footer, socialMedia }: FooterProps): JSX.Element => {
 							</div>
 						))}
 
-						<ul className='p-0 my-16 mx-0'>
+						<ul className='p-0 my-16 mx-0 list-none'>
 							{socialMedia.map(({ id, label, url }, i) => (
 								<li key={id ?? i}>
 									<a
