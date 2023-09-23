@@ -86,7 +86,7 @@ function icons { ## Runs icon pipeline
   pnpm icons
 }
 
-function compile { ## Compile schemas
+function compile { ## Compile typebox schemas
   pnpm compile
 }
 

@@ -22,6 +22,33 @@ services:
         limits:
           cpus: '${DOCKER_REDIS_CPUS-0}'
           memory: '${DOCKER_REDIS_MEMORY-0}'
+  imagor:
+    image: shumc/imagor:latest
+    volumes:
+      - ./apps/web/media/assets/:/mnt/data
+    environment:
+      PORT: 8000
+      IMAGOR_SECRET: imagesecret
+      IMAGOR_SIGNER_TYPE: sha256 # default sha1 is not secure
+      # Image bomb prevention
+      VIPS_MAX_RESOLUTION: 16800000
+      VIPS_MAX_WIDTH: 5000
+      VIPS_MAX_HEIGHT: 5000
+      # Return optimized format if browser accept header includes it
+      IMAGOR-AUTO-WEBP: true
+      IMAGOR-AUTO-AVIF: true
+
+      FILE_LOADER_BASE_DIR: /mnt/data # enable file loader by specifying base dir
+
+      FILE_STORAGE_BASE_DIR: /mnt/data # enable file storage by specifying base dir
+      FILE_STORAGE_MKDIR_PERMISSION: 0755 # optional
+      FILE_STORAGE_WRITE_PERMISSION: 0666 # optional
+
+      FILE_RESULT_STORAGE_BASE_DIR: /mnt/data/result # enable file result storage by specifying base dir
+      FILE_RESULT_STORAGE_MKDIR_PERMISSION: 0755 # optional
+      FILE_RESULT_STORAGE_WRITE_PERMISSION: 0666 # optional
+    ports:
+      - '8000:8000'
 
 volumes:
   mongo_data:

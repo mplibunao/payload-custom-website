@@ -28,3 +28,23 @@
 ## See if you can convert switch components to React.lazy
 
 - Can you do nested suspense?
+
+## Imagor
+
+- Switch to img
+- Add preload
+
+### Web crypto
+
+#### Size
+
+- Full sha512 json `181 bytes`
+- Sha512 40 trun `133` bytes
+- Full sha215 json `133 bytes` 
+- Sha256 40 trunc `133` bytes
+
+#### Perf
+
+sha1 x 71,754 ops/sec ±1.48% (56 runs sampled)
+sha256 x 72,314 ops/sec ±0.82% (63 runs sampled)
+sha512 x 70,739 ops/sec ±0.47% (64 runs sampled)

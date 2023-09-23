@@ -9,6 +9,7 @@ import {
 	getOverloadProtectionOpts,
 } from '../middleware/overloadProtection.ts'
 import { type typeboxEnvSchema } from './configSchema.ts'
+import { type ImagorConfig } from './imagor.ts'
 import { type CloudRunLoggerOpts } from './logger/cloudRunLoggerOpts.ts'
 import { type PayloadConfig } from './payload/index.ts'
 import { type RedisOpts } from './redis.ts'
@@ -34,7 +35,8 @@ export type Env = Static<typeof typeboxEnvSchema>
 export interface Config<T extends Env = Env>
 	extends OverloadProtectionOpts,
 		PayloadConfig,
-		SiteEnv {
+		SiteEnv,
+		ImagorConfig {
 	env: T
 	app: {
 		version: string
@@ -95,6 +97,10 @@ export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
 			REDIS_ENABLE_AUTO_PIPELINING: env.REDIS_ENABLE_AUTO_PIPELINING,
 			REDIS_MAX_RETRIES_PER_REQ: env.REDIS_MAX_RETRIES_PER_REQ,
 			REDIS_CONNECT_TIMEOUT: env.REDIS_CONNECT_TIMEOUT,
+		},
+		imagor: {
+			url: env.IMAGOR_URL,
+			secret: env.IMAGOR_SECRET,
 		},
 	}
 }
