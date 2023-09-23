@@ -24,3 +24,7 @@
 ## Sitemap and robots.txt
 
 - See epic stack for implementation
+
+## See if you can convert switch components to React.lazy
+
+- Can you do nested suspense?
