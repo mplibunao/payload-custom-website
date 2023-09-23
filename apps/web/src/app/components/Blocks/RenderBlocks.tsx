@@ -1,15 +1,38 @@
 import { type Page } from 'payload/generated-types'
-import { Suspense } from 'react'
+import React, { Suspense } from 'react'
 
 import { Skeleton } from '../ui/skeleton'
-import {
-	ContentBlock,
-	MediaBlock,
-	CTABlock,
-	CTAGridBlock,
-	MediaCollageBlock,
-	MediaContentCollageBlock,
-} from './sections/LazyComponents'
+
+const ContentBlock = React.lazy(() =>
+	import('./sections/ContentBlock').then((module) => ({
+		default: module.ContentBlock,
+	})),
+)
+const MediaBlock = React.lazy(() =>
+	import('./sections/MediaBlock').then((module) => ({
+		default: module.MediaBlock,
+	})),
+)
+const CTABlock = React.lazy(() =>
+	import('./sections/CallToActionBlock').then((module) => ({
+		default: module.CallToActionBlock,
+	})),
+)
+const CTAGridBlock = React.lazy(() =>
+	import('./sections/CTAGridBlock').then((module) => ({
+		default: module.CTAGridBlock,
+	})),
+)
+const MediaCollageBlock = React.lazy(() =>
+	import('./sections/MediaCollageBlock').then((module) => ({
+		default: module.MediaCollageBlock,
+	})),
+)
+const MediaContentCollageBlock = React.lazy(() =>
+	import('./sections/MediaContentCollageBlock').then((module) => ({
+		default: module.MediaContentCollageBlock,
+	})),
+)
 
 type BlockTypes = Page['layout'][number]['blockType']
 
