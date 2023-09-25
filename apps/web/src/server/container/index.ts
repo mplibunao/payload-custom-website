@@ -18,7 +18,6 @@ import {
 } from '~/server/infra/cache.server'
 
 import { type Config } from '../infra/config.server'
-import { ImagorService } from '../infra/imagor'
 import { RedisClient } from '../infra/redis'
 
 declare global {
@@ -29,7 +28,6 @@ declare global {
 			siteService: SiteService
 			redis: Redis
 			cacheRecord?: HitStatisticsRecord
-			imagorService: ImagorService
 		}
 	}
 }
@@ -113,11 +111,6 @@ export const registerDependencies = (
 	})
 	const siteService = new SiteService({ siteInfoLoader, payload, config })
 
-	const imagorService = new ImagorService(
-		config.imagor.secret,
-		config.imagor.url,
-	)
-	app.locals.imagorService = imagorService
 	app.locals.config = config
 	app.locals.cacheService = new CacheService(cache)
 	app.locals.siteService = siteService

@@ -1,4 +1,5 @@
 import { twMerge } from 'tailwind-merge'
+import { imagorService } from '~/app/utils/imagor.service'
 import { type Media as MediaType } from '~/cms/payload-types'
 import { MEDIA_LOCAL_DIR } from '~/constants'
 
@@ -17,29 +18,39 @@ export type ImageSource = {
 	media?: string
 }
 
-export interface MediaProps extends MediaType {
+type SrcSet = {
+	src: string
+	width: number
+}
+type SrcBreakpoints = number
+export type ResponsiveSrc =
+	| {
+			srcSets: undefined
+			srcBreakpoints: SrcBreakpoints[]
+	  }
+	| {
+			srcSets: SrcSet[]
+			srcBreakpoints: undefined
+	  }
+	| {}
+
+export type ResponsiveImageConfig = {
+	srcSizes?: string[]
+} & ResponsiveSrc
+
+export type MediaProps = {
 	className?: string
 	loading?: React.ImgHTMLAttributes<HTMLImageElement>['loading']
 	fetchPriority?: 'high' | 'low' | 'auto'
-	sources?: ImageSource[]
 	decoding?: 'auto' | 'async' | 'sync'
-}
+	srcSizes?: string[]
+} & MediaType &
+	ResponsiveSrc
 
 export const imagePrefix = `${MEDIA_LOCAL_DIR}/`
 
 export const Media = (props: MediaProps): JSX.Element => {
-	const {
-		filename,
-		className,
-		width,
-		height,
-		sizes,
-		alt,
-		loading = 'lazy',
-		sources,
-		fetchPriority = 'auto',
-		decoding = 'async',
-	} = props
+	const { loading = 'lazy', fetchPriority = 'auto', decoding = 'async' } = props
 
 	if (props.mimeType?.includes('video')) {
 		return (
@@ -48,81 +59,147 @@ export const Media = (props: MediaProps): JSX.Element => {
 				muted
 				loop
 				controls={false}
-				className={twMerge('max-w-full w-full', className)}
+				className={twMerge('max-w-full w-full', props.className)}
 			>
-				<source src={`${imagePrefix}${filename as string}`} />
+				<source src={props.url as string} />
 			</video>
 		)
 	}
 
-	// render original file if it's less than 1mb
-	if (!sizes) {
-		return (
-			<img
-				src={`${imagePrefix}${filename as string}`}
-				alt={alt}
-				width={width}
-				height={height}
-				className={twMerge('max-w-full w-full', className)}
-				loading={loading}
-				fetchpriority={fetchPriority}
-				decoding={decoding}
-			/>
-		)
+	return (
+		<img
+			src={props.url as string}
+			alt={props.alt}
+			className={twMerge('max-w-full w-full', props.className)}
+			loading={loading}
+			fetchpriority={fetchPriority}
+			decoding={decoding}
+			sizes={getResponsiveSizes(props.srcSizes)}
+			srcSet={getSrcSet(
+				props.filename as string,
+				'srcSets' in props ? props.srcSets : undefined,
+				'srcBreakpoints' in props ? props.srcBreakpoints : undefined,
+			)}
+		/>
+	)
+
+	/*
+	 *  return (
+	 *    <picture>
+	 *      {sources
+	 *        ? sources?.map((source) => {
+	 *            const imageSrcSet = getResponsiveSrcSet(source.srcSet, sizes, props)
+	 *            const imageSizes = getResponsiveSizes(source.sizes)
+	 *
+	 *            return (
+	 *              <source
+	 *                key={`${imageSrcSet}${imageSizes ?? ''}`}
+	 *                srcSet={imageSrcSet}
+	 *                sizes={imageSizes}
+	 *                type={source.type}
+	 *                media={source.media}
+	 *              />
+	 *            )
+	 *          })
+	 *        : null}
+	 *
+	 *      {!sources ? (
+	 *        <>
+	 *          <source
+	 *            srcSet={`${imagePrefix}${
+	 *              sizes['original-avif']?.filename as string
+	 *            }`}
+	 *            type='image/avif'
+	 *            width={width}
+	 *            height={height}
+	 *          />
+	 *          <source
+	 *            srcSet={`${imagePrefix}${
+	 *              sizes['original-webp']?.filename as string
+	 *            }`}
+	 *            type='image/webp'
+	 *            width={width}
+	 *            height={height}
+	 *          />
+	 *        </>
+	 *      ) : null}
+	 *
+	 *      <img
+	 *        src={`${imagePrefix}${filename as string}`}
+	 *        alt={alt}
+	 *        width={width}
+	 *        height={height}
+	 *        className={twMerge('max-w-full w-full', className)}
+	 *        loading={loading}
+	 *        fetchpriority={fetchPriority}
+	 *        decoding={decoding}
+	 *      />
+	 *    </picture>
+	 *  )
+	 */
+}
+
+export const getSrcSet = (
+	filename: string,
+	srcSets?: SrcSet[],
+	srcBreakpoints?: number[],
+): string | undefined => {
+	// default to breakpoints while keeping aspect ratio
+	if (
+		!srcSets ||
+		srcSets.length === 0 ||
+		!srcBreakpoints ||
+		srcBreakpoints.length === 0
+	) {
+		return [480, 640, 768, 1024, 1280, 1536, 1920, 2560]
+			.map((width) => {
+				const url = imagorService
+					.resize(width, 0)
+					.smartCrop(true)
+					.setImagePath(filename)
+					.buildUrl()
+				return `${url} ${width}w`
+			})
+			.join(', ')
 	}
 
-	return (
-		<picture>
-			{sources
-				? sources?.map((source) => {
-						const imageSrcSet = getResponsiveSrcSet(source.srcSet, sizes, props)
-						const imageSizes = getResponsiveSizes(source.sizes)
+	// simpler api is to just provide the widths or breakpoints you want to generate an image
+	// then we create the srcset based on that similar to the default
+	if (srcBreakpoints) {
+		return srcBreakpoints
+			.sort((a, b) => a - b)
+			.map((srcBreakpoint) => {
+				const url = imagorService
+					.resize(srcBreakpoint, 0)
+					.smartCrop(true)
+					.setImagePath(filename)
+					.buildUrl()
+				return `${url} ${srcBreakpoint}w`
+			})
+			.join(', ')
+	}
 
-						return (
-							<source
-								key={`${imageSrcSet}${imageSizes ?? ''}`}
-								srcSet={imageSrcSet}
-								sizes={imageSizes}
-								type={source.type}
-								media={source.media}
-							/>
-						)
-				  })
-				: null}
+	return srcSets
+		.map((srcSet) => {
+			// if you need more control for the transformation like changing format, flip v/h, etc
+			// More verbose
+			return `${srcSet.src} ${srcSet.width}w`
+		})
+		.sort((a, b) => {
+			// Order matters in srcset so browser will use image with smaller width if it can
+			// Split the strings into parts
+			const [_a, widthPartA] = a.split(' ')
+			const [_b, widthPartB] = b.split(' ')
 
-			{!sources ? (
-				<>
-					<source
-						srcSet={`${imagePrefix}${
-							sizes['original-avif']?.filename as string
-						}`}
-						type='image/avif'
-						width={width}
-						height={height}
-					/>
-					<source
-						srcSet={`${imagePrefix}${
-							sizes['original-webp']?.filename as string
-						}`}
-						type='image/webp'
-						width={width}
-						height={height}
-					/>
-				</>
-			) : null}
+			// shouldn't happen since ${width}w is required but keep in same order if ever
+			if (!widthPartA || !widthPartB) return 0
 
-			<img
-				src={`${imagePrefix}${filename as string}`}
-				alt={alt}
-				width={width}
-				height={height}
-				className={twMerge('max-w-full w-full', className)}
-				loading={loading}
-				fetchpriority={fetchPriority}
-				decoding={decoding}
-			/>
-		</picture>
-	)
+			// Extract the width values from the strings
+			const widthA = parseInt(widthPartA, 10)
+			const widthB = parseInt(widthPartB, 10)
+			return widthA - widthB
+		})
+		.join(', ')
 }
 
 // replace map().filter() with .reduce() to reduce looping since we're already doing a nested loop plus a .sort() after this

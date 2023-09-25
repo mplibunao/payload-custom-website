@@ -34,10 +34,10 @@
 - Switch to img
 - Add preload
 - Make imagor service a singleton
-	- Remove secret and url as constructor params
-	- create a function that assigns window/global values to state
-	- Store secret and url in script with single char variables
-	- Use imagor `HTTP_LOADER_BASE_URL` to set the prefix to our media url so that only our media can be used in imagor
+	- [X] Remove secret and url as constructor params
+	- [X] create a function that assigns window/global values to state
+	- [X] Store secret and url in script with single char variables
+	- [X] Use imagor `HTTP_LOADER_BASE_URL` to set the prefix to our media url so that only our media can be used in imagor
 
 ### Web crypto
 

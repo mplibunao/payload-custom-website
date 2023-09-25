@@ -64,7 +64,7 @@ const ContentAboveMediaPageHero = (
 							loading='eager'
 							fetchPriority='high'
 							decoding='sync'
-							sources={fullGutterMediaSources}
+							{...fullGutterMediaSources}
 						/>
 					</div>
 				</Gutter>
@@ -110,7 +110,7 @@ const ContentLeftOfMediaPageHero = (props: ContentLeftOfMediaPageHeroProps) => {
 							loading='eager'
 							fetchPriority='high'
 							decoding='sync'
-							sources={contentLeftOfMediaSources}
+							{...contentLeftOfMediaSources}
 						/>
 					</div>
 				) : null}
