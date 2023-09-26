@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 
-import { type V2_MetaFunction } from '@remix-run/node'
-import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
+import { type MetaFunction } from '@remix-run/node'
+import { type ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 import { type Meta } from '~/cms/payload-types'
 
 import { type SiteInfo } from '../modules/globals/site.service.server'
@@ -10,7 +10,7 @@ export const mergeTitle = (pageTitle: string, siteTitle?: string) => {
 	return siteTitle ? `${pageTitle} | ${siteTitle}` : pageTitle
 }
 
-type MetaResult = ReturnType<V2_MetaFunction>
+type MetaResult = ReturnType<MetaFunction>
 type MetaMapper = (meta: Meta, metaResult: MetaResult) => MetaResult
 
 const getProfileMeta: MetaMapper = (meta, metaResult) => {
@@ -804,7 +804,7 @@ export const formatOgTypeMeta = (
 }
 
 export const getRootMeta = (url: string, siteInfo?: SiteInfo) => {
-	const rootMeta: V2_ServerRuntimeMetaDescriptor[] = []
+	const rootMeta: ServerRuntimeMetaDescriptor[] = []
 
 	rootMeta.push(
 		...[

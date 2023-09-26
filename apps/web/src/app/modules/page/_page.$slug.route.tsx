@@ -1,7 +1,7 @@
 import {
 	json,
 	type DataFunctionArgs,
-	type V2_MetaFunction,
+	type MetaFunction,
 	type HeadersFunction,
 } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
@@ -14,7 +14,7 @@ import { getCacheHeaders } from '~/server/infra/cache.server'
 
 import { getPage, getPageMeta } from './page.service.server'
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	if (!data) return []
 	return data.meta
 }

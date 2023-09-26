@@ -1,7 +1,7 @@
 import { cssBundleHref } from '@remix-run/css-bundle'
 import {
 	type LinksFunction,
-	type V2_MetaFunction,
+	type MetaFunction,
 	type DataFunctionArgs,
 	json,
 } from '@remix-run/node'
@@ -148,7 +148,7 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 	})
 }
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	if (!data) return []
 	return data.meta
 }

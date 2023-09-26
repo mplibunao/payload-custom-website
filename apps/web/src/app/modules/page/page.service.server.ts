@@ -1,5 +1,5 @@
-import { type V2_ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 import { formatOgTypeMeta, mergeTitle } from '~/app/utils/seo'
+import { type ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
 import { type Page } from '~/cms/payload-types'
 import { type CacheUpdateKey } from '~/server/infra/cache.server'
 
@@ -34,7 +34,7 @@ export const getPageMeta = ({
 	const description = page.meta.description ?? siteInfo?.meta.description
 	const ogImage = page.meta.ogImage ?? siteInfo?.meta.ogImage
 
-	const pageMeta: V2_ServerRuntimeMetaDescriptor[] = []
+	const pageMeta: ServerRuntimeMetaDescriptor[] = []
 
 	pageMeta.push(
 		...[

@@ -54,12 +54,14 @@ export async function createDevRequestHandler({
 		// 1. re-import the server build
 		build = reimportServer(buildPath)
 		// 2. tell dev server that this app server is now up-to-date and ready
-		broadcastDevReady(build)
+		void broadcastDevReady(build)
 	}
 
 	const { default: chokidar } = await import('chokidar')
 	chokidar
-		.watch(buildPath, { ignoreInitial: true })
+		.watch(buildPath.replace('index.js', 'version.txt'), {
+			ignoreInitial: true,
+		})
 		.on('add', handleServerUpdate)
 		.on('change', handleServerUpdate)
 
