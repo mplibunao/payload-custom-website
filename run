@@ -90,6 +90,10 @@ function compile { ## Compile typebox schemas
   pnpm compile
 }
 
+function types:gen { ## Generates payload types
+  pnpm -F web dev:types
+}
+
 function dc:run { ## Docker: Runs [SERVICE] for one-off commands; Does not use ports specified in the service config preventing port collisions;
   if [ $# -eq 0 ]; then echo 1>&2 "Usage: $0 $FUNCNAME run [SERVICE] [OPTIONAL COMMANDS]
 $0 $FUNCNAME run api pnpm add -D express 

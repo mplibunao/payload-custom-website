@@ -1,9 +1,5 @@
 import type { CollectionConfig } from 'payload/types'
-import {
-	getPage,
-	getPageCacheKey,
-	invalidatePage,
-} from '~/app/modules/page/page.service.server'
+import { getPage, invalidatePage } from '~/app/modules/page/page.service.server'
 
 import { CTAGrid } from '../blocks/CTAGrid'
 import { CallToAction } from '../blocks/CallToAction'
