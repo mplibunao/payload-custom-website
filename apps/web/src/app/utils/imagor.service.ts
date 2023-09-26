@@ -213,10 +213,11 @@ class ImagorService {
 	/**
 	 * Append a filter, e.g. quality(80)
 	 * Can be chained multiple times to create a filter pipeline that will be applied sequentially
-	 * @param  {String} filterCall
+	 * When falsy value is passed, skips adding to array
+	 * @param  {(String|undefined)} filterCall
 	 */
-	public filter(filterCall: string): this {
-		this.filtersCalls.push(filterCall)
+	public filter(filterCall?: string): this {
+		if (filterCall) this.filtersCalls.push(filterCall)
 		return this
 	}
 	/**
@@ -238,6 +239,7 @@ class ImagorService {
 
 	/**
 	 * Combine image url and operations with secure and unsecure (unsafe) paths
+	 * Resets the filtersCalls array
 	 * @return {String}
 	 */
 	public buildUrl(): string {
@@ -250,6 +252,7 @@ class ImagorService {
 		} else {
 			return `${imagorServerUrl}/unsafe/${operation}${this.imagePath}`
 		}
+		this.filtersCalls = []
 	}
 
 	private sign(path: string, secret: string) {
