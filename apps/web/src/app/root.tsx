@@ -29,7 +29,6 @@ import {
 import { type SiteInfo } from './modules/globals/site.service.server.ts'
 import fontStylestylesheetUrl from './styles/font.css'
 import tailwindStylesheetUrl from './styles/tailwind.css'
-import { type ImagorSecrets } from './utils/imagor.service.ts'
 import { useIsBot } from './utils/isBotProvider.tsx'
 import { isRejected } from './utils/misc.ts'
 import { getRootMeta } from './utils/seo.ts'
@@ -136,8 +135,7 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 				footer,
 				socialMedia,
 				meta: getRootMeta(request.url, siteInfo),
-				s: process.env.s,
-				u: process.env.u,
+				imagorUrl: process.env.PAYLOAD_PUBLIC_IMAGOR_URL,
 			},
 			{
 				headers: {
@@ -156,13 +154,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 function Document({
 	children,
 	siteInfo,
-	s,
-	u,
+	imagorUrl,
 }: {
 	children: React.ReactNode
 	siteInfo?: SiteInfo
-	s?: string
-	u?: string
+	imagorUrl?: string
 }) {
 	const isBot = useIsBot()
 	return (
@@ -203,7 +199,9 @@ function Document({
 				{isBot ? null : <Scripts />}
 				<script
 					dangerouslySetInnerHTML={{
-						__html: `window.s = '${s as string}'; window.u = '${u as string}'`,
+						__html: `window.PAYLOAD_PUBLIC_IMAGOR_URL = '${
+							imagorUrl as string
+						}'`,
 					}}
 				/>
 				<LiveReload />
@@ -215,7 +213,7 @@ function Document({
 export default function App() {
 	const data = useLoaderData<typeof loader>()
 	return (
-		<Document siteInfo={data.siteInfo ?? undefined} s={data.s} u={data.u}>
+		<Document siteInfo={data.siteInfo ?? undefined} imagorUrl={data.imagorUrl}>
 			<div className='flex h-screen flex-col justify-between'>
 				<div className='flex-1'>
 					<Header socialMedia={data.socialMedia} megaMenu={data.megaMenu} />

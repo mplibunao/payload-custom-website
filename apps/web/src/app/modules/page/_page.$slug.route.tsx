@@ -6,7 +6,7 @@ import {
 } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { RenderBlocks } from '~/app/components/Blocks/RenderBlocks'
-import { PageHero } from '~/app/components/PageHero/PageHero'
+import { PageHero } from '~/app/components/PageHero'
 import { ErrorBoundary as NotFoundErrorBoundary } from '~/app/routes/$'
 import { NotFound } from '~/app/utils/http.server'
 import { isRejected } from '~/app/utils/misc'

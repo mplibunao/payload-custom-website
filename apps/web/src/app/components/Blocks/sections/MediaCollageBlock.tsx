@@ -92,7 +92,6 @@ export const MediaCollageBlock = (
 										'media(min-width: 640px) 55vw',
 										'media(min-width: 1920px) 84vw',
 									]}
-									srcBreakpoints={[480, 640, 768, 1024, 1280, 1536, 1920, 2560]}
 								/>
 							</div>
 						</m.div>

@@ -14,7 +14,7 @@ import { BackgroundColor } from '../../BackgroundColor'
 import { Grid, Gutter } from '../../Layout'
 import { SiteLink } from '../../SiteLink'
 import { Button } from '../../ui/button'
-import { type ImageSource, Media, type ResponsiveImageConfig } from '../Media'
+import { Media, type ResponsiveImageConfig } from '../Media'
 import { RichText } from '../RichText'
 import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxUtils'
 

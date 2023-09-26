@@ -52,11 +52,6 @@ export interface Config<T extends Env = Env>
 }
 
 export const mapEnvToConfig = <T extends Env = Env>(env: T): Config<T> => {
-	// this satisfies the types in app/utils/imagor.service.ts
-	// this is a temp hack
-	process.env.s = env.IMAGOR_SECRET
-	process.env.u = env.IMAGOR_URL
-
 	return {
 		env,
 		app: {

@@ -28,17 +28,16 @@ services:
       - ./apps/web/media/assets/:/mnt/data
     environment:
       PORT: 8000
-      IMAGOR_SECRET: f002151381c2b3962780e80bc4edce9f
-      IMAGOR_SIGNER_TYPE: sha256 # default sha1 is not secure
+      IMAGOR_UNSAFE: 1
       # Image bomb prevention
       VIPS_MAX_RESOLUTION: 16800000
       VIPS_MAX_WIDTH: 4000
       VIPS_MAX_HEIGHT: 4000
       # Return optimized format if browser accept header includes it
-      IMAGOR_AUTO_WEBP: true
-      IMAGOR_AUTO_AVIF: true
+      IMAGOR_AUTO_WEBP: 1
+      IMAGOR_AUTO_AVIF: 1
       # set base url to only allow using our images
-      HTTP_LOADER_BASE_URL: /media/assets/
+      HTTP_LOADER_BASE_URL: media/assets/
 
       FILE_LOADER_BASE_DIR: /mnt/data # enable file loader by specifying base dir
 
@@ -49,6 +48,8 @@ services:
       FILE_RESULT_STORAGE_BASE_DIR: /mnt/data/result # enable file result storage by specifying base dir
       FILE_RESULT_STORAGE_MKDIR_PERMISSION: 0755 # optional
       FILE_RESULT_STORAGE_WRITE_PERMISSION: 0666 # optional
+      IMAGOR_RESULT_STORAGE_PATH_STYLE: size # more flat results storage
+      #DEBUG: 1
     ports:
       - '8000:8000'
 

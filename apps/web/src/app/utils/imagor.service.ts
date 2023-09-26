@@ -1,13 +1,9 @@
 /* eslint-disable max-statements */
 
-import crypto from 'node:crypto'
-
 import { isServer } from './misc'
 
-// obfuscate sensitive info to defer noobs until rsc is release in remix
 export interface ImagorSecrets {
-	u: string
-	s: string
+	PAYLOAD_PUBLIC_IMAGOR_URL: string
 }
 
 declare global {
@@ -36,15 +32,18 @@ class ImagorService {
 	private meta?: boolean
 	private filtersCalls: string[] = []
 	private imagorServerUrl?: string
-	private secret?: string
 
-	private getSecrets() {
-		return {
-			secret: this.secret ?? isServer ? process.env.s : window.s,
-			imagorServerUrl:
-				this.imagorServerUrl ?? isServer ? process.env.u : window.u,
-		}
+	private getImagorUrl() {
+		return this.imagorServerUrl ?? isServer
+			? process.env.PAYLOAD_PUBLIC_IMAGOR_URL
+			: window.PAYLOAD_PUBLIC_IMAGOR_URL
 	}
+
+	public setImagorUrl(url: string) {
+		this.imagorServerUrl = url
+		return this
+	}
+
 	/**
 	 * Set path of image
 	 * @param {String} imagePath The path of the image you want to fetch
@@ -244,43 +243,10 @@ class ImagorService {
 	 */
 	public buildUrl(): string {
 		const operation = this.getOperationPath()
-		const { imagorServerUrl, secret } = this.getSecrets()
-		if (secret) {
-			const safeKey = this.sign(`${operation}${this.imagePath}`, secret)
-
-			return `${imagorServerUrl}/${safeKey}`
-		} else {
-			return `${imagorServerUrl}/unsafe/${operation}${this.imagePath}`
-		}
 		this.filtersCalls = []
+		const imagorServerUrl = this.getImagorUrl()
+		return `${imagorServerUrl}/unsafe/${operation}${this.imagePath}`
 	}
-
-	private sign(path: string, secret: string) {
-		const hash = crypto
-			.createHmac('sha256', secret)
-			.update(path)
-			.digest('base64')
-			.replace(/\+/g, '-')
-			.replace(/\//g, '_')
-		return hash + '/' + path
-	}
-
-	//private async sign(path: string, secret: string) {
-	//console.log(crypto)
-	//const encoder = new TextEncoder()
-	//const data = encoder.encode(path)
-	//const key = await crypto.subtle.importKey(
-	//'raw',
-	//encoder.encode(secret),
-	//{ name: 'HMAC', hash: 'SHA-256' },
-	//false,
-	//['sign'],
-	//)
-	//const signature = await crypto.subtle.sign('HMAC', key, data)
-	//const hashArray = Array.from(new Uint8Array(signature))
-	//const base64Hash = btoa(String.fromCharCode(...hashArray))
-	//return base64Hash + '/' + path
-	//}
 }
 
 export const imagorService = new ImagorService()

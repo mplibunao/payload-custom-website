@@ -1,5 +1,5 @@
-import { formatOgTypeMeta, mergeTitle } from '~/app/utils/seo'
 import { type ServerRuntimeMetaDescriptor } from '@remix-run/server-runtime'
+import { formatOgTypeMeta, mergeTitle, optimizeOgImage } from '~/app/utils/seo'
 import { type Page } from '~/cms/payload-types'
 import { type CacheUpdateKey } from '~/server/infra/cache.server'
 
@@ -32,7 +32,17 @@ export const getPageMeta = ({
 }) => {
 	const title = mergeTitle(page.meta.title, siteInfo?.meta.title)
 	const description = page.meta.description ?? siteInfo?.meta.description
-	const ogImage = page.meta.ogImage ?? siteInfo?.meta.ogImage
+	let ogImage
+
+	if (page.meta.ogImage) {
+		if (typeof page.meta.ogImage === 'string') {
+			ogImage = optimizeOgImage(page.meta.ogImage)
+		} else {
+			ogImage = optimizeOgImage(page.meta.ogImage.filename)
+		}
+	} else {
+		ogImage = siteInfo?.meta.ogImage
+	}
 
 	const pageMeta: ServerRuntimeMetaDescriptor[] = []
 
