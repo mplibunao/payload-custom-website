@@ -86,8 +86,12 @@ function icons { ## Runs icon pipeline
   pnpm icons
 }
 
-function compile { ## Compile schemas
+function compile { ## Compile typebox schemas
   pnpm compile
+}
+
+function types:gen { ## Generates payload types
+  pnpm -F web dev:types
 }
 
 function dc:run { ## Docker: Runs [SERVICE] for one-off commands; Does not use ports specified in the service config preventing port collisions;

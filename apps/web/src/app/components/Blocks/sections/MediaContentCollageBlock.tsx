@@ -14,7 +14,7 @@ import { BackgroundColor } from '../../BackgroundColor'
 import { Grid, Gutter } from '../../Layout'
 import { SiteLink } from '../../SiteLink'
 import { Button } from '../../ui/button'
-import { type ImageSource, Media } from '../Media'
+import { Media, type ResponsiveImageConfig } from '../Media'
 import { RichText } from '../RichText'
 import { getParallaxTranslateYOutput, parallaxStyles } from '../parallaxUtils'
 
@@ -61,7 +61,7 @@ export const MediaContentCollageBlock = (
 											}
 										>
 											<div>
-												<Media {...media} sources={mediaSources[variant]} />
+												<Media {...media} {...mediaSources[variant]} />
 											</div>
 										</m.div>
 									</li>
@@ -115,166 +115,35 @@ const mediaStyles = cva(['absolute list-none m-0 p-0'], {
 	},
 })
 
-const mediaSources: Record<Variant, ImageSource[]> = {
-	media1: [
-		{
-			type: 'image/avif',
-			srcSet: ['portrait-480w-avif', 'portrait-768w-avif'],
-			sizes: [
-				'45vw',
-				'media(min-width: 768px) 28vw',
-				'media(min-width: 1536px) 22vw',
-			],
-		},
-		{
-			type: 'image/webp',
-			srcSet: ['portrait-480w-webp', 'portrait-768w-webp'],
-			sizes: [
-				'45vw',
-				'media(min-width: 768px) 28vw',
-				'media(min-width: 1536px) 22vw',
-			],
-		},
-		{
-			srcSet: ['portrait-480w', 'portrait-768w'],
-			sizes: [
-				'45vw',
-				'media(min-width: 768px) 28vw',
-				'media(min-width: 1536px) 22vw',
-			],
-		},
-	],
-	media2: [
-		{
-			type: 'image/avif',
-			srcSet: [
-				'landscape-480w-avif',
-				'landscape-640w-avif',
-				'landscape-768w-avif',
-			],
-			sizes: ['65vw', 'media(min-width: 768px) 33vw'],
-		},
-		{
-			type: 'image/webp',
-			srcSet: [
-				'landscape-480w-webp',
-				'landscape-640w-webp',
-				'landscape-768w-webp',
-			],
-			sizes: ['65vw', 'media(min-width: 768px) 33vw'],
-		},
-		{
-			srcSet: ['landscape-480w', 'landscape-640w', 'landscape-768w'],
-			sizes: ['65vw', 'media(min-width: 768px) 33vw'],
-		},
-	],
-	media3: [
-		{
-			type: 'image/avif',
-			srcSet: ['landscape-480w-avif', 'landscape-640w-avif'],
-			sizes: ['media(min-width: 768px) 25vw'],
-		},
-		{
-			type: 'image/webp',
-			srcSet: ['landscape-480w-webp', 'landscape-640w-webp'],
-			sizes: ['media(min-width: 768px) 25vw'],
-		},
-		{
-			srcSet: ['landscape-480w', 'landscape-640w'],
-			sizes: ['media(min-width: 768px) 25vw'],
-		},
-	],
-	media4: [
-		{
-			type: 'image/avif',
-			srcSet: [
-				'landscape-480w-avif',
-				'landscape-640w-avif',
-				'landscape-768w-avif',
-				'landscape-1024w-avif',
-			],
-			sizes: ['65vw', 'media(min-width: 768px) 40vw'],
-		},
-		{
-			type: 'image/webp',
-			srcSet: [
-				'landscape-480w-webp',
-				'landscape-640w-webp',
-				'landscape-768w-webp',
-				'landscape-1024w-webp',
-			],
-			sizes: ['65vw', 'media(min-width: 768px) 40vw'],
-		},
-		{
-			srcSet: [
-				'landscape-480w',
-				'landscape-640w',
-				'landscape-768w',
-				'landscape-1024w',
-			],
-			sizes: ['65vw', 'media(min-width: 768px) 40vw'],
-		},
-	],
-	media5: [
-		{
-			type: 'image/avif',
-			srcSet: [
-				'portrait-480w-avif',
-				'portrait-768w-avif',
-				'portrait-1024w-avif',
-			],
-			sizes: [
-				'45vw',
-				'media(min-width: 640px) 65vw',
-				'media(min-width: 768px) 33vw',
-			],
-		},
-		{
-			type: 'image/webp',
-			srcSet: [
-				'portrait-480w-webp',
-				'portrait-768w-webp',
-				'portrait-1024w-webp',
-			],
-			sizes: [
-				'45vw',
-				'media(min-width: 640px) 65vw',
-				'media(min-width: 768px) 33vw',
-			],
-		},
-		{
-			srcSet: ['portrait-480w', 'portrait-768w', 'portrait-1024w'],
-			sizes: [
-				'45vw',
-				'media(min-width: 640px) 65vw',
-				'media(min-width: 768px) 33vw',
-			],
-		},
-	],
-	media6: [
-		{
-			type: 'image/avif',
-			srcSet: [
-				'landscape-480w-avif',
-				'landscape-640w-avif',
-				'landscape-768w-avif',
-			],
-			sizes: ['media(min-width: 768px) 35vw'],
-		},
-		{
-			type: 'image/webp',
-			srcSet: [
-				'landscape-480w-webp',
-				'landscape-640w-webp',
-				'landscape-768w-webp',
-			],
-			sizes: ['media(min-width: 768px) 35vw'],
-		},
-		{
-			srcSet: ['landscape-480w', 'landscape-640w', 'landscape-768w'],
-			sizes: ['media(min-width: 768px) 35vw'],
-		},
-	],
+const mediaSources: Record<Variant, ResponsiveImageConfig> = {
+	media1: {
+		srcSizes: ['portrait-480w-avif', 'portrait-768w-avif'],
+		srcBreakpoints: [480, 640, 768],
+	},
+	media2: {
+		srcSizes: ['65vw', 'media(min-width: 768px) 33vw'],
+		srcBreakpoints: [480, 640, 768],
+	},
+	media3: {
+		srcSizes: ['media(min-width: 768px) 25vw'],
+		srcBreakpoints: [480, 640],
+	},
+	media4: {
+		srcSizes: ['65vw', 'media(min-width: 768px) 40vw'],
+		srcBreakpoints: [480, 640, 768, 1024],
+	},
+	media5: {
+		srcSizes: [
+			'45vw',
+			'media(min-width: 640px) 65vw',
+			'media(min-width: 768px) 33vw',
+		],
+		srcBreakpoints: [480, 640, 768, 1024],
+	},
+	media6: {
+		srcSizes: ['media(min-width: 768px) 35vw'],
+		srcBreakpoints: [480, 640, 768],
+	},
 }
 
 const useMediaCollageScrollTransform = (

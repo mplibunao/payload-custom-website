@@ -1,4 +1,5 @@
 import { type Payload } from 'payload'
+import { optimizeOgImage } from '~/app/utils/seo'
 import { type Site } from '~/cms/payload-types'
 import { type Config } from '~/server/infra/config.server'
 
@@ -35,13 +36,13 @@ export class SiteService {
 		const ogImage =
 			typeof site.meta.ogImage === 'string'
 				? site.meta.ogImage
-				: site.meta.ogImage.sizes?.og?.url
+				: site.meta.ogImage.filename
 
 		return {
 			meta: {
 				title: site.meta.title ?? defaults.title,
 				description: site.meta.description ?? defaults.description,
-				ogImage,
+				ogImage: optimizeOgImage(ogImage),
 			},
 		}
 	}

@@ -5,18 +5,15 @@ import { type Page } from '~/cms/payload-types'
 import { Media } from '../Blocks/Media'
 import { RichText } from '../Blocks/RichText'
 import { Grid, Gutter } from '../Layout'
-import {
-	fullGutterMediaSources,
-	contentLeftOfMediaSources,
-} from './responsiveHeroSources'
+import { fullGutterMediaSources } from './heroUtils'
 
-const fadeInAnimation = cva([
+export const fadeInAnimation = cva([
 	'animate-in slide-in-from-bottom-20 fade-in duration-700 fill-mode-both ease-in',
 ])
 
 type MinimalPageHeroProps = Pick<Page, 'title' | 'heroContent'>
 
-const MinimalPageHero = ({
+export const MinimalPageHero = ({
 	title,
 	heroContent,
 }: MinimalPageHeroProps): JSX.Element => {
@@ -33,7 +30,7 @@ const MinimalPageHero = ({
 
 type ContentAboveMediaPageHeroProps = Pick<Page, 'heroMedia' | 'heroContent'>
 
-const ContentAboveMediaPageHero = (
+export const ContentAboveMediaPageHero = (
 	props: ContentAboveMediaPageHeroProps,
 ): JSX.Element => {
 	return (
@@ -64,7 +61,7 @@ const ContentAboveMediaPageHero = (
 							loading='eager'
 							fetchPriority='high'
 							decoding='sync'
-							sources={fullGutterMediaSources}
+							{...fullGutterMediaSources}
 						/>
 					</div>
 				</Gutter>
@@ -78,7 +75,9 @@ type ContentLeftOfMediaPageHeroProps = Pick<
 	'title' | 'heroContent' | 'heroMedia'
 >
 
-const ContentLeftOfMediaPageHero = (props: ContentLeftOfMediaPageHeroProps) => {
+export const ContentLeftOfMediaPageHero = (
+	props: ContentLeftOfMediaPageHeroProps,
+) => {
 	return (
 		<div className='relative mb-40'>
 			<div className='container'>
@@ -110,7 +109,8 @@ const ContentLeftOfMediaPageHero = (props: ContentLeftOfMediaPageHeroProps) => {
 							loading='eager'
 							fetchPriority='high'
 							decoding='sync'
-							sources={contentLeftOfMediaSources}
+							srcSizes={['50vw']}
+							srcBreakpoints={[768, 1024, 1280, 1536, 1920]}
 						/>
 					</div>
 				) : null}
@@ -119,37 +119,12 @@ const ContentLeftOfMediaPageHero = (props: ContentLeftOfMediaPageHeroProps) => {
 	)
 }
 
-export type PageHeroProps = Pick<
-	Page,
-	'title' | 'heroType' | 'heroContent' | 'heroMedia'
->
+type FallbackHeroProps = Pick<Page, 'heroContent'>
 
-export const PageHero = (props: PageHeroProps): JSX.Element => {
-	switch (props.heroType) {
-		case 'contentAboveMedia':
-			return (
-				<ContentAboveMediaPageHero
-					heroContent={props.heroContent}
-					heroMedia={props.heroMedia}
-				/>
-			)
-		case 'contentLeftOfMedia':
-			return (
-				<ContentLeftOfMediaPageHero
-					heroContent={props.heroContent}
-					heroMedia={props.heroMedia}
-					title={props.title}
-				/>
-			)
-		case 'minimal':
-			return (
-				<MinimalPageHero heroContent={props.heroContent} title={props.title} />
-			)
-		default:
-			return (
-				<div>
-					<RichText content={props.heroContent} />
-				</div>
-			)
-	}
+export const FallbackHero = (props: FallbackHeroProps) => {
+	return (
+		<div>
+			<RichText content={props.heroContent} />
+		</div>
+	)
 }

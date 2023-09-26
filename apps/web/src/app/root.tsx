@@ -1,7 +1,7 @@
 import { cssBundleHref } from '@remix-run/css-bundle'
 import {
 	type LinksFunction,
-	type V2_MetaFunction,
+	type MetaFunction,
 	type DataFunctionArgs,
 	json,
 } from '@remix-run/node'
@@ -135,6 +135,7 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 				footer,
 				socialMedia,
 				meta: getRootMeta(request.url, siteInfo),
+				imagorUrl: process.env.PAYLOAD_PUBLIC_IMAGOR_URL,
 			},
 			{
 				headers: {
@@ -145,7 +146,7 @@ export const loader = async ({ context, request }: DataFunctionArgs) => {
 	})
 }
 
-export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	if (!data) return []
 	return data.meta
 }
@@ -153,9 +154,11 @@ export const meta: V2_MetaFunction<typeof loader> = ({ data }) => {
 function Document({
 	children,
 	siteInfo,
+	imagorUrl,
 }: {
 	children: React.ReactNode
 	siteInfo?: SiteInfo
+	imagorUrl?: string
 }) {
 	const isBot = useIsBot()
 	return (
@@ -194,6 +197,13 @@ function Document({
 				{children}
 				<ScrollRestoration />
 				{isBot ? null : <Scripts />}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `window.PAYLOAD_PUBLIC_IMAGOR_URL = '${
+							imagorUrl as string
+						}'`,
+					}}
+				/>
 				<LiveReload />
 			</body>
 		</html>
@@ -203,7 +213,7 @@ function Document({
 export default function App() {
 	const data = useLoaderData<typeof loader>()
 	return (
-		<Document siteInfo={data.siteInfo ?? undefined}>
+		<Document siteInfo={data.siteInfo ?? undefined} imagorUrl={data.imagorUrl}>
 			<div className='flex h-screen flex-col justify-between'>
 				<div className='flex-1'>
 					<Header socialMedia={data.socialMedia} megaMenu={data.megaMenu} />

@@ -1,4 +1,3 @@
-import { type HeadersFunction } from '@remix-run/node'
 import {
 	type ManualCache,
 	type InMemoryCacheConfiguration,

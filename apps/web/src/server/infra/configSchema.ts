@@ -3,6 +3,7 @@ import { SiteEnvSchema } from '~/app/modules/globals/siteEnv.server'
 import { NODE_ENV, APP_ENV, PORT, SERVER_URL } from '~/shared/schemas'
 
 import { overloadProtectionEnvSchema } from '../middleware/overloadProtection'
+import { imagorEnvSchema } from './imagor'
 import { cloudRunLoggerOptsEnvSchema } from './logger/cloudRunLoggerOpts'
 import { payloadEnvSchema } from './payload'
 import { redisEnvSchema } from './redis'
@@ -20,6 +21,7 @@ export const baseTypeboxEnvSchema = {
 	...payloadEnvSchema,
 	...SiteEnvSchema,
 	...redisEnvSchema,
+	...imagorEnvSchema,
 	NODE_ENV,
 	APP_ENV,
 	PORT,

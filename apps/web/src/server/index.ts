@@ -24,7 +24,7 @@ async function start() {
 	const server = app.listen(config.server.port, () => {
 		app.locals.logger.info(`server started on ${config.server.port}`)
 		if (config.env.NODE_ENV === 'development') {
-			broadcastDevReady(build)
+			void broadcastDevReady(build)
 		}
 	})
 
