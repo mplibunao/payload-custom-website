@@ -33,16 +33,22 @@ const MediaContentCollageBlock = React.lazy(() =>
 		default: module.MediaContentCollageBlock,
 	})),
 )
+const MediaGridBlock = React.lazy(() =>
+	import('./sections/MediaGridBlock').then((module) => ({
+		default: module.MediaGridBlock,
+	})),
+)
 
 type BlockTypes = Page['layout'][number]['blockType']
 
 const components: Record<BlockTypes, React.LazyExoticComponent<any>> = {
-	content: ContentBlock,
-	media: MediaBlock,
 	cta: CTABlock,
 	'cta-grid': CTAGridBlock,
+	content: ContentBlock,
+	media: MediaBlock,
 	'media-collage': MediaCollageBlock,
 	'media-content-collage': MediaContentCollageBlock,
+	'media-grid': MediaGridBlock,
 }
 
 type Props = {
