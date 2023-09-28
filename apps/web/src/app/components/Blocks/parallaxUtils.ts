@@ -5,6 +5,7 @@ export const parallaxStyles = cva([
 ])
 
 const parallaxTranslateY = {
+	0: ['25%', '0%'],
 	50: ['25%', '-10%'], // index 1 can be 0 or closer to -25%
 	100: ['25%', '-25%'],
 	150: ['25%', '-75%'],

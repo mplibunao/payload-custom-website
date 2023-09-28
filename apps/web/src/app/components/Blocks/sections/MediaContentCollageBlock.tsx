@@ -36,68 +36,69 @@ export const MediaContentCollageBlock = (
 	const opacityStyle = { opacity }
 	return (
 		<LazyMotionDomAnimation>
-			<Gutter left right className='overflow-hidden py-32 md:py-44'>
-				<BackgroundColor
-					color={props.backgroundColor.color}
-					className='text-center relative py-60 md:py-96 px-0'
-				>
-					{props.media.length > 0 ? (
-						<ul>
-							{props.media.map(({ media, id }, i) => {
-								if (typeof media === 'string') return null
-								const variant = `media${i + 1}` as Variant
+			<div ref={ref}>
+				<Gutter left right className='overflow-hidden py-32 md:py-44'>
+					<BackgroundColor
+						color={props.backgroundColor.color}
+						className='text-center relative py-60 md:py-96 px-0'
+					>
+						{props.media.length > 0 ? (
+							<ul>
+								{props.media.map(({ media, id }, i) => {
+									if (typeof media === 'string') return null
+									const variant = `media${i + 1}` as Variant
 
-								return (
-									<li
-										key={id ?? i}
-										className={mediaStyles({
-											variant,
-										})}
-									>
-										<m.div
-											className={parallaxStyles()}
-											style={
-												shouldReduceMotion ? opacityStyle : { y: y[variant] }
-											}
+									return (
+										<li
+											key={id ?? i}
+											className={mediaStyles({
+												variant,
+											})}
 										>
-											<div>
-												<Media {...media} {...mediaSources[variant]} />
-											</div>
-										</m.div>
-									</li>
-								)
-							})}
-						</ul>
-					) : null}
+											<m.div
+												className={parallaxStyles()}
+												style={
+													shouldReduceMotion ? opacityStyle : { y: y[variant] }
+												}
+											>
+												<div>
+													<Media {...media} {...mediaSources[variant]} />
+												</div>
+											</m.div>
+										</li>
+									)
+								})}
+							</ul>
+						) : null}
 
-					<div className='container'>
-						<Grid>
-							<div className='col-start-1 md:col-start-2 col-span-10'>
-								<RichText
-									content={props.content}
-									className='relative content-collage-rich-text'
-								/>
-								{props.enableCTA && props.link ? (
-									<SiteLink
-										{...props.link}
-										prefetch='viewport'
-										className='relative'
-									>
-										<Button color={props.backgroundColor.color}>
-											{props.link.label}
-										</Button>
-									</SiteLink>
-								) : null}
-							</div>
-						</Grid>
-					</div>
-				</BackgroundColor>
-			</Gutter>
+						<div className='container'>
+							<Grid>
+								<div className='col-start-1 md:col-start-2 col-span-10'>
+									<RichText
+										content={props.content}
+										className='relative content-collage-rich-text'
+									/>
+									{props.enableCTA && props.link ? (
+										<SiteLink
+											{...props.link}
+											prefetch='viewport'
+											className='relative'
+										>
+											<Button color={props.backgroundColor.color}>
+												{props.link.label}
+											</Button>
+										</SiteLink>
+									) : null}
+								</div>
+							</Grid>
+						</div>
+					</BackgroundColor>
+				</Gutter>
+			</div>
 		</LazyMotionDomAnimation>
 	)
 }
 
-//'-top-4 left-[-10%] w-[45%] md:left-[4%] md:w-[28%] xl:top-[-15%] 2xl:left-[-5%] 2xl:w-[22%]',
 const mediaStyles = cva(['absolute list-none m-0 p-0'], {
 	variants: {
 		variant: {
@@ -150,36 +151,22 @@ const useMediaCollageScrollTransform = (
 	scrollYProgress: MotionValue<number>,
 ) => {
 	const inputRange = [0, 1]
+	const medium = useTransform(
+		scrollYProgress,
+		inputRange,
+		getParallaxTranslateYOutput(100),
+	)
+	const fast = useTransform(
+		scrollYProgress,
+		inputRange,
+		getParallaxTranslateYOutput(150),
+	)
 	return {
-		media1: useTransform(
-			scrollYProgress,
-			inputRange,
-			getParallaxTranslateYOutput(100),
-		),
-		media2: useTransform(
-			scrollYProgress,
-			inputRange,
-			getParallaxTranslateYOutput(150),
-		),
-		media3: useTransform(
-			scrollYProgress,
-			inputRange,
-			getParallaxTranslateYOutput(150),
-		),
-		media4: useTransform(
-			scrollYProgress,
-			inputRange,
-			getParallaxTranslateYOutput(100),
-		),
-		media5: useTransform(
-			scrollYProgress,
-			inputRange,
-			getParallaxTranslateYOutput(100),
-		),
-		media6: useTransform(
-			scrollYProgress,
-			inputRange,
-			getParallaxTranslateYOutput(150),
-		),
+		media1: medium,
+		media2: fast,
+		media3: fast,
+		media4: medium,
+		media5: medium,
+		media6: fast,
 	}
 }
