@@ -9,6 +9,7 @@ export const MediaGrid: Block = {
 		singular: 'Media Grid',
 		plural: 'Media Grids',
 	},
+	interfaceName: 'MediaGridBlockType',
 	fields: [
 		colorField({ name: 'backgroundColor', label: 'Background Color' }),
 		richText({ name: 'content', label: 'Content', required: false }),

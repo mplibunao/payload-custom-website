@@ -42,20 +42,7 @@ export interface Page {
     | MediaBlockType
     | MediaCollageBlockType
     | MediaContentCollageBlockType
-    | {
-        backgroundColor: BackgroundColorType;
-        content?: {
-          [k: string]: unknown;
-        }[];
-        media?: {
-          media: string | Media;
-          content?: string;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'media-grid';
-      }
+    | MediaGridBlockType
     | {
         topOverlap?: 'none' | 'small' | 'medium' | 'large';
         bottomOverlap?: 'none' | 'small' | 'medium' | 'large';
@@ -228,6 +215,20 @@ export interface MediaContentCollageBlockType {
   blockName?: string;
   blockType: 'media-content-collage';
 }
+export interface MediaGridBlockType {
+  backgroundColor: BackgroundColorType;
+  content?: {
+    [k: string]: unknown;
+  }[];
+  media?: {
+    media: string | Media;
+    content?: string;
+    id?: string;
+  }[];
+  id?: string;
+  blockName?: string;
+  blockType: 'media-grid';
+}
 export interface Study {
   id: string;
   title: string;
@@ -239,20 +240,7 @@ export interface Study {
     | MediaBlockType
     | MediaCollageBlockType
     | MediaContentCollageBlockType
-    | {
-        backgroundColor: BackgroundColorType;
-        content?: {
-          [k: string]: unknown;
-        }[];
-        media?: {
-          media: string | Media;
-          content?: string;
-          id?: string;
-        }[];
-        id?: string;
-        blockName?: string;
-        blockType: 'media-grid';
-      }
+    | MediaGridBlockType
     | {
         topOverlap?: 'none' | 'small' | 'medium' | 'large';
         bottomOverlap?: 'none' | 'small' | 'medium' | 'large';

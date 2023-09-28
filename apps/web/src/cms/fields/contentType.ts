@@ -9,7 +9,7 @@ export const contentType: Field = {
 	admin: {
 		position: 'sidebar',
 		description:
-			"Choose dynamic for time-sensitive data like a product's inventory count to display accurate data. Choose static if you want better performance in exchange for data freshness",
+			"Choose dynamic for time-sensitive data like a product's inventory count to display accurate data. Choose static if you want better performance in exchange for data staleness",
 	},
 	options: [
 		{ label: 'Static', value: 'static' },
