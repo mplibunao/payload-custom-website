@@ -110,7 +110,13 @@ export const ContentLeftOfMediaPageHero = (
 							fetchPriority='high'
 							decoding='sync'
 							srcSizes={['50vw']}
-							srcBreakpoints={[768, 1024, 1280, 1536, 1920]}
+							srcBreakpoints={[
+								{ width: 768 },
+								{ width: 1024 },
+								{ width: 1280 },
+								{ width: 1536 },
+								{ width: 1920 },
+							]}
 						/>
 					</div>
 				) : null}

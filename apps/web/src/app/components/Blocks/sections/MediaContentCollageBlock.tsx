@@ -119,19 +119,24 @@ const mediaStyles = cva(['absolute list-none m-0 p-0'], {
 const mediaSources: Record<Variant, ResponsiveImageConfig> = {
 	media1: {
 		srcSizes: ['portrait-480w-avif', 'portrait-768w-avif'],
-		srcBreakpoints: [480, 640, 768],
+		srcBreakpoints: [{ width: 480 }, { width: 640 }, { width: 768 }],
 	},
 	media2: {
 		srcSizes: ['65vw', 'media(min-width: 768px) 33vw'],
-		srcBreakpoints: [480, 640, 768],
+		srcBreakpoints: [{ width: 480 }, { width: 640 }, { width: 768 }],
 	},
 	media3: {
 		srcSizes: ['media(min-width: 768px) 25vw'],
-		srcBreakpoints: [480, 640],
+		srcBreakpoints: [{ width: 480 }, { width: 640 }],
 	},
 	media4: {
 		srcSizes: ['65vw', 'media(min-width: 768px) 40vw'],
-		srcBreakpoints: [480, 640, 768, 1024],
+		srcBreakpoints: [
+			{ width: 480 },
+			{ width: 640 },
+			{ width: 768 },
+			{ width: 1024 },
+		],
 	},
 	media5: {
 		srcSizes: [
@@ -139,11 +144,16 @@ const mediaSources: Record<Variant, ResponsiveImageConfig> = {
 			'media(min-width: 640px) 65vw',
 			'media(min-width: 768px) 33vw',
 		],
-		srcBreakpoints: [480, 640, 768, 1024],
+		srcBreakpoints: [
+			{ width: 480 },
+			{ width: 640 },
+			{ width: 768 },
+			{ width: 1024 },
+		],
 	},
 	media6: {
 		srcSizes: ['media(min-width: 768px) 35vw'],
-		srcBreakpoints: [480, 640, 768],
+		srcBreakpoints: [{ width: 480 }, { width: 640 }, { width: 768 }],
 	},
 }
 

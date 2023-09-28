@@ -90,7 +90,12 @@ export const NormalMediaBlock = (props: MediaBlockProps): JSX.Element => {
 						'media(min-width: 1563px) 51vw',
 						'media(min-width: 1920px) 42vw',
 					]}
-					srcBreakpoints={[480, 640, 768, 1024]}
+					srcBreakpoints={[
+						{ width: 480 },
+						{ width: 640 },
+						{ width: 768 },
+						{ width: 1024 },
+					]}
 				/>
 				{props.caption ? <RichText content={props.caption} /> : null}
 			</div>

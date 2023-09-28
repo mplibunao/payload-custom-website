@@ -10,7 +10,7 @@ type SrcSet = {
 	width: number
 }
 
-type SrcBreakpoints = number
+type SrcBreakpoints = { width?: number; height?: number }
 export type ResponsiveSrc =
 	| {
 			srcSets: undefined
@@ -63,9 +63,9 @@ export const Media = (props: MediaProps): JSX.Element => {
 			{['image/avif', 'image/webp', 'image/jpeg'].map((format) => {
 				const imageSrcSet = getSrcSet(
 					props.filename as string,
+					format as ImageType,
 					srcSets,
 					srcBreakpoints,
-					format as ImageType,
 				)
 
 				return (
@@ -90,35 +90,17 @@ export const Media = (props: MediaProps): JSX.Element => {
 	)
 }
 
-// https://www.industrialempathy.com/posts/avif-webp-quality-settings/#:~:text=If%20you%20usually%20encode%20JPEGs,than%20the%20equivalent%20JPEG%20image.
-const getImageQuality = (format?: ImageType) => {
-	switch (format) {
-		case 'image/avif':
-			return 51
-		case 'image/webp':
-			return 64
-		case 'image/jpeg':
-		default:
-			return 60
-	}
-}
-
 export const getSrcSet = (
 	filename: string,
+	format: ImageType,
 	srcSets?: SrcSet[],
-	srcBreakpoints?: number[],
-	format?: ImageType,
+	srcBreakpoints?: SrcBreakpoints[],
 ) => {
-	const imageFormat = format ? format.replace('image/', '') : undefined
+	const imageFormat = format.replace('image/', '')
 	const quality = getImageQuality(format)
 
 	// default breakpoints while keeping aspect ratio
-	if (
-		!srcSets ||
-		srcSets.length === 0 ||
-		!srcBreakpoints ||
-		srcBreakpoints.length === 0
-	) {
+	if (!srcSets?.length && !srcBreakpoints?.length) {
 		return [480, 640, 768, 1024, 1280, 1536, 1920, 2560]
 			.map((width) => {
 				const url = imagorService
@@ -133,20 +115,20 @@ export const getSrcSet = (
 			.join(', ')
 	}
 
-	// simpler api is to just provide the widths or breakpoints you want to generate an image
+	// simpler api is to just provide the width/height you want to generate
 	// then we create the srcset based on that similar to the default
 	if (srcBreakpoints) {
 		return srcBreakpoints
-			.sort((a, b) => a - b)
-			.map((srcBreakpoint) => {
+			.sort(({ width: a = 0 }, { width: b = 0 }) => a - b)
+			.map(({ width = 0, height = 0 }) => {
 				const url = imagorService
-					.resize(srcBreakpoint, 0)
+					.resize(width, height)
 					.smartCrop(true)
 					.setImagePath(filename)
 					.filter(`quality(${quality})`)
 					.filter(imageFormat ? `format(${imageFormat})` : undefined)
 					.buildUrl()
-				return `${url} ${srcBreakpoint}w`
+				return `${url} ${width}w`
 			})
 			.join(', ')
 	}
@@ -155,7 +137,8 @@ export const getSrcSet = (
 		.map((srcSet) => {
 			// if you need more control for the transformation like changing format, flip v/h, etc
 			// More verbose
-			return `${srcSet.src} ${srcSet.width}w`
+
+			return `${addFilter(srcSet.src, imageFormat, quality)} ${srcSet.width}w`
 		})
 		.sort((a, b) => {
 			// Order matters in srcset so browser will use image with smaller width if it can
@@ -172,6 +155,31 @@ export const getSrcSet = (
 			return widthA - widthB
 		})
 		.join(', ')
+}
+
+// https://www.industrialempathy.com/posts/avif-webp-quality-settings/#:~:text=If%20you%20usually%20encode%20JPEGs,than%20the%20equivalent%20JPEG%20image.
+const getImageQuality = (format?: ImageType) => {
+	switch (format) {
+		case 'image/avif':
+			return 51
+		case 'image/webp':
+			return 64
+		case 'image/jpeg':
+		default:
+			return 60
+	}
+}
+
+const addFilter = (url: string, imageFormat: string, quality: number) => {
+	const filter = `filters:quality(${quality}):format(${imageFormat})`
+
+	if (url.includes('filters:')) {
+		return url.replace('filters:', filter)
+	}
+
+	const lastSlashIndex = url.lastIndexOf('/')
+	const imagorParams = url.substring(0, lastSlashIndex)
+	return `${imagorParams}/${filter}${url.substring(lastSlashIndex)}`
 }
 
 export const getResponsiveSizes = (sizes?: string[]) => sizes?.join(', ')
