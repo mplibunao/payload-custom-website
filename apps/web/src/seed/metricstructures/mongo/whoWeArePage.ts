@@ -165,7 +165,32 @@ export const whoWeArePageData = ({
 						type: 'h2',
 					},
 				],
-				media: mediaGridIds.map((id) => ({ media: id })),
+				media: [
+					{
+						media: mediaGridIds[0] as string,
+						content: 'Gaby Yu \r\nPresident, Founder AIA Assoc.',
+					},
+					{
+						media: mediaGridIds[1] as string,
+						content: 'Cameron Kuiken\r\nProject Manager',
+					},
+					{
+						media: mediaGridIds[2] as string,
+						content: 'Kat Britton\r\nProject Coordinator',
+					},
+					{
+						media: mediaGridIds[3] as string,
+						content: 'Christina Lee\r\nSuperintendent',
+					},
+					{
+						media: mediaGridIds[4] as string,
+						content: 'Lance Jensen\r\nBusiness Manager',
+					},
+					{
+						media: mediaGridIds[5] as string,
+						content: 'Kent Swanson\r\nArchitect',
+					},
+				],
 			},
 			{
 				type: 'fullscreen',
