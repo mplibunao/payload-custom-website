@@ -26,6 +26,7 @@ services:
     image: shumc/imagor:latest
     volumes:
       - ./apps/web/media/assets/:/mnt/data
+    restart: '${DOCKER_RESTART_POLICY:-unless-stopped}'
     environment:
       PORT: 8000
       IMAGOR_UNSAFE: 1
@@ -52,6 +53,11 @@ services:
       #DEBUG: 1
     ports:
       - '8000:8000'
+    deploy:
+      resources:
+        limits:
+          cpus: '${DOCKER_IMAGOR_CPUS-0}'
+          memory: '${DOCKER_IMAGOR_MEMORY-0}'
 
 volumes:
   mongo_data:
