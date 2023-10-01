@@ -94,6 +94,13 @@ function types:gen { ## Generates payload types
   pnpm -F web dev:types
 }
 
+function ssl { ## Generate ssl certificate
+  openssl req  -nodes -new -x509  \
+    -keyout ./apps/web/cert/server.key \
+    -out ./apps/web/cert/server.cert \
+    -subj "/C=US/ST=State/L=City/O=company/OU=Com/CN=www.testserver.local"
+}
+
 function dc:run { ## Docker: Runs [SERVICE] for one-off commands; Does not use ports specified in the service config preventing port collisions;
   if [ $# -eq 0 ]; then echo 1>&2 "Usage: $0 $FUNCNAME run [SERVICE] [OPTIONAL COMMANDS]
 $0 $FUNCNAME run api pnpm add -D express 

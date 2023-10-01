@@ -27,3 +27,19 @@
 
 
 # Add cspotsourcemap
+
+
+# Preload css and preconnect (we don't have any) using early hints
+
+- [github remix run remix discussions](https://github.com/remix-run/remix/discussions/5378)
+- defer this as it might get implemented in remix
+
+# Visual regression testing
+
+- [playwright docs test snapshots](https://playwright.dev/docs/test-snapshots)
+
+# Client hints
+
+- Using kent dodds approach
+- See if you can prevent reload
+- defer as library might get published

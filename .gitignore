@@ -80,3 +80,7 @@ playwright/.cache/
 # Because seed scripts uses lots of media which generates multiple versions. Reduce git bloat
 apps/*/media/assets/
 scratch/
+
+# for running http2 locally
+*.key
+*.cert
