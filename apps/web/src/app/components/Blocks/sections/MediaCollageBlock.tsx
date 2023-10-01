@@ -52,7 +52,19 @@ export const MediaCollageBlock = (
 							<div>
 								<Media
 									{...media1.media}
-									srcSizes={['70vw', 'media(min-width: 640px) 50vw']}
+									srcSizes={[
+										'(max-width: 639px) 70vw',
+										'(min-width: 640px) 50vw',
+									]}
+									srcBreakpoints={[
+										{ width: 270 },
+										{ width: 360 },
+										{ width: 480 },
+										{ width: 640 },
+										{ width: 768 },
+										{ width: 1024 },
+										{ width: 1536 },
+									]}
 								/>
 							</div>
 						</m.div>
@@ -68,14 +80,17 @@ export const MediaCollageBlock = (
 						>
 							<Media
 								{...media2.media}
-								srcSizes={['50vw', 'media(min-width: 640px) 40vw']}
+								srcSizes={[
+									'(max-width: 639px) 50vw',
+									'(min-width: 640px) 40vw',
+								]}
 								srcBreakpoints={[
+									{ width: 270 },
+									{ width: 360 },
 									{ width: 480 },
 									{ width: 640 },
 									{ width: 768 },
 									{ width: 1024 },
-									{ width: 1280 },
-									{ width: 1536 },
 								]}
 							/>
 						</m.div>
@@ -95,9 +110,20 @@ export const MediaCollageBlock = (
 								<Media
 									{...media3.media}
 									srcSizes={[
-										'64vw',
-										'media(min-width: 640px) 55vw',
-										'media(min-width: 1920px) 84vw',
+										'(max-width: 639px) 64vw',
+										'(min-width: 640px) 55vw',
+										'(min-width: 1920px) 84vw',
+									]}
+									srcBreakpoints={[
+										{ width: 270 },
+										{ width: 360 },
+										{ width: 480 },
+										{ width: 640 },
+										{ width: 768 },
+										{ width: 1024 },
+										{ width: 1280 },
+										{ width: 1536 },
+										{ width: 1920 },
 									]}
 								/>
 							</div>

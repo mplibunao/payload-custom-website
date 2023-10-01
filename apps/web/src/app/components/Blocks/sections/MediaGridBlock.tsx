@@ -8,10 +8,7 @@ import {
 import React from 'react'
 import { LazyMotionDomAnimation } from '~/app/utils/framerMotion/LazyMotionFeatures'
 import { useMediaQuery } from '~/app/utils/useMediaQuery'
-import {
-	type MediaGridBlockType,
-	type Media as MediaType,
-} from '~/cms/payload-types'
+import { type MediaGridBlockType } from '~/cms/payload-types'
 
 import { BackgroundColor } from '../../BackgroundColor'
 import { Grid, Gutter } from '../../Layout'
@@ -78,18 +75,20 @@ export const MediaGridBlock = (props: MediaGridBlockType): JSX.Element => {
 												{...media}
 												className='text-antique align-middle'
 												srcSizes={[
-													'36w',
-													'media(min-width: 480px) 40w',
-													'media(min-width: 768px) 43w',
-													'media(min-width: 1024px) 29w',
-													'media(min-width: 1280px) 23w',
-													'media(min-width: 1536px) 19w',
-													'media(min-width: 1920px) 15w',
+													'(max-width: 479px) 36w',
+													'(min-width: 480px) 40w',
+													'(min-width: 1024px) 29w',
+													'(min-width: 1280px) 23w',
+													'(min-width: 1536px) 19w',
+													'(min-width: 1920px) 15w',
 												]}
-												srcBreakpoints={[{ width: 480, height: 640 }]}
+												srcBreakpoints={[
+													{ width: 360, height: 480 },
+													{ width: 480, height: 640 },
+												]}
 											/>
 											{content ? (
-												<div className='p text-sm md:text-base flex items-end absolute inset-0 p-4 whitespace-pre-wrap leading-7 tracking-widest md:tracking-normal md:leading-8 bg-gradient-to-b from-gray/0 via-gray/20 to-gray/80 text-antique'>
+												<div className='p text-xs md:text-base flex items-end absolute inset-0 p-4 whitespace-pre-wrap tracking-wide md:tracking-normal md:leading-8 bg-gradient-to-b from-gray/0 via-gray/20 to-gray/80 text-antique'>
 													{content}
 												</div>
 											) : null}

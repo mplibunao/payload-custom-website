@@ -2,6 +2,7 @@ import React from 'react'
 
 /**
  * More performant than window.innerWidth and context (w/o useMemo)
+ * Eg. useMediaQuery('only screen and (min-width: 1024px)', false)
  * @param {String} query
  * @param {Boolean} serverFallback
  * @return {Boolean} Whether devices matches the media query

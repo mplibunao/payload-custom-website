@@ -35,7 +35,7 @@ export const ContentAboveMediaPageHero = (
 ): JSX.Element => {
 	return (
 		<div className='mb-40'>
-			<div className='container'>
+			<div className='container pb-6'>
 				<Grid>
 					<div className='col-span-8 md:col-span-10 col-start-1 md:col-start-2'>
 						<RichText
@@ -111,11 +111,12 @@ export const ContentLeftOfMediaPageHero = (
 							decoding='sync'
 							srcSizes={['50vw']}
 							srcBreakpoints={[
+								{ width: 360, height: 480 },
+								{ width: 480 },
+								{ width: 640 },
 								{ width: 768 },
 								{ width: 1024 },
 								{ width: 1280 },
-								{ width: 1536 },
-								{ width: 1920 },
 							]}
 						/>
 					</div>

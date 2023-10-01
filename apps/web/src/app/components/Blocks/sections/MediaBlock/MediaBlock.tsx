@@ -27,9 +27,9 @@ export const WideMediaBlock = (props: MediaBlockProps): JSX.Element => {
 				<Media
 					{...props.media}
 					srcSizes={[
-						'100vw',
-						'media(min-width: 1280px) 80vw',
-						'media(min-width: 1920px) 70vw',
+						'(max-width: 1279px) 100vw',
+						'(min-width: 1280px) 80vw',
+						'(min-width: 1920px) 70vw',
 					]}
 				/>
 				{props.caption ? <RichText content={props.caption} /> : null}
@@ -63,9 +63,9 @@ export const FullScreenMediaBlock = (props: MediaBlockProps) => {
 							{...props.media}
 							className='h-full w-full object-cover'
 							srcSizes={[
-								'100vw',
-								'media(min-width: 1280px) 80vw',
-								'media(min-width: 1920px) 70vw',
+								'(max-width: 1279px) 100vw',
+								'(min-width: 1280px) 80vw',
+								'(min-width: 1920px) 70vw',
 							]}
 						/>
 						{props.caption ? <RichText content={props.caption} /> : null}
@@ -83,14 +83,16 @@ export const NormalMediaBlock = (props: MediaBlockProps): JSX.Element => {
 				<Media
 					{...props.media}
 					srcSizes={[
-						'80vw',
-						'media(min-width: 764px) 90vw',
-						'media(min-width: 1024px) 80vw',
-						'media(min-width: 1280px) 63vw',
-						'media(min-width: 1563px) 51vw',
-						'media(min-width: 1920px) 42vw',
+						'(max-width: 763px) 80vw',
+						'(min-width: 764px) 90vw',
+						'(min-width: 1024px) 80vw',
+						'(min-width: 1280px) 63vw',
+						'(min-width: 1563px) 51vw',
+						'(min-width: 1920px) 42vw',
 					]}
 					srcBreakpoints={[
+						{ width: 270 },
+						{ width: 360 },
 						{ width: 480 },
 						{ width: 640 },
 						{ width: 768 },

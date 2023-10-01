@@ -73,7 +73,7 @@ export const Media = (props: MediaProps): JSX.Element => {
 						type={format}
 						sizes={getResponsiveSizes(props.srcSizes)}
 						srcSet={imageSrcSet}
-						key={`${imageSrcSet}${format ?? 'original'}`}
+						key={`${imageSrcSet ?? ''}${format ?? 'original'}`}
 					/>
 				)
 			})}
@@ -101,7 +101,7 @@ export const getSrcSet = (
 
 	// default breakpoints while keeping aspect ratio
 	if (!srcSets?.length && !srcBreakpoints?.length) {
-		return [480, 640, 768, 1024, 1280, 1536, 1920, 2560]
+		return [360, 480, 640, 768, 1024, 1280, 1536, 1920, 2560]
 			.map((width) => {
 				const url = imagorService
 					.resize(width, 0)
@@ -134,7 +134,7 @@ export const getSrcSet = (
 	}
 
 	return srcSets
-		.map((srcSet) => {
+		?.map((srcSet) => {
 			// if you need more control for the transformation like changing format, flip v/h, etc
 			// More verbose
 

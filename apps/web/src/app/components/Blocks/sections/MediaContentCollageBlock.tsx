@@ -118,20 +118,37 @@ const mediaStyles = cva(['absolute list-none m-0 p-0'], {
 
 const mediaSources: Record<Variant, ResponsiveImageConfig> = {
 	media1: {
-		srcSizes: ['portrait-480w-avif', 'portrait-768w-avif'],
-		srcBreakpoints: [{ width: 480 }, { width: 640 }, { width: 768 }],
+		srcSizes: [
+			'(max-width: 767px) 45w',
+			'(min-width: 768px) 28vw',
+			'(min-width: 1536px) 22w',
+		],
+		srcBreakpoints: [{ width: 360 }, { width: 480 }],
 	},
 	media2: {
-		srcSizes: ['65vw', 'media(min-width: 768px) 33vw'],
-		srcBreakpoints: [{ width: 480 }, { width: 640 }, { width: 768 }],
+		srcSizes: ['(max-width: 768px) 65vw', '33vw'],
+		srcBreakpoints: [
+			{ width: 270 },
+			{ width: 360 },
+			{ width: 480 },
+			{ width: 640 },
+			{ width: 768 },
+		],
 	},
 	media3: {
-		srcSizes: ['media(min-width: 768px) 25vw'],
-		srcBreakpoints: [{ width: 480 }, { width: 640 }],
+		srcSizes: ['(min-width: 768px) 25vw'],
+		srcBreakpoints: [
+			{ width: 270 },
+			{ width: 360 },
+			{ width: 480 },
+			{ width: 640 },
+		],
 	},
 	media4: {
-		srcSizes: ['65vw', 'media(min-width: 768px) 40vw'],
+		srcSizes: ['(max-width: 768px) 65vw', '40vw'],
 		srcBreakpoints: [
+			{ width: 270 },
+			{ width: 360 },
 			{ width: 480 },
 			{ width: 640 },
 			{ width: 768 },
@@ -140,20 +157,28 @@ const mediaSources: Record<Variant, ResponsiveImageConfig> = {
 	},
 	media5: {
 		srcSizes: [
-			'45vw',
-			'media(min-width: 640px) 65vw',
-			'media(min-width: 768px) 33vw',
+			'(max-width: 639px) 45vw',
+			'(min-width: 640px) 65vw',
+			'(min-width: 768px) 33vw',
 		],
 		srcBreakpoints: [
+			{ width: 203 },
+			{ width: 270 },
+			{ width: 360 },
 			{ width: 480 },
 			{ width: 640 },
 			{ width: 768 },
-			{ width: 1024 },
 		],
 	},
 	media6: {
-		srcSizes: ['media(min-width: 768px) 35vw'],
-		srcBreakpoints: [{ width: 480 }, { width: 640 }, { width: 768 }],
+		srcSizes: ['(min-width: 768px) 35vw'],
+		srcBreakpoints: [
+			{ width: 270 },
+			{ width: 360 },
+			{ width: 480 },
+			{ width: 640 },
+			{ width: 768 },
+		],
 	},
 }
 
