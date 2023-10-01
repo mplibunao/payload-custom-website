@@ -1,5 +1,5 @@
 const { routeExtensions } = require('remix-custom-routes')
-const path = require('path')
+const path = require('node:path')
 /**
  * @type {import('@remix-run/dev').AppConfig}
  */

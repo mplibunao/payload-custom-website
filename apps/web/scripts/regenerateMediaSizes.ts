@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 import payload from 'payload'
 import { MEDIA_LOCAL_DIR } from '~/constants'
 import { config } from '~/server/infra/config.server'

@@ -1,6 +1,6 @@
 import { type Plugin } from 'esbuild'
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 
 // https://github.com/evanw/esbuild/issues/1685
 // exclude js files from node_modules from sourcemap

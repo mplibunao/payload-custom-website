@@ -1,7 +1,7 @@
 import esbuild from 'esbuild'
-import fs from 'fs'
 import { globby } from 'globby'
 import minimist from 'minimist'
+import fs from 'node:fs'
 
 import {
 	excludeVendorFromSourceMapPlugin,

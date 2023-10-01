@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { $ } from 'execa'
-import fs from 'fs'
+import fs from 'node:fs'
 
 import { type PackageJson } from './build.ts'
 

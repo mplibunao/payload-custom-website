@@ -1,7 +1,7 @@
 import { type Static, Type } from '@sinclair/typebox'
 import { TypeCompiler } from '@sinclair/typebox/compiler'
-import { writeFile } from 'fs/promises'
-import { resolve } from 'path'
+import { writeFile } from 'node:fs/promises'
+import { resolve } from 'node:path'
 
 const routeSchema = Type.Recursive((route) =>
 	Type.Object({

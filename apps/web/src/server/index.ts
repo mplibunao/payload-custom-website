@@ -2,7 +2,7 @@ import { type ServerBuild, broadcastDevReady } from '@remix-run/node'
 import closeWithGrace, { type Signals } from 'close-with-grace'
 import express from 'express'
 import { type Server } from 'http'
-import path from 'path'
+import path from 'node:path'
 import { type Logger } from 'pino'
 
 import { initApp } from './app'

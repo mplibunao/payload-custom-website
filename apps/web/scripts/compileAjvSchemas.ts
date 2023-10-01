@@ -1,7 +1,7 @@
 import Ajv from 'ajv'
 import standaloneCode from 'ajv/dist/standalone'
-import { writeFile } from 'fs/promises'
-import path from 'path'
+import { writeFile } from 'node:fs/promises'
+import path from 'node:path'
 import { typeboxEnvSchema } from '~/server/infra/configSchema'
 
 const separator = {

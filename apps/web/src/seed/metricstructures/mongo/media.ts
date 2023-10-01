@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 import { type Options } from 'payload/dist/collections/operations/local/create'
 
 type MediaOptions = Options<'media'>
