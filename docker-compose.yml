@@ -50,6 +50,7 @@ services:
       FILE_RESULT_STORAGE_MKDIR_PERMISSION: 0755 # optional
       FILE_RESULT_STORAGE_WRITE_PERMISSION: 0666 # optional
       IMAGOR_RESULT_STORAGE_PATH_STYLE: size # more flat results storage
+      VIPS_MOZJPEG: 1
       #DEBUG: 1
     ports:
       - '8000:8000'
