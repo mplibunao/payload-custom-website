@@ -36,7 +36,7 @@ import { getRootMeta } from './utils/seo.ts'
 export const links: LinksFunction = () => {
 	const rootLinks = [
 		// Preload svg sprite as a resource to avoid render blocking
-		{ rel: 'preload', href: svgSprite, as: 'image', fetchpriority: 'low' },
+		{ rel: 'preload', href: svgSprite, as: 'image' },
 		// Preload CSS as a resource to avoid render blocking
 		{ rel: 'preload', href: fontStylestylesheetUrl, as: 'style' },
 		{ rel: 'preload', href: tailwindStylesheetUrl, as: 'style' },

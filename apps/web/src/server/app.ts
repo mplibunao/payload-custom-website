@@ -12,6 +12,7 @@ import {
 	createDevRequestHandler,
 	createRemixRequestHandler,
 } from './infra/remix/index.ts'
+import { remixEarlyHints } from './middleware/earlyHints.ts'
 import { stripTrailingSlash } from './middleware/stripTrailingSlashes.ts'
 import { healthCheck } from './routes/healthcheck.ts'
 
@@ -89,6 +90,7 @@ export const initApp = async (
 		}
 		app.all(
 			'*',
+			remixEarlyHints(build),
 			// eslint-disable-next-line @typescript-eslint/no-misused-promises
 			config.env.NODE_ENV === 'development'
 				? await createDevRequestHandler({ build, config, buildPath, app })

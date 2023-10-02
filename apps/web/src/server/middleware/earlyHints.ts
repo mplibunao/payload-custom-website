@@ -44,7 +44,7 @@ export const remixEarlyHints = (build: ServerBuild): ExpressMiddleware => {
 			return links ? links() : []
 		})
 
-		// Filter down to stylesheets and emit css resources
+		// Filter down to stylesheets/preload links
 		const cssResources = matchesLinks.flatMap((link) => {
 			if ('href' in link && link.rel === 'stylesheet' && link.href) {
 				return [
@@ -55,6 +55,17 @@ export const remixEarlyHints = (build: ServerBuild): ExpressMiddleware => {
 					},
 				] satisfies EarlyHintItem[]
 			}
+
+			if ('href' in link && link.rel === 'preload' && link.href) {
+				return [
+					{
+						rel: 'preload',
+						as: link.as as EarlyHintAs,
+						href: link.href,
+					},
+				] satisfies EarlyHintItem[]
+			}
+
 			return []
 		})
 
