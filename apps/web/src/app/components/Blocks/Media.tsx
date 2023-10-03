@@ -109,6 +109,7 @@ export const getSrcSet = (
 					.setImagePath(filename)
 					.filter(`quality(${quality})`)
 					.filter(imageFormat ? `format(${imageFormat})` : undefined)
+					.filter('strip_exif()')
 					.buildUrl()
 				return `${url} ${width}w`
 			})
@@ -127,6 +128,7 @@ export const getSrcSet = (
 					.setImagePath(filename)
 					.filter(`quality(${quality})`)
 					.filter(imageFormat ? `format(${imageFormat})` : undefined)
+					.filter('strip_exif()')
 					.buildUrl()
 				return `${url} ${width}w`
 			})
@@ -171,7 +173,7 @@ const getImageQuality = (format?: ImageType) => {
 }
 
 const addFilter = (url: string, imageFormat: string, quality: number) => {
-	const filter = `filters:quality(${quality}):format(${imageFormat})`
+	const filter = `filters:quality(${quality}):format(${imageFormat}):strip_exif()`
 
 	if (url.includes('filters:')) {
 		return url.replace('filters:', filter)
