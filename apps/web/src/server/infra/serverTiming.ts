@@ -5,11 +5,11 @@ export class ServerTiming {
 	}>()
 
 	async time<Result>(name: string, fn: () => Promise<Result>): Promise<Result> {
-		let start = Date.now()
+		let start = performance.now()
 		try {
 			return await fn()
 		} finally {
-			let duration = Date.now() - start
+			let duration = performance.now() - start
 			this.#measures.add({ name, duration })
 		}
 	}
