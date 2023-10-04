@@ -43,3 +43,7 @@
 - Using kent dodds approach
 - See if you can prevent reload
 - defer as library might get published
+
+# Hono
+
+- Use timing middleware in addition to our custom utils
