@@ -43,6 +43,7 @@ export const metaField: MetaField = (
 			admin: {
 				description:
 					'These fields help improve Search Engine Optimization or SEO',
+				position: 'sidebar',
 			},
 			fields: [
 				...baseMetaField({ required: false }),
@@ -120,7 +121,6 @@ export const metaField: MetaField = (
 							name: 'publishedAt',
 							label: 'Published At',
 							type: 'date',
-							defaultValue: () => new Date(),
 							admin: {
 								date: {
 									pickerAppearance: 'dayAndTime',
@@ -138,11 +138,7 @@ export const metaField: MetaField = (
 								hidden: true,
 							},
 							hooks: {
-								beforeValidate: [
-									() => {
-										return new Date()
-									},
-								],
+								beforeValidate: [() => new Date()],
 							},
 						},
 						{
@@ -161,7 +157,17 @@ export const metaField: MetaField = (
 						admin: {
 							condition: (_, siblingData) => siblingData?.type === 'article',
 						},
+						defaultValue: undefined,
 						interfaceName: 'MetaArticle',
+						hooks: {
+							beforeChange: [
+								({ siblingData }) => {
+									if (siblingData?.type !== 'article') {
+										delete siblingData.article
+									}
+								},
+							],
+						},
 					},
 				}),
 
@@ -193,7 +199,6 @@ export const metaField: MetaField = (
 							name: 'publishedAt',
 							label: 'Published At',
 							type: 'date',
-							defaultValue: () => new Date(),
 							admin: {
 								date: {
 									pickerAppearance: 'dayAndTime',
@@ -207,6 +212,15 @@ export const metaField: MetaField = (
 							condition: (_, siblingData) => siblingData?.type === 'book',
 						},
 						interfaceName: 'MetaBook',
+						hooks: {
+							beforeChange: [
+								(args) => {
+									if (args.siblingData?.type !== 'book') {
+										delete args.siblingData.book
+									}
+								},
+							],
+						},
 					},
 				}),
 
@@ -219,6 +233,15 @@ export const metaField: MetaField = (
 								siblingData?.type === 'video.movie',
 						},
 						interfaceName: 'MetaMovie',
+						hooks: {
+							beforeChange: [
+								(args) => {
+									if (args.siblingData?.type !== 'video.movie') {
+										delete args.siblingData.movie
+									}
+								},
+							],
+						},
 					},
 				}),
 
@@ -244,6 +267,15 @@ export const metaField: MetaField = (
 								siblingData?.type === 'video.episode',
 						},
 						interfaceName: 'MetaVideoEpisode',
+						hooks: {
+							beforeChange: [
+								(args) => {
+									if (args.siblingData?.type !== 'video.episode') {
+										delete args.siblingData.videoEpisode
+									}
+								},
+							],
+						},
 					},
 				}),
 
@@ -256,6 +288,15 @@ export const metaField: MetaField = (
 								siblingData?.type === 'video.tv_show',
 						},
 						interfaceName: 'MetaTVShow',
+						hooks: {
+							beforeChange: [
+								(args) => {
+									if (args.siblingData?.type !== 'video.tv_show') {
+										delete args.siblingData.videoTvShow
+									}
+								},
+							],
+						},
 					},
 				}),
 
@@ -268,6 +309,15 @@ export const metaField: MetaField = (
 								siblingData?.type === 'video.other',
 						},
 						interfaceName: 'MetaVideoOther',
+						hooks: {
+							beforeChange: [
+								(args) => {
+									if (args.siblingData?.type !== 'video.other') {
+										delete args.siblingData.videoOther
+									}
+								},
+							],
+						},
 					},
 				}),
 
@@ -282,6 +332,15 @@ export const metaField: MetaField = (
 							condition: (_, siblingData) => siblingData?.type === 'profile',
 						},
 						interfaceName: 'MetaProfile',
+						hooks: {
+							beforeChange: [
+								(args) => {
+									if (args.siblingData?.type !== 'profile') {
+										delete args.siblingData.profile
+									}
+								},
+							],
+						},
 					},
 				}),
 
