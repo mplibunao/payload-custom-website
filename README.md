@@ -1,5 +1,14 @@
 # TODO
 
+## Reduce json size
+
+- remove none color
+- remove none padding
+- remove none overlap
+- remove none ctagrid.actions.icon
+- undefined should be enough
+- don't forget to change the seed data to remove the value as well
+
 ## SEO
 
 - Use seo plugin to be able to derive title and description from specific fields
@@ -47,3 +56,22 @@
 # Hono
 
 - Use timing middleware in addition to our custom utils
+
+
+# Cloudflare
+
+## Page Rule
+
+- Cache Everything (tf) allows cloudflare to cache html using cache-control headers. Probably `url/*` is good enough as we let the origin server decide whether to cache
+
+# Streaming
+
+## Header
+
+- Separate socialMedia and megaMenu components so we can suspend them
+- Pass as children is easier (check rerenders)
+	- Pass `MegaMenuDialog` tree
+- Or move out `DialogPrimitive.Root` outside and render the jsx inline
+	- Might actually be worse for rerenders since state changes causes whole root to rerender
+	- Plus more messy
+- 

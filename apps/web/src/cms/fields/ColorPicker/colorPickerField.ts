@@ -12,6 +12,10 @@ type Args = {
 export type Colors = BackgroundColorType['color']
 export type ColorsRecord = Record<Colors, string>
 
+//export type Colors = NonNullable<BackgroundColorType['color']>
+//export type ColorsRecord = Omit<Record<Colors, string>, 'none'>
+//export type ColorsPickerColors = Record<Colors, string>
+
 export const colorField = ({
 	name = 'color',
 	label = 'Color',
@@ -24,6 +28,7 @@ export const colorField = ({
 				name: 'color',
 				type: 'select',
 				required: true,
+				//required: false,
 				defaultValue: 'none',
 				admin: {
 					components: {
@@ -34,6 +39,7 @@ export const colorField = ({
 				hooks: {
 					// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 					beforeChange: [({ siblingData }) => siblingData.colorPicker],
+					//beforeChange: [({ siblingData }) => siblingData.colorPicker === 'none' ? undefined : siblingData.colorPicker],
 				},
 				options: [
 					{
