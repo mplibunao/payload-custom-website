@@ -1,1 +1,1 @@
-export type RouteId = 'root' | 'routes/$' | '_page.$slug'
+export type RouteId = 'root' | '_page.$'

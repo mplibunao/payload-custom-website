@@ -17,22 +17,13 @@ declare module "remix-routes" {
       query: ExportedQuery<import('../app/root').SearchParams>,
     };
   
-    "/:slug": {
-      params: {
-      
-        slug: string | number;
-      
-      },
-      query: ExportedQuery<import('../app/modules/page/_page.$slug.route').SearchParams>,
-    };
-  
     "/*": {
       params: {
       
         "*": string | number;
       
       },
-      query: ExportedQuery<import('../app/routes/$').SearchParams>,
+      query: ExportedQuery<import('../app/modules/page/_page.$.route').SearchParams>,
     };
   
   }

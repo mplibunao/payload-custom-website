@@ -8,13 +8,37 @@ import {
 } from 'layered-loader'
 import { type Payload } from 'payload'
 import { type Logger } from 'pino'
-import { CACHE_SHORT, CACHE_LONG, CACHE_STANDARD } from '~/constants'
+
+export const CACHE_STANDARD =
+	'public, max-age=120, s-max-age=120, stale-while-revalidate=86400, stale-if-error=86400'
+// Use more than 10 hours so we can take advantage of cloudflare's reserve cache and keep the edge cache filled
+// 24 hours
+export const CACHE_LONG =
+	'public, max-age=86400, s-max-age=86400, stale-while-revalidate=86400, stale-if-error=86400'
+export const CACHE_SHORT =
+	'public, max-age=1, s-max-age=1, stale-while-revalidate=86400, stale-if-error=86400'
+export const CACHE_SHORT_PRIVATE =
+	'private, max-age=1, stale-while-revalidate=86400, stale-while-error=86400'
+export const CACHE_STANDARD_PRIVATE =
+	'private, max-age=120, stale-while-revalidate=86400, stale-if-error=86400'
+
+// support longer cache for articles
+// 1 week
+export const CACHE_ARTICLE_SHORT =
+	'public, max-age=604800, s-max-age=604800, stale-while-revalidate=86400, stale-if-error=86400'
+// 2 weeks
+export const CACHE_ARTICLE =
+	'public, max-age=1209600, s-max-age=1209600, stale-while-revalidate=86400, stale-if-error=86400'
+// 1 month
+export const CACHE_ARTICLE_LONG =
+	'public, max-age=2419200, s-max-age=2419200, stale-while-revalidate=86400, stale-if-error=86400'
 
 // Use long TTL because it's mostly static plus we use invalidation
-const IN_MEMORY_CACHE_TTL_MS = 1000 * 60 * 60 * 24 * 7 // 7 days
-const IN_MEMORY_TTL_BEFORE_REFRESH = 1000 * 60 * 60 * 24 * 6 // 6 days
-const REDIS_CACHE_TTL_MS = 1000 * 60 * 60 * 24 * 7 // 1 week
-const REDIS_CACHE_TTL_BEFORE_REFRESH = 1000 * 60 * 60 * 24 * 6 // 6 days
+// 1000 * 60 * 60 * 24 * 7 = 7 days
+const IN_MEMORY_CACHE_TTL_MS = 604800000 // 7 days
+const IN_MEMORY_TTL_BEFORE_REFRESH = 518400000 // 6 days
+const REDIS_CACHE_TTL_MS = 604800000 // 1 week
+const REDIS_CACHE_TTL_BEFORE_REFRESH = 518400000 // 6 days
 
 export const IN_MEMORY_CONFIGURATION_BASE: InMemoryCacheConfiguration = {
 	ttlInMsecs: IN_MEMORY_CACHE_TTL_MS,

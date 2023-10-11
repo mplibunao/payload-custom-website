@@ -19,11 +19,15 @@ import { metaField } from '../fields/meta'
 import { ogImage } from '../fields/meta/ogImage'
 import { richText } from '../fields/richText'
 import { slugField } from '../fields/slug'
+import { beforeDuplicateSlug } from '../utils/beforeDuplicate'
 
 export const Pages: CollectionConfig = {
 	slug: 'pages',
 	admin: {
 		useAsTitle: 'title',
+		hooks: {
+			beforeDuplicate: beforeDuplicateSlug,
+		},
 	},
 	access: {
 		read: () => true,

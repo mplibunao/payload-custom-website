@@ -14,7 +14,7 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 } from '@remix-run/react'
-import { CACHE_STANDARD } from '~/constants/index.ts'
+import { CACHE_STANDARD } from '~/server/infra/cache.server.ts'
 
 import { Footer } from './components/Footer.tsx'
 import { Header } from './components/Header.tsx'

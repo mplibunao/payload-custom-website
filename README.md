@@ -14,6 +14,12 @@
 - Use seo plugin to be able to derive title and description from specific fields
 - Make description optional
 
+## Images
+
+- Remove picture element and let auto-avif/webp handle that
+- Set quality to 50. Let the jpeg and webp users suffer
+- Check in image component if responsive width/height is bigger than original width/height. Don't generate the responsive url if so
+
 ## Error pages
 
 - Add error pages
@@ -34,8 +40,13 @@
 
 - See epic stack for implementation
 
+# Handle nested slugs
+
+- Check out nested docs plugin
 
 # Add cspotsourcemap
+
+- Might not be needed since we're migrating to cf workers
 
 
 # Preload css and preconnect (we don't have any) using early hints
@@ -58,13 +69,20 @@
 - Use timing middleware in addition to our custom utils
 
 
-# Cloudflare
-
-## Page Rule
-
-- Cache Everything (tf) allows cloudflare to cache html using cache-control headers. Probably `url/*` is good enough as we let the origin server decide whether to cache
-
 # Streaming
+
+## Caching
+
+- **Note**: Streaming prevents caching
+- Prefer loading everything than streaming since it's hard to predict what kind of data the page will need
+	- Client can suddenly add price which requires streaming or short cache
+	- Better to just rely on current cache config than streaming
+	- If we have a really **slow** and **private** query, create a dedicated route using file-based routing to stream it or create a dedicated collection so that user can still edit the slug
+
+- Another option is to create a separate collection for streaming like `PersonalizedPages` but we can't duplicate from one collection to another**
+	- This is a good approach since authed/private pages are usually the one that benefits from streaming as private cache is not useful
+	- **Note**: For simple auth components like `logged in` in navbar, you can just hydrate it as client component and make it fetch so we still get to cache and save on resources
+		- You can also stream which might help with core-web vitals but not sure since svelte is fast and with csr, the rest of the page is really fast because of caching even if the nav is slower (have to test)
 
 ## Header
 
