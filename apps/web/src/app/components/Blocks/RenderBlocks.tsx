@@ -53,10 +53,11 @@ const components: Record<BlockTypes, React.LazyExoticComponent<any>> = {
 
 type Props = {
 	layout: Page['layout']
+	heroType: Page['heroType']
 	className?: string
 }
 
-export const RenderBlocks = ({ layout, className }: Props) => (
+export const RenderBlocks = ({ layout, className, heroType }: Props) => (
 	<div className={className}>
 		{layout?.map((block, i) => {
 			const Block: React.FC<any> = components[block.blockType]
@@ -75,7 +76,14 @@ export const RenderBlocks = ({ layout, className }: Props) => (
 							</div>
 						}
 					>
-						<section key={block.id ?? i}>
+						<section
+							key={block.id ?? i}
+							className={
+								i === 0 && heroType === 'minimal'
+									? ''
+									: 'content-visibility-auto'
+							}
+						>
 							<Block {...block} />
 						</section>
 					</Suspense>

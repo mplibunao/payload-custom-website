@@ -86,7 +86,7 @@ export default function DynamicPageRoute(): JSX.Element {
 				heroMedia={page.heroMedia}
 				heroType={page.heroType}
 			/>
-			<RenderBlocks layout={page.layout} />
+			<RenderBlocks layout={page.layout} heroType={page.heroType} />
 		</main>
 	)
 }

@@ -40,7 +40,7 @@ export const ScrollToTop = () => {
 							damping: 20,
 						}}
 						className={twMerge(
-							'hidden sm:block bottom-5 xl:bottom-10 right-3.5 md:right-5 xl:right-10 fixed z-20 cursor-pointer p-1.5 items-center rounded-full border shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white border-transparent text-white hover:opacity-50 bg-gray opacity-100',
+							'sm:block bottom-5 xl:bottom-10 right-3.5 md:right-5 xl:right-10 fixed z-20 cursor-pointer p-1.5 items-center rounded-full border shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white border-transparent text-white hover:opacity-50 bg-gray opacity-100',
 						)}
 						onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
 					>

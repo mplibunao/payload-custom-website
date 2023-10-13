@@ -151,5 +151,6 @@ module.exports = {
 		require('tailwindcss-animate'),
 		require('@tailwindcss/typography'),
 		require('./tailwindcss-extend.cjs'),
+		require('tailwindcss-content-visibility'),
 	],
 }

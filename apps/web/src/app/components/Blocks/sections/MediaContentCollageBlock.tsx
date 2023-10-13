@@ -8,6 +8,7 @@ import {
 } from 'framer-motion'
 import React from 'react'
 import { LazyMotionDomAnimation } from '~/app/utils/framerMotion/LazyMotionFeatures'
+import { useMediaQuery } from '~/app/utils/useMediaQuery'
 import { type MediaContentCollageBlockType } from '~/cms/payload-types'
 
 import { BackgroundColor } from '../../BackgroundColor'
@@ -24,6 +25,7 @@ type Variant = NonNullable<MediaProps['variant']>
 export const MediaContentCollageBlock = (
 	props: MediaContentCollageBlockType,
 ): JSX.Element => {
+	const isSmall = useMediaQuery('only screen and (max-width: 767px)', false)
 	const shouldReduceMotion = useReducedMotion()
 	const ref = React.useRef(null)
 	const { scrollYProgress } = useScroll({
@@ -46,11 +48,17 @@ export const MediaContentCollageBlock = (
 							<ul>
 								{props.media.map(({ media, id }, i) => {
 									if (typeof media === 'string') return null
-									const variant = `media${i + 1}` as Variant
+									const index = i + 1
+									const variant = `media${index}` as Variant
+									let hidden = false
+									if ([3, 6].includes(index) && isSmall) {
+										hidden = true
+									}
 
 									return (
 										<li
 											key={id ?? i}
+											aria-hidden={hidden}
 											className={mediaStyles({
 												variant,
 											})}
