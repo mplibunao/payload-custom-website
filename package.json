@@ -45,7 +45,8 @@
 	"pnpm": {
 		"patchedDependencies": {
 			"payload@1.11.3": "patches/payload@1.11.3.patch",
-			"icon-pipeline@0.1.3": "patches/icon-pipeline@0.1.3.patch"
+			"icon-pipeline@0.1.3": "patches/icon-pipeline@0.1.3.patch",
+			"payload-base64-plugin@1.2.0": "patches/payload-base64-plugin@1.2.0.patch"
 		}
 	}
 }

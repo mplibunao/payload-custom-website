@@ -1,11 +1,11 @@
 import path from 'path'
+import generateBase64 from 'payload-base64-plugin'
 import { buildConfig } from 'payload/config.js'
 
 import { Logo } from './app/components/Icon/Logo'
 import { collections } from './cms/collections'
 import { globals } from './cms/globals'
 
-//import './app/styles/payloadTailwind.css'
 import './app/styles/tailwindAdmin.css'
 
 import { BackButton } from './cms/components/BackButton'
@@ -72,4 +72,5 @@ export default buildConfig({
 			},
 		}),
 	},
+	plugins: [generateBase64()],
 })

@@ -1,0 +1,13 @@
+diff --git a/lib/index.js b/lib/index.js
+index 300c623b7e71b5a6491af75eb4e5e7ed318625d3..2255ed333587488f02c276a89182d80f82af871f 100644
+--- a/lib/index.js
++++ b/lib/index.js
+@@ -92,7 +92,7 @@ var generateBase64 = function (_a) {
+                 return __generator(this, function (_b) {
+                     switch (_b.label) {
+                         case 0:
+-                            if (!req.collection) {
++                            if (!req.files) {
+                                 return [2 /*return*/, data];
+                             }
+                             return [4 /*yield*/, (0, plaiceholder_1.getPlaiceholder)(req.files.file.data, {

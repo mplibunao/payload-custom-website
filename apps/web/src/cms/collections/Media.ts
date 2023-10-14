@@ -7,6 +7,7 @@ export const Media: CollectionConfig = {
 	slug: 'media',
 	access: {
 		read: (): boolean => true, // Everyone can read Media
+		create: () => true,
 	},
 	upload: {
 		staticDir: path.resolve(__dirname, `../../..${MEDIA_LOCAL_DIR}`),

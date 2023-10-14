@@ -16,6 +16,7 @@ export const homeMedia: HomeMedia = {
 		data: {
 			alt: 'Building with trees',
 		},
+		overrideAccess: false,
 	},
 	hancock: {
 		overwriteExistingFiles: true,
@@ -24,6 +25,7 @@ export const homeMedia: HomeMedia = {
 		data: {
 			alt: 'Hancock Plant Wall',
 		},
+		overrideAccess: false,
 	},
 	contentCollage: [
 		{
@@ -33,6 +35,7 @@ export const homeMedia: HomeMedia = {
 			data: {
 				alt: 'man sitting on wheelchair holding near full clear drinking glass beside standing and smiling man',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -41,6 +44,7 @@ export const homeMedia: HomeMedia = {
 			data: {
 				alt: 'people laughing and talking outside during daytime',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -49,6 +53,7 @@ export const homeMedia: HomeMedia = {
 			data: {
 				alt: 'meeting',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -57,6 +62,7 @@ export const homeMedia: HomeMedia = {
 			data: {
 				alt: 'Architect at work',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -65,6 +71,7 @@ export const homeMedia: HomeMedia = {
 			data: {
 				alt: 'Woman walking while smiling in the office',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -73,6 +80,7 @@ export const homeMedia: HomeMedia = {
 			data: {
 				alt: 'A builder working on a deck ready to lay the next piece of timber',
 			},
+			overrideAccess: false,
 		},
 	],
 }
@@ -91,6 +99,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 		data: {
 			alt: 'Table with people in a meeting',
 		},
+		overrideAccess: false,
 	},
 	constructionTripod: {
 		overwriteExistingFiles: true,
@@ -99,6 +108,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 		data: {
 			alt: 'Man with construction tripod',
 		},
+		overrideAccess: false,
 	},
 	teamLunch: {
 		overwriteExistingFiles: true,
@@ -107,6 +117,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 		data: {
 			alt: 'People eating a meal around a table',
 		},
+		overrideAccess: false,
 	},
 	mediaGrid: [
 		{
@@ -116,6 +127,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Gaby Yu',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -124,6 +136,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Cameron',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -132,6 +145,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Kat',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -140,6 +154,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Christina',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -148,6 +163,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Lance',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -156,6 +172,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Kent',
 			},
+			overrideAccess: false,
 		},
 	],
 	slides: [
@@ -166,6 +183,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Designer',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -174,6 +192,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Designer',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -182,6 +201,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'Men playing cornhole boards',
 			},
+			overrideAccess: false,
 		},
 		{
 			overwriteExistingFiles: true,
@@ -190,6 +210,7 @@ export const whoWeAreMedia: WhoWeAreMedia = {
 			data: {
 				alt: 'People working in an open office space',
 			},
+			overrideAccess: false,
 		},
 	],
 }
@@ -207,6 +228,7 @@ export const schuilMediaData: OurApproachMedia = [
 		data: {
 			alt: 'Outside the remodeled Schuil Cafe',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -215,6 +237,7 @@ export const schuilMediaData: OurApproachMedia = [
 		data: {
 			alt: 'Inside the remodeled Schuil Cafe',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -223,6 +246,7 @@ export const schuilMediaData: OurApproachMedia = [
 		data: {
 			alt: 'Inside the remodeled Schuil Cafe',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -231,6 +255,7 @@ export const schuilMediaData: OurApproachMedia = [
 		data: {
 			alt: 'Schuil Cafe under renovation',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -239,6 +264,7 @@ export const schuilMediaData: OurApproachMedia = [
 		data: {
 			alt: 'Schuil Mug in renovation area',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -247,6 +273,7 @@ export const schuilMediaData: OurApproachMedia = [
 		data: {
 			alt: 'Schuil Logo',
 		},
+		overrideAccess: false,
 	},
 ]
 
@@ -261,6 +288,7 @@ export const hancockMediaData: MediaOptions[] = [
 		data: {
 			alt: 'Hancock Plant Wall',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -272,6 +300,7 @@ export const hancockMediaData: MediaOptions[] = [
 		data: {
 			alt: 'Hancock Plant Wall',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -280,6 +309,7 @@ export const hancockMediaData: MediaOptions[] = [
 		data: {
 			alt: 'Hancock Plant Wall',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -288,6 +318,7 @@ export const hancockMediaData: MediaOptions[] = [
 		data: {
 			alt: 'Reece Hancock walking with a pitcher of water inside hancock',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -296,6 +327,7 @@ export const hancockMediaData: MediaOptions[] = [
 		data: {
 			alt: 'Hancock chairs and tables',
 		},
+		overrideAccess: false,
 	},
 	{
 		overwriteExistingFiles: true,
@@ -304,5 +336,6 @@ export const hancockMediaData: MediaOptions[] = [
 		data: {
 			alt: 'Hancock chairs',
 		},
+		overrideAccess: false,
 	},
 ]

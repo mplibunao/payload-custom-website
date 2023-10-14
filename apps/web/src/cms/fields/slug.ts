@@ -27,6 +27,9 @@ export const slugField: Slug = (fallback = 'title', overrides = {}) =>
 				description:
 					'Last part of the URL address that serves as a unique identifier of the page',
 			},
+			access: {
+				update: () => true,
+			},
 			hooks: {
 				beforeValidate: [
 					({ operation, value, originalDoc, data }) => {

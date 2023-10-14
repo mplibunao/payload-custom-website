@@ -81,10 +81,15 @@ export const Media = (props: MediaProps): JSX.Element => {
 			<img
 				src={props.url as string}
 				alt={props.alt}
-				className={twMerge('max-w-full w-full', props.className)}
+				className={twMerge('max-w-full w-full bg-cover', props.className)}
 				loading={loading}
 				fetchpriority={fetchPriority}
 				decoding={decoding}
+				style={
+					props.base64
+						? { backgroundImage: `url(${props.base64} )` }
+						: undefined
+				}
 			/>
 		</picture>
 	)

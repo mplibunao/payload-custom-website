@@ -115,6 +115,7 @@ export interface Page {
 export interface Media {
   id: string;
   alt: string;
+  base64?: string;
   updatedAt: string;
   createdAt: string;
   url?: string;

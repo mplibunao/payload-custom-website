@@ -43,7 +43,6 @@ export const metaField: MetaField = (
 			admin: {
 				description:
 					'These fields help improve Search Engine Optimization or SEO',
-				position: 'sidebar',
 			},
 			fields: [
 				...baseMetaField({ required: false }),
