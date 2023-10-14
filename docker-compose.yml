@@ -6,6 +6,8 @@ services:
     volumes:
       - mongo_data:/data/db
     restart: '${DOCKER_RESTART_POLICY:-unless-stopped}'
+    env_file:
+      - '.env'
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -15,6 +17,8 @@ services:
     ports:
       - '6379:6379'
     command: redis-server --save 20 1 --loglevel warning --requirepass redis_password
+    env_file:
+      - '.env'
     volumes:
       - cache:/data
     deploy:
@@ -27,6 +31,8 @@ services:
     volumes:
       - ./apps/web/media/assets/:/mnt/data
     restart: '${DOCKER_RESTART_POLICY:-unless-stopped}'
+    env_file:
+      - '.env'
     environment:
       PORT: 8000
       IMAGOR_UNSAFE: 1
