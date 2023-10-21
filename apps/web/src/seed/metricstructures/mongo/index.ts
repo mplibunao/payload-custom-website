@@ -92,11 +92,7 @@ async function seed() {
 		)
 		logger.info(hancockFullWidthMediaId, 'uploaded hancockFullWidthMediaId')
 		const homeContentCollageMediaIds = await Promise.all(
-			homeMedia.contentCollage.map(async (media) => {
-				const res = await payload.create(media)
-				logger.info(`uploaded homeMedia ${res.id}`)
-				return res
-			}),
+			homeMedia.contentCollage.map((media) => payload.create(media)),
 		).then((results) => results.map((result) => result.id))
 		logger.info(homeContentCollageMediaIds, 'uploaded homeContentCollageMedia')
 
@@ -120,20 +116,12 @@ async function seed() {
 		)
 		logger.info(whoWeAreTeamLunchMediaId, 'uploaded whoWeAreTeamLunchMediaId')
 		const whoWeAreMediaGridIds = await Promise.all(
-			whoWeAreMedia.mediaGrid.map(async (media) => {
-				const res = await payload.create(media)
-				logger.info(`uploaded who we are media grid image ${res.id}`)
-				return res
-			}),
+			whoWeAreMedia.mediaGrid.map((media) => payload.create(media)),
 		).then((results) => results.map((result) => result.id))
 		logger.info(whoWeAreMediaGridIds, 'uploaded whoWeAreMediaGridIds')
 
 		const whoWeAreMediaSlidesIds = await Promise.all(
-			whoWeAreMedia.slides.map(async (media) => {
-				const res = await payload.create(media)
-				logger.info(`Uploaded who we are media slides media ${res.id}`)
-				return res
-			}),
+			whoWeAreMedia.slides.map((media) => payload.create(media)),
 		).then((results) =>
 			results
 				.map((result) => result.id)
@@ -152,11 +140,7 @@ async function seed() {
 			schuilCollage2,
 			schuilCollage3,
 		] = await Promise.all(
-			schuilMediaData.map(async (data) => {
-				const res = await payload.create(data)
-				logger.info(`uploaded schuil ${res.id}`)
-				return res
-			}),
+			schuilMediaData.map((data) => payload.create(data)),
 		).then((res) => res.map(({ id }) => id))
 		if (
 			!schuilExteriorMedia ||
@@ -181,11 +165,7 @@ async function seed() {
 			hancockTables2,
 			hancockTables3,
 		] = await Promise.all(
-			hancockMediaData.map(async (data) => {
-				const res = await payload.create(data)
-				logger.info(`uploaded hancock ${res.id}`)
-				return res
-			}),
+			hancockMediaData.map((data) => payload.create(data)),
 		).then((res) => res.map(({ id }) => id))
 		if (
 			!hancockPlantWallMedia1 ||
