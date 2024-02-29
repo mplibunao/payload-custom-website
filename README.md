@@ -71,8 +71,13 @@
 # Cloudflare
 
 - Enable crawler hints when it lands on tf
-- Enable cloudflare argo routing $5
-- Enable reserve cache around $5
+- Enable cloudflare argo routing $5 (similar to gcp premium network)
+- Enable reserve cache around $5 (guranteed persistence of cache for long-lived cache)
+- Pages build config
+	- Enable pages build caching (not supported in tf)
+		- Settings > Builds & deployments > Build cache and select Enable build cache.
+	- Use `.nvmrc` or `.node-version` for version since pages doesn't respect engines
+	- _qwik doesn't seem supported_
 
 # Streaming
 
