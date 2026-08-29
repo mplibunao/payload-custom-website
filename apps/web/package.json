@@ -127,7 +127,7 @@
 		"typescript": "^5.1.6",
 		"vite": "^4.4.2",
 		"vite-tsconfig-paths": "^4.2.0",
-		"vitest": "^0.33.0"
+		"vitest": "^3.0.0"
 	},
 	"prettier": "prettier-config"
 }
