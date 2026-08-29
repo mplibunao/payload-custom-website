@@ -59,7 +59,7 @@
 		"isbot": "^3.6.12",
 		"layered-loader": "11.0.1",
 		"overload-protection": "1.2.3",
-		"payload": "1.11.3",
+		"payload": "3.79.1",
 		"payload-base64-plugin": "1.2.0",
 		"pino": "8.15.1",
 		"pino-http": "8.3.3",
